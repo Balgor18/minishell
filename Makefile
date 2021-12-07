@@ -35,7 +35,7 @@ OBJ/%.o : %.c
 
 
 fclean : clean
-	rm $(NAME)
+	rm -rf $(NAME)
 
 clean :
 	rm -rf OBJ
