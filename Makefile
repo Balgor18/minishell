@@ -21,7 +21,7 @@ OBJS = $(SRC:%.c=OBJ/%.o)
 DEBUG = $(shell env | grep DEBUG= | tr '=' ' ' | awk '{print $$2}')
 
 ifeq ($(DEBUG), 1)
-	FLAGS += -g3 -fsanitize=thread
+	FLAGS += -g3 -fsanitize=address
 endif
 
 all : $(NAME)
