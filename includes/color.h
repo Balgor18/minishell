@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   color.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/06 14:41:23 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/08 11:32:01 by fcatinau         ###   ########.fr       */
+/*   Created: 2021/07/30 09:57:34 by fcatinau          #+#    #+#             */
+/*   Updated: 2021/11/19 19:09:41 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef COLOR_H
+# define COLOR_H
 
-int	g_error;
+# define BLACK "\033[0;30m"
+# define BLUE "\033[0;34m"
+# define CYAN "\033[0;36m"
+# define GREEN "\033[0;32m"
+# define PURPLE "\033[0;35m"
+# define RED "\033[0;31m"
+# define WHITE "\033[0;37m"
+# define YELLOW "\033[0;33m"
+# define RESET "\e[0m"
 
-int	main(int argc, char **argv)// check si message d'erreur quand plusieur ARG
-{
-	char	*line;
-
-	(void)argc;
-	(void)argv;
-	(void)g_error;
-	while (1)// Pas encore d'arret sur la boucle || voir quoi mettre
-	{
-		line = readline( "Minishell rose >");
-		// parse_line(line);
-	}
-	return (EXIT_SUCCESS);
-}
+#endif

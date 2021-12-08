@@ -27,11 +27,11 @@ endif
 all : $(NAME)
 
 $(NAME) : $(OBJS)
-	$(CC) $(FLAGS) -o $(NAME) $(OBJS) -Iincludes
+	$(CC) $(FLAGS) -Iincludes/. $(OBJS) -o $(NAME) -lreadline
 
 OBJ/%.o : %.c
 	mkdir -p OBJ
-	$(CC) $(FLAGS) -o $@ -c $< -Iincludes
+	$(CC) $(FLAGS) -o $@ -c $< -Iincludes/.
 
 
 fclean : clean
