@@ -6,12 +6,12 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/08 15:48:34 by elaachac         ###   ########.fr       */
+/*   Updated: 2021/12/08 17:50:26 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIHSELL_H
-# define MINIHSELL_H
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
 # include "color.h"
 # include <stdio.h>
