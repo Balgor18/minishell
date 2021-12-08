@@ -1,45 +1,128 @@
-# Colors
-GREY = $(shell tput setaf 59)
-RED = $(shell tput setaf 196)
-GREEN = $(shell tput setaf 82)
-YELLOW = $(shell tput setaf 226)
-BLUE = $(shell tput setaf 39)
-PURPLE = $(shell tput setaf 164)
-CYAN = $(shell tput setaf 37)
-WHITE = $(shell tput sgr0)
+# Generated with GenMake
+# Arthur-TRT - https://github.com/arthur-trt/genMake
+# genmake v1.0
 
-NAME = minishell
-
-CC = clang
-
-FLAGS = -Wall -Wextra -Werror
-
-SRC = main.c
-
-OBJS = $(SRC:%.c=OBJ/%.o)
-
-DEBUG = $(shell env | grep DEBUG= | tr '=' ' ' | awk '{print $$2}')
-
-ifeq ($(DEBUG), 1)
-	FLAGS += -g3 -fsanitize=thread
+#Compiler and Linker
+CC					:= clang
+ifeq ($(shell uname -s),Darwin)
+	CC				:= gcc
 endif
 
-all : $(NAME)
+#The Target Binary Program
+TARGET				:= minishell
+TARGET_BONUS		:= minishell-bonus
 
-$(NAME) : $(OBJS)
-	$(CC) $(FLAGS) -Iincludes/. $(OBJS) -o $(NAME) -lreadline
+BUILD				:= release
 
-OBJ/%.o : %.c
-	mkdir -p OBJ
-	$(CC) $(FLAGS) -o $@ -c $< -Iincludes/.
+include sources.mk
+
+#The Directories, Source, Includes, Objects, Binary and Resources
+SRCDIR				:= srcs
+INCDIR				:= includes
+BUILDDIR			:= obj
+TARGETDIR			:= .
+SRCEXT				:= c
+DEPEXT				:= d
+OBJEXT				:= o
+
+OBJECTS				:= $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.$(OBJEXT)))
+OBJECTS_BONUS		:= $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES_BONUS:.$(SRCEXT)=.$(OBJEXT)))
+
+#Flags, Libraries and Includes
+cflags.release		:= -Wall -Werror -Wextra
+cflags.valgrind		:= -Wall -Werror -Wextra -DDEBUG -ggdb
+cflags.debug		:= -Wall -Werror -Wextra -DDEBUG -ggdb -fsanitize=address -fno-omit-frame-pointer
+CFLAGS				:= $(cflags.$(BUILD))
+CPPFLAGS			:= $(cflags.$(BUILD))
+
+lib.release			:=  -lreadline
+lib.valgrind		:= $(lib.release)
+lib.debug			:= $(lib.release) -fsanitize=address -fno-omit-frame-pointer
+LIB					:= $(lib.$(BUILD))
+
+INC					:= -I$(INCDIR) -I/usr/local/include
+INCDEP				:= -I$(INCDIR)
+
+# Colors
+C_RESET				:= \033[0m
+C_PENDING			:= \033[0;36m
+C_SUCCESS			:= \033[0;32m
+
+# Multi platforms
+ECHO				:= echo
+
+# Escape sequences (ANSI/VT100)
+ES_ERASE			:= "\033[1A\033[2K\033[1A"
+ERASE				:= $(ECHO) $(ES_ERASE)
+
+# hide STD/ERR and prevent Make from returning non-zero code
+HIDE_STD			:= > /dev/null
+HIDE_ERR			:= 2> /dev/null || true
+
+GREP				:= grep --color=auto --exclude-dir=.git
+NORMINETTE			:= norminette `ls`
+
+# Default Make
+all: $(TARGETDIR)/$(TARGET)
+	@$(ERASE)
+	@$(ECHO) "$(TARGET)\t\t[$(C_SUCCESS)✅$(C_RESET)]"
+	@$(ECHO) "$(C_SUCCESS)All done, compilation successful! 👌 $(C_RESET)"
+
+# Bonus rule
+bonus: CFLAGS += -DBONUS
+bonus: CPPFLAGS += -DBONUS
+bonus: $(TARGETDIR)/$(TARGET_BONUS)
+	@$(ERASE)
+	@$(ECHO) "$(TARGET)\t\t[$(C_SUCCESS)✅$(C_RESET)]"
+	@$(ECHO) "$(C_SUCCESS)All done, compilation successful with bonus! 👌 $(C_RESET)"
+
+# Remake
+re: fclean all
+
+# Clean only Objects
+clean:
+	@$(RM) -f *.d *.o
+	@$(RM) -rf $(BUILDDIR)
 
 
-fclean : clean
-	rm -rf $(NAME)
+# Full Clean, Objects and Binaries
+fclean: clean
+	@$(RM) -rf $(TARGET)
 
-clean :
-	rm -rf OBJ
 
-re : fclean all
+# Pull in dependency info for *existing* .o files
+-include $(OBJECTS:.$(OBJEXT)=.$(DEPEXT))
 
-.phony : all fclean clean re
+# Link
+$(TARGETDIR)/$(TARGET): $(OBJECTS)
+	@mkdir -p $(TARGETDIR)
+	$(CC) -o $(TARGETDIR)/$(TARGET) $^ $(LIB)
+
+# Link Bonus
+$(TARGETDIR)/$(TARGET_BONUS): $(OBJECTS_BONUS)
+	@mkdir -p $(TARGETDIR)
+	$(CC) -o $(TARGETDIR)/$(TARGET) $^ $(LIB)
+
+$(BUILDIR):
+	@mkdir -p $@
+
+# Compile
+$(BUILDDIR)/%.$(OBJEXT): $(SRCDIR)/%.$(SRCEXT)
+	@mkdir -p $(dir $@)
+	@$(ECHO) "$(TARGET)\t\t[$(C_PENDING)⏳$(C_RESET)]"
+	$(CC) $(CFLAGS) $(CPPFLAGS) $(INC) -c -o $@ $<
+	@$(CC) $(CFLAGS) $(CPPFLAGS) $(INCDEP) -MM $(SRCDIR)/$*.$(SRCEXT) > $(BUILDDIR)/$*.$(DEPEXT)
+	@$(ERASE)
+	@$(ERASE)
+	@cp -f $(BUILDDIR)/$*.$(DEPEXT) $(BUILDDIR)/$*.$(DEPEXT).tmp
+	@sed -e 's|.*:|$(BUILDDIR)/$*.$(OBJEXT):|' < $(BUILDDIR)/$*.$(DEPEXT).tmp > $(BUILDDIR)/$*.$(DEPEXT)
+	@sed -e 's/.*://' -e 's/\\$$//' < $(BUILDDIR)/$*.$(DEPEXT).tmp | fmt -1 | sed -e 's/^ *//' -e 's/$$/:/' >> $(BUILDDIR)/$*.$(DEPEXT)
+	@rm -f $(BUILDDIR)/$*.$(DEPEXT).tmp
+
+
+
+norm:
+	@$(NORMINETTE) | $(GREP) -v "Not a valid file" | $(GREP) "Error\|Warning" -B 1 || true
+
+# Non-File Targets
+.PHONY: all re clean fclean norm bonus
