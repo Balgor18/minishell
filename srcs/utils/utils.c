@@ -3,23 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 15:48:08 by elaachac          #+#    #+#             */
-/*   Updated: 2021/12/08 15:52:36 by elaachac         ###   ########.fr       */
+/*   Updated: 2021/12/10 00:14:36 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_strlen(char *s)
+size_t	ft_strlen(char *s)
 {
-	int	i;
+	char	*t;
 
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	t = s;
+	while (*s)
+		s++;
+	return (s - t);
+}
+
+void	ft_putstr_fd(int fd, char *s)
+{
+	write(fd, s, ft_strlen(s));
 }
 
 char	*ft_strdup(char *s1)
@@ -38,4 +43,36 @@ char	*ft_strdup(char *s1)
 	}
 	s2[i] = '\0';
 	return (s2);
+}
+
+static int	ft_wordcount(char const *str, char sep)
+{
+	int	i;
+	int	count;
+
+	if (str == 0 || str[0] == 0)
+		return (0);
+	i = 1;
+	count = 0;
+	if (str[0] != sep)
+		count++;
+	while (str[i] != '\0')
+	{
+		if (str[i] != sep && str[i - 1] == sep)
+			count++;
+		i++;
+	}
+	return (count);
+}
+
+static char	**ft_malloc(char const *str, char sep)
+{
+	int		len;
+	char	**tab_str;
+
+	len = ft_wordcount(str, sep);
+	tab_str = malloc(sizeof(*tab_str) * (len + 1));
+	if (tab_str == 0)
+		return (0);
+	return (tab_str);
 }

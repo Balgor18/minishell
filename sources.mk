@@ -2,19 +2,28 @@
 
 ## SRCS ##
 
-SOURCES		+=                   		\
-		srcs/main.c                 	\
+SOURCES		+=                        		\
+		srcs/main.c                      	\
+		srcs/tokenizer.c                 	\
 
 
 ## SRCS/LIST ##
 
-SOURCES		+=                   		\
-		srcs/list/list_utils.c      	\
+SOURCES		+=                        		\
+		srcs/list/list_utils.c           	\
+
+
+## SRCS/PARSE ##
+
+SOURCES		+=                        		\
+		srcs/parse/parse_readline.c      	\
 
 
 ## SRCS/UTILS ##
 
-SOURCES		+=                   		\
-		srcs/utils/utils.c          	\
+SOURCES		+=                        		\
+		srcs/utils/ft_split.c            	\
+		srcs/utils/utils.c               	\
+		srcs/utils/error.c               	\
 
 
