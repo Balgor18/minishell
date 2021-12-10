@@ -6,7 +6,7 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/10 12:09:11 by elaachac         ###   ########.fr       */
+/*   Updated: 2021/12/10 13:57:51 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,15 @@
 # define EXIT_SUCCESS 0
 # define EXIT_FAILURE 1
 
+typedef struct s_node t_node;
 // Tu veux faire une liste doublement chainee ?
-typedef struct s_node
+struct s_node
 {
 	char			*word;
 	int				token;
-	struct s_node	*next;
-	struct s_node	*prev;
-}				t_node;
+	t_node			*next;
+	t_node			*prev;
+};
 
 typedef struct s_list
 {
@@ -51,7 +52,7 @@ enum e_token
 	R_IN,
 	HEREDOC,
 	R_OUT,
-	DR_OUT,
+	APPEND,
 	PIPE,
 };
 /*
