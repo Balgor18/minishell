@@ -1,46 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   parse_readline.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/08 15:48:08 by elaachac          #+#    #+#             */
-/*   Updated: 2021/12/10 00:42:43 by fcatinau         ###   ########.fr       */
+/*   Created: 2021/12/10 00:05:31 by fcatinau          #+#    #+#             */
+/*   Updated: 2021/12/10 02:17:05 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-size_t	ft_strlen(char *s)
+int	check_token(char *s)
 {
-	char	*t;
-
-	t = s;
-	while (*s)
-		s++;
-	return (s - t);
+	(void)s;
+	//do nothing
+	return (WORD);
 }
 
-void	ft_putstr_fd(int fd, char *s)
+int	move_in_list(char **line, t_list *list)
 {
-	write(fd, s, ft_strlen(s));
-}
+	char **tmp;
 
-char	*ft_strdup(char *s1)
-{
-	size_t	i;
-	char	*s2;
-
-	i = 0;
-	s2 = ((char *)malloc(sizeof(char) * (ft_strlen(s1) + 1)));
-	if (!s2)
-		return (NULL);
-	while (s1[i])
+	tmp = line;
+	while (*line)
 	{
-		s2[i] = s1[i];
-		i++;
+		add_tail_list(&list, check_token(*line), *line);
+		free(*line);
+		line++;
 	}
-	s2[i] = '\0';
-	return (s2);
+	free(tmp);
+	return (true);
+}
+
+int	parse_readline(t_list *list, char *s)
+{
+	char **line;
+
+	line = ft_split(s, ' ');
+	if (!line)
+		return (false);
+	free(s);
+	move_in_list(line, list);
+	return (true);
 }
