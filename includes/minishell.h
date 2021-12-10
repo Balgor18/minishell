@@ -6,7 +6,11 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2021/12/10 14:47:18 by fcatinau         ###   ########.fr       */
+=======
+/*   Updated: 2021/12/10 16:53:48 by elaachac         ###   ########.fr       */
+>>>>>>> elias
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +22,7 @@
 # include <stdlib.h>
 # include <stdbool.h>
 # include <unistd.h>
+# include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -27,9 +32,8 @@
 # define EXIT_SUCCESS 0
 # define EXIT_FAILURE 1
 
-typedef struct s_node t_node;
+typedef struct s_node	t_node;
 
-// Tu veux faire une liste doublement chainee ?
 struct s_node
 {
 	char			*word;

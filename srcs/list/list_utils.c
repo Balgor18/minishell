@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 14:38:22 by elaachac          #+#    #+#             */
-/*   Updated: 2021/12/10 17:19:19 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/10 18:48:10 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ t_node	*add_tail_list(t_list **list, int token, char *word)
 			(*list)->head = newnode;
 			(*list)->tail = newnode;
 			newnode->prev = NULL;
+			newnode->next = NULL;
 		}
 		else
 		{
