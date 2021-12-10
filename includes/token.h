@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer.c                                        :+:      :+:    :+:   */
+/*   token.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/09 12:45:31 by elaachac          #+#    #+#             */
-/*   Updated: 2021/12/09 14:50:57 by elaachac         ###   ########.fr       */
+/*   Created: 2021/12/09 16:44:47 by elaachac          #+#    #+#             */
+/*   Updated: 2021/12/09 16:57:25 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef TOKEN_H
+# define TOKEN_H
 
-void	tokenizer(t_list *line)
+typedef enum e_toktype
 {
-	t_node	*tmp_node;
-	size_t	lenght;
+	TOK_CMD,
+	TOK_BUILT_IN,
+	TOK_FILE_IN,
+	TOK_FILE_OUT,
+	TOK_LIMIT,
+	TOK_PIPE,
+	TOK_REDIR_OUT,
+	TOK_REDIR_IN,
+	TOK_HEREDOC,
+	TOK_APPEND,
+	TOK_OPT,
+	TOK_ARG
+}			t_toktype;
 
-	lenght = line->lenght;
-	tmp_node = line->head;
-	while (lenght)
-	{
-		set_token(tmp_node);
-		tmp_node = tmp_node->next;
-		lenght--;
-	}
-}
+#endif
