@@ -13,6 +13,12 @@ SOURCES		+=                        		\
 		srcs/list/list_utils.c           	\
 
 
+## SRCS/CMD ##
+
+SOURCES		+=                        		\
+		srcs/cmd/command.c               	\
+
+
 ## SRCS/PARSE ##
 
 SOURCES		+=                        		\
@@ -22,8 +28,8 @@ SOURCES		+=                        		\
 ## SRCS/UTILS ##
 
 SOURCES		+=                        		\
-		srcs/utils/error.c               	\
 		srcs/utils/ft_split.c            	\
 		srcs/utils/utils.c               	\
+		srcs/utils/error.c               	\
 
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 12:45:31 by elaachac          #+#    #+#             */
-/*   Updated: 2021/12/09 14:50:57 by elaachac         ###   ########.fr       */
+/*   Updated: 2021/12/10 14:37:56 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	tokenizer(t_list *line)
 	tmp_node = line->head;
 	while (lenght)
 	{
-		set_token(tmp_node);
+		// set_token(tmp_node);
 		tmp_node = tmp_node->next;
 		lenght--;
 	}

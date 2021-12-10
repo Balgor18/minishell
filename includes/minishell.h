@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/10 13:57:51 by elaachac         ###   ########.fr       */
+/*   Updated: 2021/12/10 14:47:18 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # define EXIT_FAILURE 1
 
 typedef struct s_node t_node;
+
 // Tu veux faire une liste doublement chainee ?
 struct s_node
 {
@@ -55,6 +56,7 @@ enum e_token
 	APPEND,
 	PIPE,
 };
+
 /*
 **----------------------------------
 **------------Readline--------------
