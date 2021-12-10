@@ -6,11 +6,43 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 00:14:52 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/10 00:15:03 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/10 00:42:50 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	ft_wordcount(char const *str, char sep)
+{
+	int	i;
+	int	count;
+
+	if (str == 0 || str[0] == 0)
+		return (0);
+	i = 1;
+	count = 0;
+	if (str[0] != sep)
+		count++;
+	while (str[i] != '\0')
+	{
+		if (str[i] != sep && str[i - 1] == sep)
+			count++;
+		i++;
+	}
+	return (count);
+}
+
+static char	**ft_malloc(char const *str, char sep)
+{
+	int		len;
+	char	**tab_str;
+
+	len = ft_wordcount(str, sep);
+	tab_str = malloc(sizeof(*tab_str) * (len + 1));
+	if (tab_str == 0)
+		return (0);
+	return (tab_str);
+}
 
 static int	ft_next_word_count(char const *str, char sep, int i)
 {

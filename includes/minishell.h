@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/10 00:15:22 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/10 02:14:11 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,23 @@ typedef struct s_list
 	t_node	*tail;
 }				t_list;
 
+enum e_token
+{
+	WORD = 0,
+	FD,
+	LIMITOR,
+	R_IN,
+	HEREDOC,
+	R_OUT,
+	DR_OUT,
+	PIPE,
+};
 /*
 **----------------------------------
 **------------Readline--------------
 **----------------------------------
 */
-int	parse_readline(char *s);
+int		parse_readline(t_list *list, char *s);
 
 /*
 **----------------------------------

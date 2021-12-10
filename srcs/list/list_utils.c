@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   list_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 14:38:22 by elaachac          #+#    #+#             */
-/*   Updated: 2021/12/09 10:48:35 by elaachac         ###   ########.fr       */
+/*   Updated: 2021/12/10 02:15:38 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_list	*newlist(void)
+// Je viendrais te poser des questions car je vois pas ce que font les fonctions des listes chaines
+t_list	*newlist(void)// pourquoi tu veux malloc la list ??
 {
 	t_list	*newlist;
 

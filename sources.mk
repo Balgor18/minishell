@@ -22,8 +22,8 @@ SOURCES		+=                        		\
 ## SRCS/UTILS ##
 
 SOURCES		+=                        		\
+		srcs/utils/error.c               	\
 		srcs/utils/ft_split.c            	\
 		srcs/utils/utils.c               	\
-		srcs/utils/error.c               	\
 
 
