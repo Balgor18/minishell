@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 12:21:41 by elaachac          #+#    #+#             */
-/*   Updated: 2021/12/10 17:25:54 by elaachac         ###   ########.fr       */
+/*   Updated: 2021/12/10 18:56:39 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int		find_pipe(t_node *iterator, int pos, int lenght)
 
 void	cmd_manage(t_node *iterator)
 {
+	(void)iterator;
 	//todo
 }
 
@@ -73,7 +74,7 @@ void	exec(t_list *line)
 	while (lenght)
 	{
 		next_pipe = find_pipe(iterator,line->lenght - lenght, line->lenght);
-		cmd_manage();
+		// cmd_manage();
 		lenght -= next_pipe;
 	}
 }
