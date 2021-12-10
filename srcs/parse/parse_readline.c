@@ -6,14 +6,14 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 00:05:31 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/10 17:55:50 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/10 23:01:53 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // good WORD = Si ses pas autre choses ses un mot
-//      FD = Dont know need Check
+//      FD = Dont know need Check || Probably useless
 // good LIMITOR = Cat du HEREDOC le mot apres et le limiteur || voir si autre cas
 // good R_IN = Redirection in donc <
 // good HEREDOC = Redirection << [LIMITEUR]
@@ -74,7 +74,7 @@ void	tmp_print(t_list *list)
 	node = list->head;
 	while (node)
 	{
-		printf("world = %s\ntoken = %d\n-------\n", node->word, node->token);
+		// printf("world = %s\ntoken = %d\n-------\n", node->word, node->token);
 		node = node->next;
 	}
 }

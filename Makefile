@@ -8,6 +8,8 @@ ifeq ($(shell uname -s),Darwin)
 	CC				:= gcc
 endif
 
+ROSE = $(shell tput setaf 200)
+
 #The Target Binary Program
 TARGET				:= minishell
 TARGET_BONUS		:= minishell-bonus
@@ -29,7 +31,7 @@ OBJECTS				:= $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.$(OBJEX
 OBJECTS_BONUS		:= $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES_BONUS:.$(SRCEXT)=.$(OBJEXT)))
 
 #Flags, Libraries and Includes
-cflags.release		:= -Wall -Werror -Wextra -g3
+cflags.release		:= -Wall -Werror -Wextra -g3 
 cflags.valgrind		:= -Wall -Werror -Wextra -DDEBUG -ggdb
 cflags.debug		:= -Wall -Werror -Wextra -DDEBUG -ggdb -fsanitize=address -fno-omit-frame-pointer
 CFLAGS				:= $(cflags.$(BUILD))
