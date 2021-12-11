@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 00:05:31 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/11 15:11:25 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/11 18:36:39 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,25 +49,31 @@ int	check_token(char *s, int last)
 	return (WORD);
 }
 
-t_list	*move_in_list(char **line, t_list *list)
-{
-	char	**tmp;
-	int		last;
+// t_list	*move_in_list(char **line, t_list *list)
+// {
+// 	char	**tmp;
+// 	int		last;
 
-	tmp = line;
-	last = 0;
-	while (*line)
-	{
-		if (!add_tail_list(&list, check_token(*line, last), *line))
-			return (NULL);
-		last = check_token(*line, last);
-		free(*line);
-		line++;
-	}
-	free(tmp);
-	printf("Jai quoi dans list ?\n%p\n", list->list);
-	return (list);
-}
+// 	tmp = line;
+// 	last = 0;
+// 	while (*line)
+// 	{
+// 		if (!add_tail_list(&list, check_token(*line, last), *line))
+// 			return (NULL);
+// 		last = check_token(*line , 0);
+// 		printf("%p\n%p\n", list->list->word, &list->list->token);
+// 		printf("2 world = %s\ntoken = %d\n-------\n", list->list->word, list->list->token);
+// 		free(*line);
+// 		printf("%p\n%p\n", list->list->word, &list->list->token);
+// 		printf("3 world = %s\ntoken = %d\n-------\n", list->list->word, list->list->token);
+// 		line++;
+// 		printf("%p\n%p\n", list->list->word, &list->list->token);
+// 		printf("4 world = %s\ntoken = %d\n-------\n", list->list->word, list->list->token);
+// 	}
+// 	free(tmp);
+// 	printf("5 world = %s\ntoken = %d\n-------\n", list->list->word, list->list->token);
+// 	return (list);
+// }
 
 void	tmp_print(t_list *list)
 {
@@ -76,9 +82,46 @@ void	tmp_print(t_list *list)
 	node = list->head;
 	while (node)
 	{
-		printf("world = %s\ntoken = %d\n-------\n", node->word, node->token);
+		printf("8 world = %s\ntoken = %d\n-------\n", node->word, node->token);
 		node = node->next;
 	}
+}
+
+// int	parse_readline(t_list *list, char *s)
+// {
+// 	char **line;
+
+// 	line = ft_split(s, ' ');
+// 	free(s);
+// 	if (!line)
+// 		return (false);
+// 	list = move_in_list(line, list);
+// 	printf("Jai quoi dans list ?\n%p\n", list->list);
+// 	printf("7 world = %s\ntoken = %d\n-------\n", list->list->word, list->list->token);
+// 	if (!list)
+// 		return (false);
+// 	tmp_print(list);
+// 	return (true);
+// }
+
+t_list	*move_in_list(char **line, t_list *list)
+{
+	char	**tmp;
+	int		last;
+	int		i;
+
+	i = -1;
+	tmp = line;
+	last = 0;
+	while (line[++i])
+	{
+		if (!add_tail_list(&list, check_token(line[i], last), line[i]))
+			return (NULL);
+		last = check_token(line[i] , 0);
+		free(line[i]);
+	}
+	free(line);
+	return (list);
 }
 
 int	parse_readline(t_list *list, char *s)
@@ -90,7 +133,7 @@ int	parse_readline(t_list *list, char *s)
 	if (!line)
 		return (false);
 	list = move_in_list(line, list);
-	printf("Jai quoi dans list ?\n%p\n", list->list);
+	// printf("Jai quoi dans list ?\n%p\n", list->list);
 	if (!list)
 		return (false);
 	tmp_print(list);

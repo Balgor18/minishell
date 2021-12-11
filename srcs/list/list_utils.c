@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 14:38:22 by elaachac          #+#    #+#             */
-/*   Updated: 2021/12/11 14:52:41 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/11 16:24:39 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ t_node	*add_tail_list(t_list **list, int token, char *word)
 	{
 		add_back_list(list, new);
 	}
-	init_node(new, token, word);
+	new = init_node(new, token, word);
 	return (new);
 }
 
