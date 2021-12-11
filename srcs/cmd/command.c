@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 12:21:41 by elaachac          #+#    #+#             */
-/*   Updated: 2021/12/10 18:56:39 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/11 22:24:11 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,10 @@ void	exec(t_list *line)
 	int		next_pipe;
 
 	iterator = line->head;
-	lenght = line->lenght;
+	// lenght = line->lenght;
 	while (lenght)
 	{
-		next_pipe = find_pipe(iterator,line->lenght - lenght, line->lenght);
+		// next_pipe = find_pipe(iterator,line->lenght - lenght, line->lenght);
 		// cmd_manage();
 		lenght -= next_pipe;
 	}
