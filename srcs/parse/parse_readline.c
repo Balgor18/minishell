@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 00:05:31 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/11 22:08:21 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/11 22:33:01 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ int	heredoc_or_append(char *s)
 {
 	if (*s == '>' && *s + 1 == '>')
 		return (APPEND);
-	return (HEREDOC);
+	else if (*s == '<' && *s + 1 == '<')
+		return (HEREDOC);
+	return (WORD);
 }
 
 int	check_token(char *s, int last)
@@ -59,7 +61,7 @@ int	move_in_list(char **line, t_list *list)
 	while (*line)
 	{
 		add_tail_list(&list, check_token(*line, last), *line);
-		last = check_token(*line, last);
+		last = check_token(*line, 0);
 		free(*line);
 		line++;
 	}
@@ -74,7 +76,7 @@ void	tmp_print(t_list *list)
 	node = list->head;
 	while (node)
 	{
-		// printf("world = %s\ntoken = %d\n-------\n", node->word, node->token);
+		printf("world = %s\ntoken = %d\n-------\n", node->word, node->token);
 		node = node->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 12:21:41 by elaachac          #+#    #+#             */
-/*   Updated: 2021/12/11 22:24:11 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/11 22:25:48 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ void	cmd_manage(t_node *iterator)
 void	exec(t_list *line)
 {
 	t_node	*iterator;
-	int		lenght;
-	int		next_pipe;
+	int		lenght = 0;
+	int		next_pipe = 0;
 
 	iterator = line->head;
 	// lenght = line->lenght;
