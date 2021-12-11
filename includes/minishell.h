@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/11 14:56:38 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/11 22:19:04 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ struct s_node
 
 typedef struct s_list
 {
-	size_t	lenght;// prev->next = NULL
+	// size_t	lenght;// prev->next = NULL
 	t_node	*head;
 	t_node	*list;
-	// t_node	*tail;//check if needed
+	t_node	*tail;//check if needed
 }				t_list;
 
 enum e_token
