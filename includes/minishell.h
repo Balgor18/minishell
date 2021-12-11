@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/10 18:55:59 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/11 14:56:38 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,15 @@ struct s_node
 	char			*word;
 	int				token;
 	t_node			*next;
-	t_node			*prev;
+	// t_node			*prev;
 };
 
 typedef struct s_list
 {
-	size_t	lenght;
+	size_t	lenght;// prev->next = NULL
 	t_node	*head;
-	t_node	*tail;
+	t_node	*list;
+	// t_node	*tail;//check if needed
 }				t_list;
 
 enum e_token
@@ -88,7 +89,10 @@ size_t	ft_strlen(char *str);
 */
 t_list	*newlist(void);
 void	dellist(t_list **list);
+
 t_node	*init_node(t_node *node, int token, char *word);
 t_node	*add_tail_list(t_list **list, int token, char *word);
+// t_node	*init_node(t_node *node, int token, char *word);
+// t_node	*add_tail_list(t_list **list, int token, char *word);
 
 #endif
