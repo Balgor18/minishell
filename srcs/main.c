@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:41:23 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/11 16:46:54 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/10 23:04:29 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,19 @@ int	g_error;
 
 int	main(int argc, char **argv, char **env)// check si message d'erreur quand plusieur ARG
 {
-	t_list	*list;
+	t_list	list;
 	char	*line;
 
 	(void)argv;
 	(void)env;
 	if (argc != 1)
 		return (error_arg());
-	list = newlist();// Besoin de malloc sinon les maillons(int tokens) ne sont pas protegez
 	while (1)// Pas encore d'arret sur la boucle || voir quoi mettre
 	{
-		list = &(t_list){0};
+		list = (t_list){0};
 		line = readline("Minishell rose > ");
 		if (line)
-			if (!parse_readline(list, line))
+			if (!parse_readline(&list, line))
 				return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
