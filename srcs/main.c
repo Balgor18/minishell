@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:41:23 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/10 23:04:29 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/12 17:11:14 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	g_error;
 
-int	main(int argc, char **argv, char **env)// check si message d'erreur quand plusieur ARG
+int	main(int argc, char **argv, char **env)
 {
 	t_list	list;
 	char	*line;

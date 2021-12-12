@@ -6,14 +6,14 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 00:05:31 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/11 22:33:01 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/12 17:11:16 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // good WORD = Si ses pas autre choses ses un mot
-//      FD = Dont know need Check || Probably useless
+//      FD = always after < > << >> |
 // good LIMITOR = Cat du HEREDOC le mot apres et le limiteur || voir si autre cas
 // good R_IN = Redirection in donc <
 // good HEREDOC = Redirection << [LIMITEUR]
@@ -23,9 +23,9 @@
 
 int	heredoc_or_append(char *s)
 {
-	if (*s == '>' && *s + 1 == '>')
+	if (s[0] == '>' && s[1] == '>')
 		return (APPEND);
-	else if (*s == '<' && *s + 1 == '<')
+	if (s[0] == '<' && s[1] == '<')
 		return (HEREDOC);
 	return (WORD);
 }
@@ -37,6 +37,8 @@ int	check_token(char *s, int last)
 	len = ft_strlen(s);
 	if (last == HEREDOC)
 		return (LIMITOR);
+	if (last == APPEND || last == PIPE || last == R_OUT || last == R_IN)
+		return (FD);
 	if (len == 1)
 	{
 		if (*s == '<')
@@ -61,7 +63,7 @@ int	move_in_list(char **line, t_list *list)
 	while (*line)
 	{
 		add_tail_list(&list, check_token(*line, last), *line);
-		last = check_token(*line, 0);
+		last = check_token(*line, WORD);
 		free(*line);
 		line++;
 	}
