@@ -6,27 +6,11 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 00:14:52 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/10 18:58:49 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/13 22:56:45 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void	ft_bzero(void *s, size_t n)
-{
-	size_t	i;
-	char	*str;
-
-	i = 0;
-	str = (char *)s;
-	if (n == 0)
-		return ;
-	while (i < n)
-	{
-		str[i] = '\0';
-		i++;
-	}
-}
 
 static void	*ft_strfree(char **str)
 {
