@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   list_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 14:38:22 by elaachac          #+#    #+#             */
-/*   Updated: 2021/12/12 15:15:06 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/13 17:13:07 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Je viendrais te poser des questions car je vois pas ce que font les fonctions des listes chaines
-t_list	*newlist(void)// pourquoi tu veux malloc la list ??
+t_list	*newlist(void)
 {
 	t_list	*newlist;
 
@@ -22,11 +21,35 @@ t_list	*newlist(void)// pourquoi tu veux malloc la list ??
 		return (NULL);
 	if (newlist != NULL)
 	{
-		// newlist->lenght = 0;
+		newlist->lenght = 0;
 		newlist->head = NULL;
 		newlist->tail = NULL;
 	}
 	return (newlist);
+}
+
+t_node	*delnode(t_node *node, t_list **list)
+{
+	t_node	*tmp;
+
+	tmp = NULL;
+	if (node->next == node)
+	{
+		free(node);
+		node = NULL;
+	}
+	else
+	{
+		tmp = node;
+		node = tmp->next;
+		if (tmp->prev->next)
+			tmp->prev->next = node;
+		if (node->prev)
+			node->prev = tmp->prev;
+		free(tmp);
+	}
+	(*list)->lenght--;
+	return (node);
 }
 
 void	dellist(t_list **list)
@@ -37,10 +60,10 @@ void	dellist(t_list **list)
 	if (list != NULL)
 	{
 		tmp = (*list)->head;
-		// while ((*list)->lenght > 0)
+		while ((*list)->lenght > 0)
 		while ((*list)->list)
 		{
-			// (*list)->lenght--;
+			(*list)->lenght--;
 			del = tmp;
 			if (tmp->next)
 				tmp = tmp->next;
@@ -71,17 +94,17 @@ t_node	*add_tail_list(t_list **list, int token, char *word)
 		{
 			(*list)->head = newnode;
 			(*list)->tail = newnode;
-			// newnode->prev = NULL;
+			newnode->prev = NULL;
 			newnode->next = NULL;
 		}
 		else
 		{
 			(*list)->tail->next = newnode;
-			// newnode->prev = (*list)->tail;
+			newnode->prev = (*list)->tail;
 			newnode->next = NULL;
 			(*list)->tail = newnode;
 		}
-		// (*list)->lenght++;
+		(*list)->lenght++;
 	}
 	return (init_node(newnode, token, word));
 }

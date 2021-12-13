@@ -1,35 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   file_check.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/06 14:41:23 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/13 11:36:54 by elaachac         ###   ########.fr       */
+/*   Created: 2021/12/13 16:46:17 by elaachac          #+#    #+#             */
+/*   Updated: 2021/12/13 16:47:33 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	g_error;
-
-int	main(int argc, char **argv, char **env)
+bool	file_check(char *path)
 {
-	t_list	list;
-	char	*line;
-
-	(void)argv;
-	(void)env;
-	if (argc != 1)
-		return (error_arg());
-	while (1)// Pas encore d'arret sur la boucle || voir quoi mettre
+	if (access(path, F_OK) == -1)
 	{
-		list = (t_list){0};
-		line = readline("Minishell rose :");
-		if (line)
-			if (!parse_readline(&list, line))
-				return (EXIT_FAILURE);
+		perror(path);
+		return (false);
 	}
-	return (EXIT_SUCCESS);
+	else
+		return (true);
 }

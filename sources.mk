@@ -4,7 +4,6 @@
 
 SOURCES		+=                        		\
 		srcs/main.c                      	\
-		srcs/tokenizer.c                 	\
 
 
 ## SRCS/LIST ##
