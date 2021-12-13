@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/11 22:19:04 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/13 17:16:56 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,15 @@ struct s_node
 	char			*word;
 	int				token;
 	t_node			*next;
-	// t_node			*prev;
+	t_node			*prev;
 };
 
 typedef struct s_list
 {
-	// size_t	lenght;// prev->next = NULL
+	size_t	lenght;
 	t_node	*head;
 	t_node	*list;
-	t_node	*tail;//check if needed
+	t_node	*tail;
 }				t_list;
 
 enum e_token
@@ -74,6 +74,14 @@ int		error_arg(void);
 
 /*
 **----------------------------------
+**-------------Checkers-------------
+**----------------------------------
+*/
+bool	file_check(char *path);
+
+
+/*
+**----------------------------------
 **--------------Utils---------------
 **----------------------------------
 */
@@ -81,6 +89,7 @@ char	**ft_split(char const *str, char charset);
 void	ft_putstr_fd(int fd, char *s);
 char	*ft_strdup(char *s1);
 size_t	ft_strlen(char *str);
+void	ft_bzero(void *s, size_t n);
 
 /*
 **----------------------------------
@@ -89,10 +98,8 @@ size_t	ft_strlen(char *str);
 */
 t_list	*newlist(void);
 void	dellist(t_list **list);
-
 t_node	*init_node(t_node *node, int token, char *word);
 t_node	*add_tail_list(t_list **list, int token, char *word);
-// t_node	*init_node(t_node *node, int token, char *word);
-// t_node	*add_tail_list(t_list **list, int token, char *word);
+t_node	*delnode(t_node *node, t_list **list);
 
 #endif
