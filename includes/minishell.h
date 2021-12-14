@@ -6,7 +6,7 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/14 13:56:40 by elaachac         ###   ########.fr       */
+/*   Updated: 2021/12/14 15:51:07 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void	ft_putstr_fd(int fd, char *s);
 char	*ft_strdup(char *s1);
 size_t	ft_strlen(char *str);
 void	ft_bzero(void *s, size_t n);
+bool	ft_strchr(const char *s, int c);
 
 /*
 **----------------------------------

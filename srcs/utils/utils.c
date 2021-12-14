@@ -6,11 +6,28 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 15:48:08 by elaachac          #+#    #+#             */
-/*   Updated: 2021/12/13 14:35:28 by elaachac         ###   ########.fr       */
+/*   Updated: 2021/12/14 15:38:32 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+bool	ft_strcmp(char *s1, char *s2)
+{
+	int	i;
+
+	i = 0;
+	if (!s1 || !s2)
+		return (false);
+	while (s1[i] || s2[i])
+	{
+		if (s1[i] != s2[i])
+			return (false);
+		else
+			i++;
+	}
+	return (true);
+}
 
 void	ft_bzero(void *s, size_t n)
 {
