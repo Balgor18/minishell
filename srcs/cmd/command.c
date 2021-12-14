@@ -6,7 +6,7 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 12:21:41 by elaachac          #+#    #+#             */
-/*   Updated: 2021/12/13 17:17:49 by elaachac         ###   ########.fr       */
+/*   Updated: 2021/12/14 13:56:13 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	check_redir(t_node *iterator, int *fd, int next_pipe)
 	{
 		if (iterator->next != NULL)
 			iterator = iterator->next;
+		else
+			return (error_filename());
 	}
 	while (i < next_pipe) // condition a changer
 	{
@@ -53,6 +55,10 @@ void	check_redir(t_node *iterator, int *fd, int next_pipe)
 				iterator = iterator->next;
 				i++;
 			}
+			else
+			{
+				return (error_filename());
+			}
 			switch_fd(fd, iterator); // fct pour ouvrir et dup les fd
 		}
 		else if (iterator->token == R_OUT || iterator->token == APPEND)
@@ -62,8 +68,14 @@ void	check_redir(t_node *iterator, int *fd, int next_pipe)
 				iterator = iterator->next;
 				i++;
 			}
+			else
+			{
+				return (error_filename());
+			}
 			switch_fd(fd + 1, iterator);
 		}
+		delnode(iterator->next, iterator->list);
+		delnode(iterator, iterator->list);
 		i++;
 		iterator = iterator->next;
 	}
