@@ -6,7 +6,7 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 15:32:32 by elaachac          #+#    #+#             */
-/*   Updated: 2021/12/15 13:50:26 by elaachac         ###   ########.fr       */
+/*   Updated: 2021/12/15 18:10:54 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,11 @@ void	init_cmd(t_cmd **cmd)
 {
 	(*cmd)->absolute_path = false;
 	(*cmd)->relative_path = false;
+	(*cmd)->no_path = false;
+	(*cmd)->built_in = false;
 	(*cmd)->args = NULL;
-	(*cmd)->cmd = NULL;
+	(*cmd)->cmd_path = NULL;
+	(*cmd)->index = 0;
 	ft_bzero((*cmd)->fd, sizeof(int) * 2);
 }
 
@@ -38,4 +41,9 @@ bool	is_absolute_path(char *cmd)
 		return (true);
 	else
 		return (false);
+}
+
+char	*find_path(char *cmd)
+{
+	
 }

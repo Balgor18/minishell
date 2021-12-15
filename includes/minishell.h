@@ -6,7 +6,7 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/15 15:04:05 by elaachac         ###   ########.fr       */
+/*   Updated: 2021/12/15 18:09:05 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,13 @@ typedef	struct s_cmd
 {
 	bool	relative_path;
 	bool	absolute_path;
-	char	*cmd;
+	bool	no_path;
+	bool	built_in;
+	char	*cmd_path;
+	char	*env_path;
 	char	**args;
 	int		fd[2];
+	int		index;
 }				t_cmd;
 
 
