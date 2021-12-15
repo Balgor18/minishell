@@ -6,7 +6,7 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 12:21:41 by elaachac          #+#    #+#             */
-/*   Updated: 2021/12/14 17:35:53 by elaachac         ###   ########.fr       */
+/*   Updated: 2021/12/15 11:47:31 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,24 +47,23 @@ int	which_cmd(t_node *iterator, int next_pipe)
 				// exec command relative path
 			}
 		}
-		// manage cmd
+		// exec cmd
 	}
 
 }
 
 void	cmd_manage(t_node *iterator, int next_pipe)
 {
-	char	*cmd;
-	char	**args;
-	int	fd[2];
+	t_cmd	*cmd;
 	int i;
 
 	i = 0;
-	ft_bzero(fd, sizeof(int) * 2);
+	init_cmd(cmd);
+	ft_bzero(cmd->fd, sizeof(int) * 2);
 	while (i < next_pipe) //1er jet sans les pipes
 	{
 		//check redir -> dup le fd de chaque redir
-		check_redir(iterator, fd, next_pipe);
+		check_redir(iterator, cmd->fd, next_pipe);
 		//check cmd
 		which_cmd(iterator, next_pipe);
 		//exec cmd
