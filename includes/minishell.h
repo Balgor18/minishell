@@ -6,7 +6,7 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/14 15:51:07 by elaachac         ###   ########.fr       */
+/*   Updated: 2021/12/15 11:49:44 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,16 @@ struct s_node
 	t_node			*prev;
 	t_list			*list;
 };
+
+typedef	struct s_cmd
+{
+	bool	relative_path;
+	bool	absolute_path;
+	char	*cmd;
+	char	**args;
+	int		fd[2];
+}				t_cmd;
+
 
 enum e_token
 {
