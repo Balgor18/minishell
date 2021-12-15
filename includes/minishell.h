@@ -6,7 +6,7 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/15 11:49:44 by elaachac         ###   ########.fr       */
+/*   Updated: 2021/12/15 15:04:05 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ char	*ft_strdup(char *s1);
 size_t	ft_strlen(char *str);
 void	ft_bzero(void *s, size_t n);
 bool	ft_strchr(const char *s, int c);
+char	*get_env_var(char **envp, char *to_find);
 
 /*
 **----------------------------------

@@ -6,7 +6,7 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 15:47:24 by elaachac          #+#    #+#             */
-/*   Updated: 2021/12/14 15:50:37 by elaachac         ###   ########.fr       */
+/*   Updated: 2021/12/15 15:03:55 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,18 @@ bool	ft_strchr(const char *s, int c)
 		s++;
 	}
 	return (false);
+}
+
+char	*get_env_var(char **envp, char *to_find)
+{
+	char	**env;
+
+	env = envp;
+	while (*env != 0)
+	{
+		if (ft_strncmp(*env, to_find, 4) == 0)
+			return (*env);
+		env++;
+	}
+	return (NULL);
 }
