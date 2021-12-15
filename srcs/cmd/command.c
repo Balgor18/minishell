@@ -6,7 +6,7 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 12:21:41 by elaachac          #+#    #+#             */
-/*   Updated: 2021/12/14 17:35:53 by elaachac         ###   ########.fr       */
+/*   Updated: 2021/12/15 13:55:54 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		find_pipe(t_node *iterator, int pos, int lenght)
 	return(pos);
 }
 
-int	which_cmd(t_node *iterator, int next_pipe)
+int	which_cmd(t_node *iterator, t_cmd **cmd, int next_pipe)
 {
 	while (iterator->token != WORD)
 		iterator = iterator->next;
@@ -40,33 +40,36 @@ int	which_cmd(t_node *iterator, int next_pipe)
 		// 		if path -> check relative / absolute 
 			if (is_absolute_path(iterator->word) == true)
 			{
-				//exec command absolute path
+				(*cmd)->relative_path = true;
+				(*cmd)->absolute_path = false;
 			}
 			else
 			{
-				// exec command relative path
+				(*cmd)->relative_path = false;
+				(*cmd)->absolute_path = true;
 			}
 		}
-		// manage cmd
+		else
+		{
+		// pas de path-> donc seulement la commande donc on doit trouver le path
+		}
 	}
 
 }
 
 void	cmd_manage(t_node *iterator, int next_pipe)
 {
-	char	*cmd;
-	char	**args;
-	int	fd[2];
+	t_cmd	*cmd;
 	int i;
 
 	i = 0;
-	ft_bzero(fd, sizeof(int) * 2);
+	init_cmd(cmd);
 	while (i < next_pipe) //1er jet sans les pipes
 	{
 		//check redir -> dup le fd de chaque redir
-		check_redir(iterator, fd, next_pipe);
+		check_redir(iterator, cmd->fd, next_pipe);
 		//check cmd
-		which_cmd(iterator, next_pipe);
+		which_cmd(iterator, cmd, next_pipe);
 		//exec cmd
 		exec_cmd();
 	}
