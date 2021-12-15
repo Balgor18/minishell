@@ -6,7 +6,7 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 12:21:41 by elaachac          #+#    #+#             */
-/*   Updated: 2021/12/15 13:55:54 by elaachac         ###   ########.fr       */
+/*   Updated: 2021/12/15 18:10:59 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,40 +24,46 @@ int		find_pipe(t_node *iterator, int pos, int lenght)
 	return(pos);
 }
 
-int	which_cmd(t_node *iterator, t_cmd **cmd, int next_pipe)
+void	which_cmd(t_node *iterator, t_cmd **cmd, int next_pipe)
 {
 	while (iterator->token != WORD)
 		iterator = iterator->next;
 	if (is_builtin(iterator->word) == true)
 	{
 		// manage builtin
+		(*cmd)->built_in = true;
 	}
 	else
 	{
 		// check path or just cmd
 		if (ft_strchr(iterator->word, '/') == true)
 		{
-		// 		if path -> check relative / absolute 
+		// 		if path -> check relative / absolute
 			if (is_absolute_path(iterator->word) == true)
 			{
 				(*cmd)->relative_path = true;
-				(*cmd)->absolute_path = false;
+				(*cmd)->cmd_path = ft_strdup(iterator->word);
 			}
 			else
 			{
-				(*cmd)->relative_path = false;
 				(*cmd)->absolute_path = true;
+				(*cmd)->cmd_path = ft_strdup(iterator->word);
 			}
 		}
 		else
 		{
-		// pas de path-> donc seulement la commande donc on doit trouver le path
+			(*cmd)->no_path = true;
+			find_path(iterator->word, cmd);
 		}
 	}
-
 }
 
-void	cmd_manage(t_node *iterator, int next_pipe)
+// void	exec_cmd(t_node	*iterator, t_cmd **cmd, int next_pipe)
+// {
+// 	if ()
+// }
+
+void	cmd_manage(t_node *iterator, int next_pipe, char **env)
 {
 	t_cmd	*cmd;
 	int i;
