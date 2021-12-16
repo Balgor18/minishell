@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 00:05:31 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/12 17:11:16 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/14 17:51:59 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,11 @@ int	move_in_list(char **line, t_list *list)
 	last = 0;
 	while (*line)
 	{
-		add_tail_list(&list, check_token(*line, last), *line);
+		if (!add_tail_list(&list, check_token(*line, last), *line))
+		{
+			dellist(&list);
+			return (false);
+		}
 		last = check_token(*line, WORD);
 		free(*line);
 		line++;
