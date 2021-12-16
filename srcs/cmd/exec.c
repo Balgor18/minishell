@@ -1,36 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/06 14:41:23 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/16 16:04:10 by elaachac         ###   ########.fr       */
+/*   Created: 2021/12/16 18:26:05 by elaachac          #+#    #+#             */
+/*   Updated: 2021/12/16 18:29:06 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	g_error;
-
-int	main(int argc, char **argv, char **env)
+void	exec_child(t_cmd *cmd, char **env)
 {
-	t_list	list;
-	char	*line;
+	pid_t	child;
 
-	(void)argv;
-	(void)env;
-	if (argc != 1)
-		return (error_arg());
-	while (1)// Pas encore d'arret sur la boucle || voir quoi mettre
+	child = fork();
+	if (child == 0)
 	{
-		list = (t_list){0};
-		list.env = env;
-		line = readline("Minishell rose :");
-		if (line)
-			if (!parse_readline(&list, line))
-				return (EXIT_FAILURE);
+		//manage fd (close and dup2)
+		execve(cmd->cmd_path, cmd->args, env);
 	}
-	return (EXIT_SUCCESS);
 }

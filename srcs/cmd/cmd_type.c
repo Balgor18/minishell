@@ -6,13 +6,13 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 15:32:32 by elaachac          #+#    #+#             */
-/*   Updated: 2021/12/15 18:16:51 by elaachac         ###   ########.fr       */
+/*   Updated: 2021/12/16 12:09:44 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	init_cmd(t_cmd **cmd)
+void	init_cmd(t_cmd **cmd, t_list *list)
 {
 	(*cmd)->absolute_path = false;
 	(*cmd)->relative_path = false;
@@ -21,6 +21,7 @@ void	init_cmd(t_cmd **cmd)
 	(*cmd)->args = NULL;
 	(*cmd)->cmd_path = NULL;
 	(*cmd)->index = 0;
+	(*cmd)->env_path = ft_strdup(get_env_var(list->env , "PATH") + 5);
 	ft_bzero((*cmd)->fd, sizeof(int) * 2);
 }
 

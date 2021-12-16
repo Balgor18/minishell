@@ -6,13 +6,13 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 17:40:13 by elaachac          #+#    #+#             */
-/*   Updated: 2021/12/15 18:18:40 by elaachac         ###   ########.fr       */
+/*   Updated: 2021/12/16 11:47:13 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	cmd_check2(int cmd_ok, char **env_path, char *pathname, t_cmd *cmd)
+int	find_path2(int cmd_ok, char **env_path, char *pathname, t_cmd *cmd)
 {
 	if (cmd_ok == 0)
 	{
@@ -30,7 +30,7 @@ int	cmd_check2(int cmd_ok, char **env_path, char *pathname, t_cmd *cmd)
 	return (0);
 }
 
-void	cmd_check3(int i, int *cmd_ok, char **env_path, t_cmd *cmd)
+void	find_path3(int i, int *cmd_ok, char **env_path, t_cmd *cmd)
 {
 	while (--i)
 	{

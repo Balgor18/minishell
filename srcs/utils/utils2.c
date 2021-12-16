@@ -6,7 +6,7 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 15:47:24 by elaachac          #+#    #+#             */
-/*   Updated: 2021/12/15 15:03:55 by elaachac         ###   ########.fr       */
+/*   Updated: 2021/12/16 15:15:03 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,25 @@ bool	ft_strchr(const char *s, int c)
 	return (false);
 }
 
+char	*ft_strjoin(char *s1, char *s2)
+{
+	char			*dest;
+	unsigned int	i;
+
+	i = 0;
+	if (s1 == NULL || s2 == NULL)
+		return (NULL);
+	dest = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (dest == NULL)
+		return (NULL);
+	while (*s1 != '\0')
+		dest[i++] = *s1++;
+	while (*s2 != '\0')
+		dest[i++] = *s2++;
+	dest[i] = '\0';
+	return (dest);
+}
+
 char	*get_env_var(char **envp, char *to_find)
 {
 	char	**env;
@@ -37,4 +56,13 @@ char	*get_env_var(char **envp, char *to_find)
 		env++;
 	}
 	return (NULL);
+}
+
+char	*get_pwd()
+{
+	char	BUFFER[4096];
+	char	*pwd;
+
+	pwd = getcwd(BUFFER, 4096);
+	return (pwd);
 }

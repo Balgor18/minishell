@@ -6,7 +6,7 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/15 18:09:05 by elaachac         ###   ########.fr       */
+/*   Updated: 2021/12/16 16:04:16 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@
 typedef struct s_node	t_node;
 typedef struct s_list	t_list;
 
-
 typedef struct s_list
 {
 	size_t	lenght;
+	char	**env;
 	t_node	*head;
 	t_node	*list;
 	t_node	*tail;
@@ -46,7 +46,7 @@ struct s_node
 	t_list			*list;
 };
 
-typedef	struct s_cmd
+typedef struct s_cmd
 {
 	bool	relative_path;
 	bool	absolute_path;
@@ -58,7 +58,6 @@ typedef	struct s_cmd
 	int		fd[2];
 	int		index;
 }				t_cmd;
-
 
 enum e_token
 {
@@ -106,6 +105,7 @@ size_t	ft_strlen(char *str);
 void	ft_bzero(void *s, size_t n);
 bool	ft_strchr(const char *s, int c);
 char	*get_env_var(char **envp, char *to_find);
+char	*ft_strjoin(char *s1, char *s2);
 
 /*
 **----------------------------------

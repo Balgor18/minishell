@@ -6,7 +6,7 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 12:21:41 by elaachac          #+#    #+#             */
-/*   Updated: 2021/12/15 18:10:59 by elaachac         ###   ########.fr       */
+/*   Updated: 2021/12/16 18:29:29 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@ void	which_cmd(t_node *iterator, t_cmd **cmd, int next_pipe)
 		// 		if path -> check relative / absolute
 			if (is_absolute_path(iterator->word) == true)
 			{
-				(*cmd)->relative_path = true;
+				(*cmd)->absolute_path = true;
 				(*cmd)->cmd_path = ft_strdup(iterator->word);
 			}
 			else
 			{
-				(*cmd)->absolute_path = true;
-				(*cmd)->cmd_path = ft_strdup(iterator->word);
+				(*cmd)->relative_path = true;
+				(*cmd)->cmd_path = ft_strjoin(get_pwd(), iterator->word);
 			}
 		}
 		else
@@ -58,18 +58,25 @@ void	which_cmd(t_node *iterator, t_cmd **cmd, int next_pipe)
 	}
 }
 
-// void	exec_cmd(t_node	*iterator, t_cmd **cmd, int next_pipe)
-// {
-// 	if ()
-// }
+void	exec_cmd(t_node	*iterator, t_cmd **cmd, int next_pipe)
+{
+	if ((*cmd)->built_in == true)
+	{
+		//manage built in exec
+	}
+	else
+	{
+		exec_child(cmd, iterator->list->env);
+	}
+}
 
-void	cmd_manage(t_node *iterator, int next_pipe, char **env)
+void	cmd_manage(t_node *iterator, int next_pipe)
 {
 	t_cmd	*cmd;
 	int i;
 
 	i = 0;
-	init_cmd(cmd);
+	init_cmd(cmd, iterator->list);
 	while (i < next_pipe) //1er jet sans les pipes
 	{
 		//check redir -> dup le fd de chaque redir
@@ -77,7 +84,8 @@ void	cmd_manage(t_node *iterator, int next_pipe, char **env)
 		//check cmd
 		which_cmd(iterator, cmd, next_pipe);
 		//exec cmd
-		exec_cmd();
+		set_args(iterator, cmd, next_pipe);
+		exec_cmd(iterator, cmd, next_pipe);
 	}
 }
 
