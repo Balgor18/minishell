@@ -6,7 +6,7 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 17:40:13 by elaachac          #+#    #+#             */
-/*   Updated: 2021/12/15 18:11:20 by elaachac         ###   ########.fr       */
+/*   Updated: 2021/12/15 18:18:40 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,6 @@ int	find_path(char *pathname, t_cmd *cmd)
 		env_path[i] = ft_strjoin(tmp, pathname);
 		free(tmp);
 	}
-	cmd_check3(i, &cmd_ok, env_path, cmd);
-	return (cmd_check2(cmd_ok, env_path, pathname, cmd));
+	find_path3(i, &cmd_ok, env_path, cmd);
+	return (find_path2(cmd_ok, env_path, pathname, cmd));
 }

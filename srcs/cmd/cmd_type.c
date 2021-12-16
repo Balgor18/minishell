@@ -6,7 +6,7 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 15:32:32 by elaachac          #+#    #+#             */
-/*   Updated: 2021/12/15 18:10:54 by elaachac         ###   ########.fr       */
+/*   Updated: 2021/12/15 18:16:51 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,4 @@ bool	is_absolute_path(char *cmd)
 		return (true);
 	else
 		return (false);
-}
-
-char	*find_path(char *cmd)
-{
-	
 }
