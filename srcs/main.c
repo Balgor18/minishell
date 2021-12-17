@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:41:23 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/15 17:53:45 by elaachac         ###   ########.fr       */
+/*   Updated: 2021/12/17 15:31:34 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,12 @@ int	main(int argc, char **argv, char **env)
 		list = (t_list){0};
 		line = readline("Minishell rose :");
 		if (line)
+		{
 			if (!parse_readline(&list, line))
 				return (EXIT_FAILURE);
+			if (!expand(&list, env))
+				return (EXIT_FAILURE);
+		}
 	}
 	return (EXIT_SUCCESS);
 }
