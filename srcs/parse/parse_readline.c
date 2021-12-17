@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 00:05:31 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/14 17:51:59 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/18 00:36:04 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,15 +87,58 @@ void	tmp_print(t_list *list)
 	}
 }
 
+int	is_special_char(char c, char *is)
+{
+	while (*is)
+	{
+		if (c == *is)
+			return (true);
+		is++;
+	}
+	return (false);
+}
+
+// int	parse_readline(t_list *list, char *s)
+// {
+// 	char **line;
+
+// 	line = ft_split(s, ' ');
+// 	free(s);
+// 	if (!line)
+// 		return (false);
+// 	move_in_list(line, list);
+// 	tmp_print(list);
+// 	return (true);
+// }
+
+int	word_in_list(t_list *list, int token, char *start, char *stop)
+{
+
+}
+
 int	parse_readline(t_list *list, char *s)
 {
-	char **line;
+	char	*last;
+	int		token;
 
-	line = ft_split(s, ' ');
+	token = WORD;
+	last = s;
+	while (*s)
+	{
+		if (is_special_char(*s, "<|>$"))
+		{
+			// special elem in list
+		}
+		if (*s == ' ')
+		{
+			// word_in_list();
+			// go do a function for add a elem to a list
+			token = WORD;
+			last = s;
+		}
+		s++;
+	}
 	free(s);
-	if (!line)
-		return (false);
-	move_in_list(line, list);
 	tmp_print(list);
 	return (true);
 }

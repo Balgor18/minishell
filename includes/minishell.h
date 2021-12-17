@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/17 18:28:30 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/17 20:47:45 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,12 @@ enum e_token
 	APPEND,
 	PIPE,
 };
+
+// Vois si on as besoin
+// enum e_error
+// {
+// 	MALLOC = "Error\n Malloc",
+// }
 
 /*
 **----------------------------------
