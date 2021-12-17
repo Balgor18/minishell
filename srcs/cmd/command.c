@@ -6,21 +6,11 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 12:21:41 by elaachac          #+#    #+#             */
-/*   Updated: 2021/12/13 17:17:49 by elaachac         ###   ########.fr       */
+/*   Updated: 2021/12/15 18:10:59 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	manage_file(t_node *iterator)
-{
-	if (iterator->token == APPEND)
-	{
-		return (open(iterator->word, O_WRONLY | O_CREAT | O_APPEND, 0644));
-	}
-	else
-		return (open(iterator->word, O_WRONLY | O_TRUNC | O_CREAT, 0644));
-}
 
 int		find_pipe(t_node *iterator, int pos, int lenght)
 {
@@ -34,56 +24,58 @@ int		find_pipe(t_node *iterator, int pos, int lenght)
 	return(pos);
 }
 
-void	check_redir(t_node *iterator, int *fd, int next_pipe)
+void	which_cmd(t_node *iterator, t_cmd **cmd, int next_pipe)
 {
-	int i;
-
-	i = 0;
-	if (iterator->token == PIPE)
-	{
-		if (iterator->next != NULL)
-			iterator = iterator->next;
-	}
-	while (i < next_pipe) // condition a changer
-	{
-		if (iterator->token == R_IN || iterator->token == HEREDOC)
-		{
-			if (iterator->next != NULL)
-			{
-				iterator = iterator->next;
-				i++;
-			}
-			switch_fd(fd, iterator); // fct pour ouvrir et dup les fd
-		}
-		else if (iterator->token == R_OUT || iterator->token == APPEND)
-		{
-			if (iterator->next != NULL)
-			{
-				iterator = iterator->next;
-				i++;
-			}
-			switch_fd(fd + 1, iterator);
-		}
-		i++;
+	while (iterator->token != WORD)
 		iterator = iterator->next;
+	if (is_builtin(iterator->word) == true)
+	{
+		// manage builtin
+		(*cmd)->built_in = true;
 	}
-	//Delete node => le node de l'operateur et le node du fichier
-	// Donc iterator et iterator->prev
+	else
+	{
+		// check path or just cmd
+		if (ft_strchr(iterator->word, '/') == true)
+		{
+		// 		if path -> check relative / absolute
+			if (is_absolute_path(iterator->word) == true)
+			{
+				(*cmd)->relative_path = true;
+				(*cmd)->cmd_path = ft_strdup(iterator->word);
+			}
+			else
+			{
+				(*cmd)->absolute_path = true;
+				(*cmd)->cmd_path = ft_strdup(iterator->word);
+			}
+		}
+		else
+		{
+			(*cmd)->no_path = true;
+			find_path(iterator->word, cmd);
+		}
+	}
 }
 
-void	cmd_manage(t_node *iterator, int next_pipe)
+// void	exec_cmd(t_node	*iterator, t_cmd **cmd, int next_pipe)
+// {
+// 	if ()
+// }
+
+void	cmd_manage(t_node *iterator, int next_pipe, char **env)
 {
-	int	fd[2];
+	t_cmd	*cmd;
 	int i;
 
 	i = 0;
-	ft_bzero(fd, sizeof(int) * 2);
+	init_cmd(cmd);
 	while (i < next_pipe) //1er jet sans les pipes
 	{
 		//check redir -> dup le fd de chaque redir
-		check_redir(iterator, fd, next_pipe);
+		check_redir(iterator, cmd->fd, next_pipe);
 		//check cmd
-		which_cmd();
+		which_cmd(iterator, cmd, next_pipe);
 		//exec cmd
 		exec_cmd();
 	}

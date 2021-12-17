@@ -6,7 +6,7 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 14:38:22 by elaachac          #+#    #+#             */
-/*   Updated: 2021/12/13 17:13:07 by elaachac         ###   ########.fr       */
+/*   Updated: 2021/12/14 13:57:59 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,8 @@ t_node	*delnode(t_node *node, t_list **list)
 	{
 		tmp = node;
 		node = tmp->next;
-		if (tmp->prev->next)
-			tmp->prev->next = node;
-		if (node->prev)
-			node->prev = tmp->prev;
+		tmp->prev->next = node;
+		node->prev = tmp->prev;
 		free(tmp);
 	}
 	(*list)->lenght--;
@@ -74,10 +72,11 @@ void	dellist(t_list **list)
 	}
 }
 
-t_node	*init_node(t_node *node, int token, char *word)
+t_node	*init_node(t_node *node, int token, char *word, t_list *list)
 {
 	node->token = token;
 	node->word = ft_strdup(word);
+	node->list = list;
 	return (node);
 }
 
@@ -106,5 +105,5 @@ t_node	*add_tail_list(t_list **list, int token, char *word)
 		}
 		(*list)->lenght++;
 	}
-	return (init_node(newnode, token, word));
+	return (init_node(newnode, token, word, *list));
 }

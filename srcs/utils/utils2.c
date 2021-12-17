@@ -1,25 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/09 23:13:35 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/14 13:45:46 by elaachac         ###   ########.fr       */
+/*   Created: 2021/12/14 15:47:24 by elaachac          #+#    #+#             */
+/*   Updated: 2021/12/15 15:03:55 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	error_arg(void)
+bool	ft_strchr(const char *s, int c)
 {
-	ft_putstr_fd(STDERR_FILENO, RED"Error\n"WHITE"Minishell don't need arg\n");
-	return (EXIT_FAILURE);
+	if ((char)c == '\0')
+		return (false);
+	while (*s)
+	{
+		if (*s == (char)c)
+			return (true);
+		s++;
+	}
+	return (false);
 }
 
-int	error_filename(void)
+char	*get_env_var(char **envp, char *to_find)
 {
-	ft_putstr_fd(STDERR_FILENO, RED"Error\n"WHITE"error filename after redir -> function to do\n");
-	return (EXIT_FAILURE);
+	char	**env;
+
+	env = envp;
+	while (*env != 0)
+	{
+		if (ft_strncmp(*env, to_find, 4) == 0)
+			return (*env);
+		env++;
+	}
+	return (NULL);
 }
