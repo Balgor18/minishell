@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 17:40:56 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/17 15:39:47 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/17 16:25:25 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int	change_node(t_node *node, char **env)
 {
 	(void)node;
 	(void)env;
+	// do something
+	printf("Need to change node\n");
 	return (false);
 }
 
@@ -52,11 +54,12 @@ int	change_node(t_node *node, char **env)
 // quote[0] = No quote
 // quote[1] = '
 // quote[2] = "
-int	check_word(t_node *node, char **env)
+int	check_word(t_node *node, char **env, int *quote)
 {
 	char	*tmp;
 
 	tmp = node->word;
+	(void)quote;
 	while (*tmp)
 	{
 		if (is_special_char(*tmp, "<|>$"))
@@ -72,11 +75,13 @@ int	expand(t_list *list, char **env)
 	t_node	*node;
 	int		quote[3];
 
-	quote = {0};
+	quote[0] = 0;// init quote check if need -- probably not
+	quote[1] = 0;
+	quote[2] = 0;
 	node = list->head;
 	while (node)
 	{
-		check_word(node, env);
+		check_word(node, env, quote);
 		node = node->next;
 	}
 	return (true);

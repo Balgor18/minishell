@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/17 15:32:56 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/17 18:28:30 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,13 @@
 typedef struct s_node	t_node;
 typedef struct s_list	t_list;
 
-
-typedef struct s_list
+struct s_list
 {
 	size_t	lenght;
 	t_node	*head;
 	t_node	*list;
 	t_node	*tail;
-}				t_list;
+};
 
 struct s_node
 {
