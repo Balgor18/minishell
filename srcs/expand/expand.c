@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 17:40:56 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/17 16:25:25 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/18 15:20:26 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 // export test="a b c d e f"
 // ls < $test
 
-int	is_special_char(char c, char *is)
+static int	is_special_char(char c, char *is)
 {
 	while (*is)
 	{

@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 00:05:31 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/18 11:57:34 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/18 15:35:57 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,16 +87,16 @@ void	tmp_print(t_list *list)
 	}
 }
 
-int	is_special_char(char c, char *is)
-{
-	while (*is)
-	{
-		if (c == *is)
-			return (true);
-		is++;
-	}
-	return (false);
-}
+// static int	is_special_char(char c, char *is)
+// {
+// 	while (*is)
+// 	{
+// 		if (c == *is)
+// 			return (true);
+// 		is++;
+// 	}
+// 	return (false);
+// }
 
 // int	parse_readline(t_list *list, char *s)
 // {
@@ -116,7 +116,7 @@ int	word_in_list(t_list *list, int token, char *start, char *stop)
 	char	*mal;
 	char	*tmp;
 
-	mal = malloc(sizeof(char) * (stop - start) + 1);
+	mal = malloc(sizeof(char) * (stop - start) + 1);// malloc dont work need to see why ?
 	if (!mal)
 		return (false);
 	mal[stop - start] = '\0';
@@ -127,32 +127,46 @@ int	word_in_list(t_list *list, int token, char *start, char *stop)
 		start++;
 		mal++;
 	}
+	if (!add_tail_list(&list, token, mal))
+	{
+		free(mal);
+		return (false);
+	}
+	free(mal);
 	return (true);
 }
 
+// int	special_elem_in_list()
+// echo  "test    "
+// test
+// ls /etc
 int	parse_readline(t_list *list, char *s)
 {
 	char	*last;
 	int		token;
+	char	*free_word;
 
 	token = WORD;
+	free_word= s;
 	last = s;
 	while (*s)
 	{
-		if (is_special_char(*s, "<|>$"))
-		{
-			// special elem in list
-		}
+		// if (is_special_char(*s, "'\"<|>$"))
+		// {
+			//
+		// 	// special elem in list
+		// }
 		if (*s == ' ')
 		{
-			// word_in_list();
+			word_in_list(list, token, s, last);
 			// go do a function for add a elem to a list
 			token = WORD;
-			last = s;
+			last = s + 1;
 		}
 		s++;
 	}
-	free(s);
+	word_in_list(list, token, s, last);
+	free(free_word);
 	tmp_print(list);
 	return (true);
 }
