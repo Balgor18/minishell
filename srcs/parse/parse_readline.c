@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 00:05:31 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/18 00:36:04 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/18 11:57:34 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,21 @@ int	is_special_char(char c, char *is)
 
 int	word_in_list(t_list *list, int token, char *start, char *stop)
 {
+	char	*mal;
+	char	*tmp;
 
+	mal = malloc(sizeof(char) * (stop - start) + 1);
+	if (!mal)
+		return (false);
+	mal[stop - start] = '\0';
+	tmp = mal;
+	while (start < stop)
+	{
+		*mal = *start;
+		start++;
+		mal++;
+	}
+	return (true);
 }
 
 int	parse_readline(t_list *list, char *s)
