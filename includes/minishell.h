@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/17 20:47:45 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/20 18:41:12 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,17 @@ enum e_token
 **------------Readline--------------
 **----------------------------------
 */
-int		parse_readline(t_list *list, char *s);
+int		parse_readline(t_list *list, char *s, char *free_word);
+char	*spc_quote_in_list(t_list *list, int *token, char *start, char *stop);
+char	*spc_rd_in_list(t_list *list, int *token, char *start, char *stop);
+int		word_in_list(t_list *list, int token, char *start, char *stop);
+
+/*
+**----------------------------------
+**--------------Token---------------
+**----------------------------------
+*/
+int	check_token(char *s, int last);
 
 /*
 **----------------------------------
