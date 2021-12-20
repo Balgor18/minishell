@@ -6,7 +6,7 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 12:21:41 by elaachac          #+#    #+#             */
-/*   Updated: 2021/12/17 10:19:29 by elaachac         ###   ########.fr       */
+/*   Updated: 2021/12/20 17:21:42 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		find_pipe(t_node *iterator, int pos, int lenght)
 {
-	while(pos <= lenght)
+	while(pos < lenght)
 	{
 		if (iterator->token == PIPE)
 			return (pos);
@@ -24,7 +24,7 @@ int		find_pipe(t_node *iterator, int pos, int lenght)
 	return(pos);
 }
 
-void	which_cmd(t_node *iterator, t_cmd **cmd, int next_pipe)
+void	which_cmd(t_node *iterator, t_cmd **cmd)
 {
 	while (iterator->token != WORD)
 		iterator = iterator->next;
@@ -53,12 +53,12 @@ void	which_cmd(t_node *iterator, t_cmd **cmd, int next_pipe)
 		else
 		{
 			(*cmd)->no_path = true;
-			find_path(iterator->word, cmd);
+			find_path(iterator->word, *cmd);
 		}
 	}
 }
 
-void	exec_cmd(t_node	*iterator, t_cmd **cmd, int next_pipe)
+void	exec_cmd(t_list	*list, t_cmd **cmd)
 {
 	if ((*cmd)->built_in == true)
 	{
@@ -66,26 +66,28 @@ void	exec_cmd(t_node	*iterator, t_cmd **cmd, int next_pipe)
 	}
 	else
 	{
-		exec_child(cmd, iterator->list->env);
+		exec_child(*cmd, list->env);
 	}
 }
 
-void	cmd_manage(t_node *iterator, int next_pipe)
+void	cmd_manage(t_node *iterator, t_list *line, int next_pipe)
 {
 	t_cmd	*cmd;
 	int i;
 
+	// cmd = NULL;
 	i = 0;
-	init_cmd(cmd, iterator->list);
+	cmd = init_cmd(iterator->list);
 	while (i < next_pipe) //1er jet sans les pipes
 	{
 		//check redir -> dup le fd de chaque redir
 		check_redir(iterator, cmd->fd, next_pipe);
 		//check cmd
-		which_cmd(iterator, cmd, next_pipe);
+		which_cmd(iterator, &cmd);
 		//exec cmd
-		set_args(iterator, cmd, next_pipe);
-		exec_cmd(iterator, cmd, next_pipe);
+		set_args(iterator, cmd, line);
+		exec_cmd(line, &cmd);
+		i++;
 	}
 }
 
@@ -98,11 +100,11 @@ void	exec(t_list *line)
 	next_pipe = 0;
 	iterator = line->head;
 	lenght = line->lenght;
-	file_opener();
+	// file_opener(); -> ouvrir les fd
 	while (lenght)
 	{
 		next_pipe = find_pipe(iterator,line->lenght - lenght, line->lenght);
-		cmd_manage(iterator, next_pipe);
+		cmd_manage(iterator, line, next_pipe);
 		lenght -= next_pipe;
 	}
 }

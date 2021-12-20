@@ -6,7 +6,7 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 15:47:24 by elaachac          #+#    #+#             */
-/*   Updated: 2021/12/16 15:15:03 by elaachac         ###   ########.fr       */
+/*   Updated: 2021/12/20 14:02:14 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*get_env_var(char **envp, char *to_find)
 	return (NULL);
 }
 
-char	*get_pwd()
+char	*get_pwd(void)
 {
 	char	BUFFER[4096];
 	char	*pwd;
@@ -66,3 +66,25 @@ char	*get_pwd()
 	pwd = getcwd(BUFFER, 4096);
 	return (pwd);
 }
+
+void	free_split(char **array)
+{
+	int	i;
+
+	i = 0;
+	if (array != NULL && *array != NULL)
+	{
+		while (array[i] != NULL)
+		{
+			if (array[i])
+			{
+				free(array[i]);
+				array[i] = NULL;
+			}
+			i++;
+		}
+	}
+	free(array);
+	array = NULL;
+}
+

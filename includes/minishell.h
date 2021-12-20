@@ -6,7 +6,7 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/20 13:30:47 by elaachac         ###   ########.fr       */
+/*   Updated: 2021/12/20 17:34:53 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	expand(t_list *list, char **env);
 **----------------------------------
 */
 int		error_arg(void);
-int	error_filename(void);
+int		error_filename(void);
 
 /*
 **----------------------------------
@@ -119,6 +119,25 @@ void	ft_bzero(void *s, size_t n);
 bool	ft_strchr(const char *s, int c);
 char	*get_env_var(char **envp, char *to_find);
 char	*ft_strjoin(char *s1, char *s2);
+char	*get_pwd(void);
+void	free_split(char **array);
+bool	ft_strcmp(char *s1, char *s2);
+bool	file_check(char *path);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
+
+/*
+**----------------------------------
+**---------------Exec---------------
+**----------------------------------
+*/
+void	set_args(t_node *iterator, t_cmd *cmd, t_list *line);
+int		check_redir(t_node *iterator, int *fd, int next_pipe);
+bool	is_builtin(char *cmd);
+bool	is_absolute_path(char *cmd);
+t_cmd	*init_cmd(t_list *list);
+int		find_path(char *pathname, t_cmd *cmd);
+void	exec_child(t_cmd *cmd, char **env);
+void	exec(t_list *line);
 
 /*
 **----------------------------------

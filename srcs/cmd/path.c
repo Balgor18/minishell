@@ -6,7 +6,7 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 17:40:13 by elaachac          #+#    #+#             */
-/*   Updated: 2021/12/16 11:47:13 by elaachac         ###   ########.fr       */
+/*   Updated: 2021/12/20 14:32:48 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 int	find_path2(int cmd_ok, char **env_path, char *pathname, t_cmd *cmd)
 {
-	if (cmd_ok == 0)
+	if (cmd_ok == 0 && cmd)
 	{
 		free_split(env_path);
-		if (cmd->file_error == 0 || cmd->file_error == 2)
-		{
+		// if (cmd->file_error == 0 || cmd->file_error == 2)
+		// {
 			write(2, pathname, ft_strlen(pathname));
 			write(2, " : Command not found\n", 21);
 			// cmd->error = 1; // ->gestion d'erreur
-		}
+		// }
 		return (1);
 	}
 	else
@@ -36,7 +36,7 @@ void	find_path3(int i, int *cmd_ok, char **env_path, t_cmd *cmd)
 	{
 		if (access(env_path[i], F_OK) != -1)
 		{
-			cmd->cmd_path[cmd->index] = ft_strdup(env_path[i]);
+			cmd->cmd_path = ft_strdup(env_path[i]);
 			cmd->index++;
 			*cmd_ok = 1;
 			break ;
