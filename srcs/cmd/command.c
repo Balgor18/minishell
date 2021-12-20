@@ -6,7 +6,7 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 12:21:41 by elaachac          #+#    #+#             */
-/*   Updated: 2021/12/20 17:21:42 by elaachac         ###   ########.fr       */
+/*   Updated: 2021/12/20 18:50:55 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	cmd_manage(t_node *iterator, t_list *line, int next_pipe)
 		//exec cmd
 		set_args(iterator, cmd, line);
 		exec_cmd(line, &cmd);
-		i++;
+		i += next_pipe;
 	}
 }
 

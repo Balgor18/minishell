@@ -6,7 +6,7 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 17:55:05 by elaachac          #+#    #+#             */
-/*   Updated: 2021/12/20 17:04:12 by elaachac         ###   ########.fr       */
+/*   Updated: 2021/12/20 18:26:43 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,14 @@ void	set_args(t_node *iterator, t_cmd *cmd, t_list *line)
 		if (iterator->next)
 			iterator = iterator->next;
 	}
+	tmp = NULL;
 	while (i)
 	{
+		if (iterator->prev)
+			tmp = iterator->prev;
 		delnode(iterator, &line);
+		if (tmp)
+			iterator = tmp;
 		i--;
 	}
 }
