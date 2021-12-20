@@ -6,7 +6,7 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/16 16:04:16 by elaachac         ###   ########.fr       */
+/*   Updated: 2021/12/20 13:30:47 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@
 typedef struct s_node	t_node;
 typedef struct s_list	t_list;
 
-typedef struct s_list
+struct s_list
 {
 	size_t	lenght;
 	char	**env;
 	t_node	*head;
 	t_node	*list;
 	t_node	*tail;
-}				t_list;
+};
 
 struct s_node
 {
@@ -71,12 +71,25 @@ enum e_token
 	PIPE,
 };
 
+// Vois si on as besoin
+// enum e_error
+// {
+// 	MALLOC = "Error\n Malloc",
+// }
+
 /*
 **----------------------------------
 **------------Readline--------------
 **----------------------------------
 */
 int		parse_readline(t_list *list, char *s);
+
+/*
+**----------------------------------
+**-------------Expand---------------
+**----------------------------------
+*/
+int	expand(t_list *list, char **env);
 
 /*
 **----------------------------------

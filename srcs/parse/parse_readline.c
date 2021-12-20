@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 00:05:31 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/14 17:51:59 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/19 17:31:23 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,15 +87,108 @@ void	tmp_print(t_list *list)
 	}
 }
 
+static int	is_special_char(char c, char *is)
+{
+	while (*is)
+	{
+		if (c == *is)
+			return (true);
+		is++;
+	}
+	return (false);
+}
+
+// int	parse_readline(t_list *list, char *s)
+// {
+// 	char **line;
+
+// 	line = ft_split(s, ' ');
+// 	free(s);
+// 	if (!line)
+// 		return (false);
+// 	move_in_list(line, list);
+// 	tmp_print(list);
+// 	return (true);
+// }
+
+int	word_in_list(t_list *list, int token, char *start, char *stop)
+{
+	char	*word;
+	char	*tmp;
+
+	if (start == stop)
+		return (true);
+	word = malloc(sizeof(char) * (stop - start) + 1);// malloc dont work need to see why ?
+	if (!word)
+		return (false);
+	word[stop - start] = '\0';
+	tmp = word;
+	while (start < stop)
+	{
+		*word = *start;
+		start++;
+		word++;
+	}
+	if (!add_tail_list(&list, token, tmp))
+	{
+		free(tmp);
+		return (false);
+	}
+	free(tmp);
+	return (true);
+}
+
+char	*special_elem_in_list(t_list *list, char *start, char *stop)
+{
+	char	quote;
+
+	(void)list;
+	(void)stop;
+	quote = 0;
+	if (*stop == '\'' || *stop == '\"' )
+	{
+		quote = *stop;
+		stop++;
+	}
+	while (*stop != quote)
+		stop++;
+	stop++;
+	word_in_list(list, WORD, start, stop);
+	printf("first char = %c\n", start[0]);
+	return (stop);
+}
+
+// echo  "test    "
+// test
+// ls /etc
 int	parse_readline(t_list *list, char *s)
 {
-	char **line;
+	char	*last;
+	int		token;
+	char	*free_word;
 
-	line = ft_split(s, ' ');
-	free(s);
-	if (!line)
-		return (false);
-	move_in_list(line, list);
+	token = WORD;
+	free_word = s;
+	last = s;
+	while (*s)
+	{
+		if (is_special_char(*s, "'\"<|>$"))
+		{
+			s = special_elem_in_list(list, last, s);
+			// special elem in list
+		}
+		else if (*s == ' ' && *s + 1 != '\0')
+		{
+			word_in_list(list, token, last, s);
+			// go do a function for add a elem to a list
+			token = WORD;
+			last = s + 1;
+		}
+		s++;
+	}
+	if (*s)
+		word_in_list(list, token, last, s);
+	free(free_word);
 	tmp_print(list);
 	return (true);
 }

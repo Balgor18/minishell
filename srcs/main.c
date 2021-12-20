@@ -6,7 +6,7 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:41:23 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/16 16:04:10 by elaachac         ###   ########.fr       */
+/*   Updated: 2021/12/20 13:29:33 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,12 @@ int	main(int argc, char **argv, char **env)
 		list.env = env;
 		line = readline("Minishell rose :");
 		if (line)
+		{
 			if (!parse_readline(&list, line))
 				return (EXIT_FAILURE);
+			if (!expand(&list, env))
+				return (EXIT_FAILURE);
+		}
 	}
 	return (EXIT_SUCCESS);
 }
