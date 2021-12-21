@@ -3,14 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 15:48:08 by elaachac          #+#    #+#             */
-/*   Updated: 2021/12/14 15:38:32 by elaachac         ###   ########.fr       */
+/*   Updated: 2021/12/21 16:02:08 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	is_special_char(char c, char *is)
+{
+	while (*is)
+	{
+		if (c == *is)
+			return (true);
+		is++;
+	}
+	return (false);
+}
 
 bool	ft_strcmp(char *s1, char *s2)
 {

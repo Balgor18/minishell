@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/20 18:41:12 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/21 18:36:08 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ bool	file_check(char *path);
 **--------------Utils---------------
 **----------------------------------
 */
+int		is_special_char(char c, char *is);
 char	**ft_split(char const *str, char charset);
 void	ft_putstr_fd(int fd, char *s);
 char	*ft_strdup(char *s1);

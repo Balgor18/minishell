@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:41:23 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/20 18:41:24 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/21 18:43:08 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int	main(int argc, char **argv, char **env)
 	char	*line;
 
 	(void)argv;
-	(void)env;
 	if (argc != 1)
 		return (error_arg());
 	while (1)// Pas encore d'arret sur la boucle || voir quoi mettre

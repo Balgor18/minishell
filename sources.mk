@@ -6,12 +6,6 @@ SOURCES		+=                               		\
 		srcs/main.c                             	\
 
 
-## SRCS/CMD ##
-
-SOURCES		+=                               		\
-		srcs/cmd/command.c                      	\
-
-
 ## SRCS/EXPAND ##
 
 SOURCES		+=                               		\
@@ -23,20 +17,20 @@ SOURCES		+=                               		\
 SOURCES		+=                               		\
 		srcs/list/list_utils.c                  	\
 
-
 ## SRCS/PARSE ##
 
 SOURCES		+=                               		\
+		srcs/parse/parse_readline2.c            	\
+		srcs/parse/token.c                      	\
 		srcs/parse/parse_readline.c             	\
 
 
 ## SRCS/UTILS ##
 
 SOURCES		+=                               		\
-		srcs/utils/error.c                      	\
 		srcs/utils/ft_split.c                   	\
-		srcs/utils/redir.c                      	\
 		srcs/utils/utils.c                      	\
+		srcs/utils/error.c                      	\
 
 
 ## SRCS/UTILS/CHECKERS.C ##

@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 00:05:31 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/20 18:50:49 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/21 19:22:10 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,24 +33,32 @@ void	tmp_print(t_list *list)
 	}
 }
 
-static int	is_special_char(char c, char *is)
-{
-	while (*is)
-	{
-		if (c == *is)
-			return (true);
-		is++;
-	}
-	return (false);
-}
+char	*spc_prev_in_list(t_list *list, int *token, char *start, char *stop);
+char	*spc_next_in_list(t_list *list, int *token, char *start, char *stop);
 
 char	*do_special_in_list(t_list *list, int *token, char *last, char *s)
 {
+	//test< test
+	//< test
 	if (is_special_char(*s, "'\""))
 		s = spc_quote_in_list(list, token, last, s);
 	else if (is_special_char(*s, "<|>"))
-		s = spc_rd_in_list(list, token, last, s);
-	return (s + 1);
+	{
+		if (*(s - 1) == ' ' && *(s + 1) == ' ')
+			s = spc_rd_in_list(list, token, last, s);
+		else if (*(s - 1) == ' ')
+		{
+			printf(RED"next \n"WHITE);
+			s = spc_next_in_list(list, token, last, s);
+		}
+		else if (*(s + 1) == ' ')// work
+		{
+			s = spc_prev_in_list(list, token, last, s);
+		}
+	}
+	if (*s == ' ')
+		return (s + 1);
+	return (s);
 }
 
 // echo  "test    "
@@ -82,8 +90,8 @@ int	parse_readline(t_list *list, char *s, char *free_word)
 		{
 			s = do_special_in_list(list, &token, last, s);
 			last = s;
-			// if (*s == ' ')
-			// 	last = s + 1;
+			if (*s == ' ')
+				last = s + 1;
 		}
 		else if (*s == ' ' && *s + 1 != '\0')
 		{
@@ -93,9 +101,28 @@ int	parse_readline(t_list *list, char *s, char *free_word)
 		}
 		s++;
 	}
-	if (s != last)
-		word_in_list(list, check_token(s, token), last, s);
+	// if (s != last)
+	// printf("last == |%s|\n%p\ns = |%s|\n%p\n", last, last, s, s);
+	word_in_list(list, check_token(s, token), last, s);
 	free(free_word);
 	tmp_print(list);
 	return (true);
 }
+
+// test a faire
+
+// echo salut a tous
+// echo "salut a tous" // pas bon
+// echo 'salut a tous' // pas bon
+
+// test test
+
+// ls < cat
+// ls <cat
+// ls< cat // pas bon
+// ls<cat // pas bon
+
+// echo "Salut a tous"|yolo > cd
+
+//ech"o" "a"
+//ech"o"" a"
