@@ -6,11 +6,38 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 15:32:32 by elaachac          #+#    #+#             */
-/*   Updated: 2021/12/20 15:56:37 by elaachac         ###   ########.fr       */
+/*   Updated: 2021/12/21 15:27:30 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	free_cmd(t_cmd **cmd)
+{
+	int	i;
+
+	i = 0;
+	if ((*cmd)->env_path)
+	{
+		free((*cmd)->env_path);
+		(*cmd)->env_path = NULL;
+	}
+	if ((*cmd)->cmd_path)
+	{
+		free((*cmd)->cmd_path);
+		(*cmd)->cmd_path = NULL;
+	}
+	while ((*cmd)->args[i])
+	{
+		free((*cmd)->args[i]);
+		(*cmd)->args[i] = NULL;
+		i++;
+	}
+	if ((*cmd)->args)
+		free((*cmd)->args);
+	if ((*cmd))
+		free((*cmd));
+}
 
 t_cmd	*init_cmd(t_list *list)
 {

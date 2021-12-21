@@ -6,7 +6,7 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/20 18:45:58 by elaachac         ###   ########.fr       */
+/*   Updated: 2021/12/21 15:07:45 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@ t_cmd	*init_cmd(t_list *list);
 int		find_path(char *pathname, t_cmd *cmd);
 void	exec_child(t_cmd *cmd, char **env);
 void	exec(t_list *line);
+void	free_cmd(t_cmd **cmd);
 
 /*
 **----------------------------------

@@ -6,7 +6,7 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:41:23 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/20 17:34:47 by elaachac         ###   ########.fr       */
+/*   Updated: 2021/12/21 15:45:13 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	main4(int argc, char **argv, char **envp)
 	if (argv[2])
 		add_tail_list(&list, WORD, argv[2]);
 	exec(list);
+	dellist(&list);
 	return (0);
 }
 
