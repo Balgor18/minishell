@@ -6,7 +6,7 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 15:47:52 by elaachac          #+#    #+#             */
-/*   Updated: 2021/12/20 16:34:36 by elaachac         ###   ########.fr       */
+/*   Updated: 2021/12/21 17:01:41 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	switch_fd(int fd, t_node *iterator)
 		}
 		else
 		{
-			//gestion d'erreur redir in inexistante
+			g_error = 1;
 		}
 	}
 	else if (iterator->token == APPEND)

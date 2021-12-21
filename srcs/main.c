@@ -6,7 +6,7 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:41:23 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/21 16:36:28 by elaachac         ###   ########.fr       */
+/*   Updated: 2021/12/21 17:02:27 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,10 @@ int	main4(int argc, char **argv, char **envp)
 	list = (t_list *)malloc(sizeof(t_list));
 	ft_bzero(list, sizeof(t_list));
 	list->env = envp;
-	add_tail_list(&list, WORD, argv[1]);
+	add_tail_list(&list, R_IN, argv[1]);
 	if (argv[2])
 		add_tail_list(&list, WORD, argv[2]);
+	add_tail_list(&list, WORD, argv[3]);
 	exec(list);
 	dellist(&list);
 	return (g_error);
