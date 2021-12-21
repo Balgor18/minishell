@@ -6,7 +6,7 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 17:40:13 by elaachac          #+#    #+#             */
-/*   Updated: 2021/12/20 14:32:48 by elaachac         ###   ########.fr       */
+/*   Updated: 2021/12/21 16:15:25 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	find_path2(int cmd_ok, char **env_path, char *pathname, t_cmd *cmd)
 		// {
 			write(2, pathname, ft_strlen(pathname));
 			write(2, " : Command not found\n", 21);
-			// cmd->error = 1; // ->gestion d'erreur
+			g_error = 127; // ->gestion d'erreur
 		// }
 		return (1);
 	}

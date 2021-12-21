@@ -6,7 +6,7 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/21 15:07:45 by elaachac         ###   ########.fr       */
+/*   Updated: 2021/12/21 16:28:34 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 
 typedef struct s_node	t_node;
 typedef struct s_list	t_list;
+extern int	g_error;
 
 struct s_list
 {
