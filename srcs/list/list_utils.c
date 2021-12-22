@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 14:38:22 by elaachac          #+#    #+#             */
-/*   Updated: 2021/12/14 13:57:59 by elaachac         ###   ########.fr       */
+/*   Updated: 2021/12/22 13:06:09 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,15 +72,15 @@ void	dellist(t_list **list)
 	}
 }
 
-t_node	*init_node(t_node *node, int token, char *word, t_list *list)
+t_node	*init_node(t_node *node, char *word, t_list *list)
 {
-	node->token = token;
+	node->token = 0;
 	node->word = ft_strdup(word);
 	node->list = list;
 	return (node);
 }
 
-t_node	*add_tail_list(t_list **list, int token, char *word)
+t_node	*add_tail_list(t_list **list, char *word)
 {
 	t_node	*newnode;
 
@@ -105,5 +105,5 @@ t_node	*add_tail_list(t_list **list, int token, char *word)
 		}
 		(*list)->lenght++;
 	}
-	return (init_node(newnode, token, word, *list));
+	return (init_node(newnode, word, *list));
 }

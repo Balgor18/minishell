@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/21 18:36:08 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/22 16:45:17 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,6 @@
 # include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-
-# define EXIT_SUCCESS 0
-# define EXIT_FAILURE 1
 
 typedef struct s_node	t_node;
 typedef struct s_list	t_list;
@@ -71,6 +68,20 @@ enum e_token
 	PIPE,
 };
 
+enum e_split
+{
+	START = 0,
+	END,
+	MAX_SPLIT,
+};
+
+enum e_quote
+{
+	NO_QUOTE = 0,
+	SIMPLE,
+	DOUBLE,
+};
+
 // Vois si on as besoin
 // enum e_error
 // {
@@ -83,23 +94,20 @@ enum e_token
 **----------------------------------
 */
 int		parse_readline(t_list *list, char *s, char *free_word);
-char	*spc_quote_in_list(t_list *list, int *token, char *start, char *stop);
-char	*spc_rd_in_list(t_list *list, int *token, char *start, char *stop);
-int		word_in_list(t_list *list, int token, char *start, char *stop);
-
+int		shell_split(char ***tab, char *line);
 /*
 **----------------------------------
 **--------------Token---------------
 **----------------------------------
 */
-int	check_token(char *s, int last);
+int		check_token(char *s, int last);
 
 /*
 **----------------------------------
 **-------------Expand---------------
 **----------------------------------
 */
-int	expand(t_list *list, char **env);
+int		expand(t_list *list, char **env);
 
 /*
 **----------------------------------
@@ -107,7 +115,7 @@ int	expand(t_list *list, char **env);
 **----------------------------------
 */
 int		error_arg(void);
-int	error_filename(void);
+int		error_filename(void);
 
 /*
 **----------------------------------
@@ -129,6 +137,8 @@ size_t	ft_strlen(char *str);
 void	ft_bzero(void *s, size_t n);
 bool	ft_strchr(const char *s, int c);
 char	*get_env_var(char **envp, char *to_find);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+
 
 /*
 **----------------------------------
@@ -137,8 +147,8 @@ char	*get_env_var(char **envp, char *to_find);
 */
 t_list	*newlist(void);
 void	dellist(t_list **list);
-t_node	*init_node(t_node *node, int token, char *word, t_list *list);
-t_node	*add_tail_list(t_list **list, int token, char *word);
+t_node	*init_node(t_node *node, char *word, t_list *list);
+t_node	*add_tail_list(t_list **list, char *word);
 t_node	*delnode(t_node *node, t_list **list);
 
 #endif
