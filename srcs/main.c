@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:41:23 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/23 21:23:33 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/23 23:54:23 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	main(int argc, char **argv, char **env)
 		{
 			if (!parse_readline(&list, line, line))
 			{
-				// rl_clear_history();
+				rl_clear_history();
 				return (EXIT_FAILURE);
 			}
 		}
