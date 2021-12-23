@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 00:05:31 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/23 23:42:18 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/23 23:57:41 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,3 +132,6 @@ int	parse_readline(t_list *list, char *s, char *free_word)
 	tmp_print(list);
 	return (true);
 }
+
+// error to check
+//test          >         test
