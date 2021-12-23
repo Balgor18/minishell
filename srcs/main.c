@@ -6,13 +6,16 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:41:23 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/22 17:52:51 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/23 12:38:02 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	g_error;
+
+// Pas encore d'arret sur la boucle || voir quoi mettre
+// rl_clear_history(); --> check le leaks
 
 int	main(int argc, char **argv, char **env)
 {
@@ -23,14 +26,17 @@ int	main(int argc, char **argv, char **env)
 	(void)env;
 	if (argc != 1)
 		return (error_arg());
-	while (1)// Pas encore d'arret sur la boucle || voir quoi mettre
+	while (1)
 	{
 		list = (t_list){0};
 		line = readline("Minishell rose :");
 		if (line)
 		{
 			if (!parse_readline(&list, line, line))
+			{
+				rl_clear_history();
 				return (EXIT_FAILURE);
+			}
 		}
 	}
 	return (EXIT_SUCCESS);

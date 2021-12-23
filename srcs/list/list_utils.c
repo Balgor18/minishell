@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 14:38:22 by elaachac          #+#    #+#             */
-/*   Updated: 2021/12/22 13:06:09 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/23 14:36:08 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,16 +59,16 @@ void	dellist(t_list **list)
 	{
 		tmp = (*list)->head;
 		while ((*list)->lenght > 0)
-		while ((*list)->list)
 		{
 			(*list)->lenght--;
 			del = tmp;
 			if (tmp->next)
 				tmp = tmp->next;
+			free(del->word);
+			del->word = NULL;
 			free(del);
+			del = NULL;
 		}
-		free(*list);
-		*list = NULL;
 	}
 }
 
@@ -91,16 +91,16 @@ t_node	*add_tail_list(t_list **list, char *word)
 	{
 		if ((*list)->head == NULL)
 		{
-			(*list)->head = newnode;
-			(*list)->tail = newnode;
 			newnode->prev = NULL;
 			newnode->next = NULL;
+			(*list)->head = newnode;
+			(*list)->tail = newnode;
 		}
 		else
 		{
-			(*list)->tail->next = newnode;
 			newnode->prev = (*list)->tail;
 			newnode->next = NULL;
+			(*list)->tail->next = newnode;
 			(*list)->tail = newnode;
 		}
 		(*list)->lenght++;

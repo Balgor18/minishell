@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/22 16:45:17 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/23 14:48:00 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ struct s_list
 {
 	size_t	lenght;
 	t_node	*head;
-	t_node	*list;
+	// t_node	*list;
 	t_node	*tail;
 };
 
@@ -94,7 +94,9 @@ enum e_quote
 **----------------------------------
 */
 int		parse_readline(t_list *list, char *s, char *free_word);
-int		shell_split(char ***tab, char *line);
+int		shell_split(t_list *list, char ***tab, char *line);
+int		split_start_word(char *line);
+int		split_end_word(char *line, int start);
 /*
 **----------------------------------
 **--------------Token---------------

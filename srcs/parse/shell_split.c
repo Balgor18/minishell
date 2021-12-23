@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 13:08:51 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/22 18:26:15 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/23 19:39:32 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,39 +43,55 @@ int	split_start_word(char *line)
 	return (ret);
 }
 
+static int	is_start_or_end_quote(char c, int *quote)
+{
+	if (c == '\'' && !*quote)
+	{
+		if (!*quote)
+			*quote = SIMPLE;
+		else
+			*quote = NO_QUOTE;
+		return (true);
+	}
+	else if (c == '"')
+	{
+		if (!*quote)
+			*quote = DOUBLE;
+		else
+			*quote = NO_QUOTE;
+		return (true);
+	}
+	return (false);
+}
+
 int	split_end_word(char *line, int start)
 {
 	static int	quote = NO_QUOTE;
+	int			ret;
 
+	if (is_specify_char(line[start], "<|>&"))
+	{
+		while (is_specify_char(line[start], "<|>&"))
+			start++;
+		return (start);
+	}
 	while (line[start])
 	{
-		if (line[start] == '\'')
+		ret = is_start_or_end_quote(line[start], &quote);
+		if (ret == 1)
 		{
-			if (quote == NO_QUOTE)
-				quote = SIMPLE;
-			else if (quote == SIMPLE)
+			if (!quote)
 			{
-				quote = NO_QUOTE;
-				start++;
-				break ;
-			}
-		}
-		else if (line[start] == '"')
-		{
-			if (quote == NO_QUOTE)
-				quote = DOUBLE;
-			else if (quote == DOUBLE)
-			{
-				quote = NO_QUOTE;
 				start++;
 				break ;
 			}
 		}
 		else if (line[start] == ' ' && !quote)
-			break;
+		{
+			break ;
+		}
 		else if (is_specify_char(line[start], "<|>&") && !quote)
 		{
-			start++;
 			break ;
 		}
 		start++;
@@ -83,45 +99,4 @@ int	split_end_word(char *line, int start)
 	return (start);
 }
 
-int	shell_split_rec(char ***tab, char *line, int index)
-{
-	int	i[MAX_SPLIT];
-
-	i[START] = split_start_word(line);
-	i[END] = split_end_word(line, i[START]);
-	if (i[END] > 0)
-	{
-		if (!shell_split_rec(tab, line + i[START] + i[END], index + 1))
-			return (false);
-		(*tab)[index] = ft_substr(line, i[START], i[END] - i[START]);
-		if (!(*tab)[index])
-			return (false);
-	}
-	else if (i[END] == 0)
-	{
-		(*tab) = (char **)malloc(sizeof(char *) * index + 1);
-		if (!(*tab))
-			return (false);
-		(*tab)[index] = NULL;
-	}
-	return (true);
-}
-
-static void	tmp_print(char **tab)
-{
-	int	index;
-
-	index = -1;
-	while (tab[++index])
-	{
-		printf("%s\n", tab[index]);
-	}
-}
-
-int	shell_split(char ***tab, char *line)
-{
-	if (!shell_split_rec(tab, line, 0))
-		return (false);
-	tmp_print(*tab);
-	return (true);
-}
+// next step do the tokeniser and expand
