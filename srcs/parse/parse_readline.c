@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 00:05:31 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/23 19:38:21 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/23 23:42:18 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,6 @@ static void	tmp_print(t_list *list)
 	}
 }
 
-// echo  "test    "
-// test
-// ls /etc
-
-// if (is_special_char(*s, "'\""))
-// 	s = spc_quote_in_list(list, &token, last, s);
-// else if (is_special_char(*s, "<|>"))
-// 	s = spc_rd_in_list(list, &token, last, s);
-
 static void	free_tab(char ***tab)
 {
 	char	**free_tab;
@@ -63,7 +54,7 @@ static void	free_tab(char ***tab)
 	free_tab = NULL;
 }
 
-int	push_tab_in_list(t_list *list, char **tab)
+static int	push_tab_in_list(t_list *list, char **tab)
 {
 	char	**free_tab;
 
@@ -86,20 +77,18 @@ int	push_tab_in_list(t_list *list, char **tab)
 int	shell_split_rec(char ***tab, char *line, int index)
 {
 	int	i[MAX_SPLIT];
+	int	ret;
 
 	i[START] = split_start_word(line);
 	i[END] = split_end_word(line, i[START]);
-	printf("|%.*s|\nstart = %d\nend = %d\n", i[END], &line[i[START]], i[START], i[END]);
 	if (i[END] > 0)
 	{
 		if (line[i[END]] == ' ')
-		{
-			if (!shell_split_rec(tab, line + i[START] + i[END] + 1, index + 1))
-				return (false);
-		}
+			ret = shell_split_rec(tab, line + i[START] + i[END] + 1, index + 1);
 		else
-			if (!shell_split_rec(tab, line + i[START] + i[END], index + 1))
-				return (false);
+			ret = shell_split_rec(tab, line + i[START] + i[END], index + 1);
+		if (!ret)
+			return (false);
 		(*tab)[index] = ft_substr(line, i[START], i[END] - i[START]);
 		if (!(*tab)[index])
 			return (false);
@@ -129,7 +118,6 @@ int	shell_split(t_list *list, char ***tab, char *line)
 	return (true);
 }
 
-// si j'utilise les index alors pas besoin de free_word
 int	parse_readline(t_list *list, char *s, char *free_word)
 {
 	char	**split;
@@ -140,30 +128,7 @@ int	parse_readline(t_list *list, char *s, char *free_word)
 		return (false);
 	}
 	free(free_word);
-	// tokeniser();
+	tokeniser(list);
 	tmp_print(list);
 	return (true);
 }
-
-// test a faire
-
-// test<<lol|get_yolo>>okmec
-
-// ls < cat
-// ls<cat
-
-// echo salut a tous
-// echo "salut a tous" // pas bon
-// echo 'salut a tous' // pas bon
-
-// test test
-
-// ls < cat
-// ls <cat
-// ls< cat // pas bon
-// ls<cat // pas bon
-
-// echo "Salut a tous"|yolo > cd
-
-//ech"o" "a"
-//ech"o"" a"

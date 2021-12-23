@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/23 14:48:00 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/23 23:45:30 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ struct s_list
 {
 	size_t	lenght;
 	t_node	*head;
-	// t_node	*list;
 	t_node	*tail;
 };
 
@@ -42,7 +41,7 @@ struct s_node
 	t_list			*list;
 };
 
-typedef	struct s_cmd
+typedef struct s_cmd
 {
 	bool	relative_path;
 	bool	absolute_path;
@@ -54,7 +53,6 @@ typedef	struct s_cmd
 	int		fd[2];
 	int		index;
 }				t_cmd;
-
 
 enum e_token
 {
@@ -102,8 +100,7 @@ int		split_end_word(char *line, int start);
 **--------------Token---------------
 **----------------------------------
 */
-int		check_token(char *s, int last);
-
+int		tokeniser(t_list *list);
 /*
 **----------------------------------
 **-------------Expand---------------
@@ -140,7 +137,6 @@ void	ft_bzero(void *s, size_t n);
 bool	ft_strchr(const char *s, int c);
 char	*get_env_var(char **envp, char *to_find);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
-
 
 /*
 **----------------------------------

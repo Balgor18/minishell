@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 13:08:51 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/23 19:39:32 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/23 22:36:18 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ static int	is_start_or_end_quote(char c, int *quote)
 int	split_end_word(char *line, int start)
 {
 	static int	quote = NO_QUOTE;
-	int			ret;
 
 	if (is_specify_char(line[start], "<|>&"))
 	{
@@ -77,8 +76,7 @@ int	split_end_word(char *line, int start)
 	}
 	while (line[start])
 	{
-		ret = is_start_or_end_quote(line[start], &quote);
-		if (ret == 1)
+		if (is_start_or_end_quote(line[start], &quote))
 		{
 			if (!quote)
 			{
@@ -87,16 +85,10 @@ int	split_end_word(char *line, int start)
 			}
 		}
 		else if (line[start] == ' ' && !quote)
-		{
 			break ;
-		}
 		else if (is_specify_char(line[start], "<|>&") && !quote)
-		{
 			break ;
-		}
 		start++;
 	}
 	return (start);
 }
-
-// next step do the tokeniser and expand

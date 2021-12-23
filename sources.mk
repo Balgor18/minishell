@@ -6,10 +6,10 @@ SOURCES		+=                               		\
 		srcs/main.c                             	\
 
 
-## SRCS/LIST ##
+## SRCS/TOKENISER ##
 
 SOURCES		+=                               		\
-		srcs/list/list_utils.c                  	\
+		srcs/tokeniser/token.c                  	\
 
 
 ## SRCS/PARSE ##
@@ -26,9 +26,16 @@ SOURCES		+=                               		\
 		srcs/utils/utils.c                      	\
 		srcs/utils/error.c                      	\
 
+
 ## SRCS/UTILS/CHECKERS.C ##
 
 SOURCES		+=                               		\
 		srcs/utils/checkers.c/file_check.c      	\
+
+
+## SRCS/LIST ##
+
+SOURCES		+=                               		\
+		srcs/list/list_utils.c                  	\
 
 
