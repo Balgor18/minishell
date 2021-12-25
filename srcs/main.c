@@ -26,6 +26,7 @@ int	main(int argc, char **argv, char **env)
 	(void)env;
 	if (argc != 1)
 		return (error_arg());
+	init_sig();
 	while (1)
 	{
 		list = (t_list){0};

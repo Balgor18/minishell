@@ -21,6 +21,7 @@
 # include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <signal.h>
 
 typedef struct s_node	t_node;
 typedef struct s_list	t_list;
