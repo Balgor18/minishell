@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 15:48:08 by elaachac          #+#    #+#             */
-/*   Updated: 2021/12/22 16:37:27 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/25 02:09:58 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,21 +54,6 @@ void	ft_bzero(void *s, size_t n)
 		str[i] = '\0';
 		i++;
 	}
-}
-
-size_t	ft_strlen(char *s)
-{
-	char	*t;
-
-	t = s;
-	while (*s)
-		s++;
-	return (s - t);
-}
-
-void	ft_putstr_fd(int fd, char *s)
-{
-	write(fd, s, ft_strlen(s));
 }
 
 char	*ft_strdup(char *s1)
