@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:41:23 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/23 23:54:23 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/28 15:09:52 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	main(int argc, char **argv, char **env)
 	(void)env;
 	if (argc != 1)
 		return (error_arg());
-	init_sig();
 	while (1)
 	{
 		list = (t_list){0};
