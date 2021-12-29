@@ -6,20 +6,11 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 00:05:31 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/29 10:16:51 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/29 16:01:03 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// good WORD = Si ses pas autre choses ses un mot
-//      FD = always after < > << >> |
-// good LIMITOR = Cat du HDOC le mot apres et le limiteur || voir si autre cas
-// good R_IN = Redirection in donc <
-// good HDOC (HEREDOC)= Redirection << [LIMITEUR]
-// good R_OUT = redirection out donc >
-// good APPEND = >>
-// good PIPE = |
 
 static void	tmp_print(t_list *list)
 {
@@ -118,20 +109,17 @@ int	shell_split(t_list *list, char ***tab, char *line)
 	return (true);
 }
 
-int	parse_readline(t_list *list, char *s, char *free_word)
+int	parse_readline(t_list *list, char *s)
 {
 	char	**split;
 
 	if (!shell_split(list, &split, s))
 	{
-		free(free_word);
+		free(s);
 		return (false);
 	}
-	free(free_word);
+	free(s);
 	tokeniser(list);
 	tmp_print(list);
 	return (true);
 }
-
-// error to check
-//test          >         test

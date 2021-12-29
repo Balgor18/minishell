@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 13:08:51 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/23 22:36:18 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/29 11:03:13 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,6 @@ static int	is_whitespace(char c)
 {
 	if (c == ' ' || c == '	')
 		return (true);
-	return (false);
-}
-
-static int	is_specify_char(char c, char *s)
-{
-	while (*s)
-	{
-		if (c == *s)
-			return (true);
-		s++;
-	}
 	return (false);
 }
 
@@ -68,9 +57,9 @@ int	split_end_word(char *line, int start)
 {
 	static int	quote = NO_QUOTE;
 
-	if (is_specify_char(line[start], "<|>&"))
+	if (ft_strchr("<|>&", line[start]))
 	{
-		while (is_specify_char(line[start], "<|>&"))
+		while (ft_strchr("<|>&", line[start]))
 			start++;
 		return (start);
 	}
@@ -86,7 +75,7 @@ int	split_end_word(char *line, int start)
 		}
 		else if (line[start] == ' ' && !quote)
 			break ;
-		else if (is_specify_char(line[start], "<|>&") && !quote)
+		else if (ft_strchr("<|>&", line[start]) && !quote)
 			break ;
 		start++;
 	}

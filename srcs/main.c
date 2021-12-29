@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:41:23 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/28 15:09:52 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/29 16:27:50 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(int argc, char **argv, char **env)
 		line = readline("Minishell rose :");
 		if (line)
 		{
-			if (!parse_readline(&list, line, line))
+			if (!parse_readline(&list, line) || !expand(&list, env))
 			{
 				rl_clear_history();
 				return (EXIT_FAILURE);

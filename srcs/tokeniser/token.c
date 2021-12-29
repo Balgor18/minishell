@@ -6,11 +6,20 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 21:58:56 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/23 23:43:37 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/29 16:01:11 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// good WORD = Si ses pas autre choses ses un mot
+// good FD = always after < > << >> |
+// good LIMITOR = Cat du HDOC le mot apres et le limiteur || voir si autre cas
+// good R_IN = Redirection in donc <
+// good HDOC (HEREDOC)= Redirection << [LIMITEUR]
+// good R_OUT = redirection out donc >
+// good APPEND = >>
+// good PIPE = |
 
 static int	heredoc_or_append(char *s)
 {
