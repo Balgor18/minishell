@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 00:05:31 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/23 23:57:41 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/29 10:16:51 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,9 @@ int	shell_split_rec(char ***tab, char *line, int index)
 	if (i[END] > 0)
 	{
 		if (line[i[END]] == ' ')
-			ret = shell_split_rec(tab, line + i[START] + i[END] + 1, index + 1);
+			ret = shell_split_rec(tab, line + i[END] + 1, index + 1);
 		else
-			ret = shell_split_rec(tab, line + i[START] + i[END], index + 1);
+			ret = shell_split_rec(tab, line + i[END], index + 1);
 		if (!ret)
 			return (false);
 		(*tab)[index] = ft_substr(line, i[START], i[END] - i[START]);
