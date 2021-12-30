@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 14:38:22 by elaachac          #+#    #+#             */
-/*   Updated: 2021/12/23 14:36:08 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/30 14:45:19 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ t_node	*add_tail_list(t_list **list, char *word)
 	newnode = (t_node *)malloc(sizeof(*newnode));
 	if (!newnode)
 		return (NULL);
-	if ((*list) != NULL)
+	if ((*list))
 	{
 		if ((*list)->head == NULL)
 		{

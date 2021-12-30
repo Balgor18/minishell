@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 15:47:24 by elaachac          #+#    #+#             */
-/*   Updated: 2021/12/29 11:02:06 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/30 17:11:43 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*get_env_var(char **envp, char *to_find)
 	env = envp;
 	while (*env != 0)
 	{
-		if (ft_strncmp(*env, to_find, 4) == 0)
+		if (ft_strncmp(*env, to_find, 4) == 0)// Why check only 4 char --> check for only $L --> and check for $COUCOU
 			return (*env);
 		env++;
 	}

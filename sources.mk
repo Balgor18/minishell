@@ -24,12 +24,6 @@ SOURCES		+=                             		\
 		srcs/tokeniser/token.c                	\
 
 
-## SRCS/SIGNAL ##
-
-SOURCES		+=                             		\
-		srcs/signal/signal.c                  	\
-
-
 ## SRCS/PARSE ##
 
 SOURCES		+=                             		\
