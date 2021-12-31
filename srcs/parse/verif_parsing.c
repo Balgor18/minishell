@@ -1,39 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   verif_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/06 14:41:23 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/31 19:03:20 by fcatinau         ###   ########.fr       */
+/*   Created: 2021/12/31 18:12:55 by fcatinau          #+#    #+#             */
+/*   Updated: 2021/12/31 18:22:21 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Pas encore d'arret sur la boucle || voir quoi mettre
-// rl_clear_history(); --> check le leaks
-
-int	g_error;
-
-int	main(int argc, char **argv, char **env)
+int	verif_parsing(t_list *list)
 {
-	char	*line;
+	t_node	*node;
+	int		last_token;
 
-	(void)argv;
-	(void)env;
-	g_error = 0;
-	if (argc != 1)
-		return (error_arg());
-	while (1)
+	last_token = -1;
+	node = list->head;
+	while (node)
 	{
-		line = readline("Minishell rose :");
-		if (line == NULL)
+		if (node->token != WORD && last_token != WORD && last_token != -1)
+		{
+			g_error = 2;// syntax error --> print line of syntax ??
 			break ;
-		if (line)
-			shell_split(line)
+		}
+		if (last_token == -1)
+			last_token = node->token;
+		node = node->next;
 	}
-	rl_clear_history();
-	return (EXIT_SUCCESS);
+	return (true);
 }

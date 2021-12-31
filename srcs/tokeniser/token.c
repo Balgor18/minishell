@@ -6,14 +6,14 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 21:58:56 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/29 16:01:11 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/31 18:49:31 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // good WORD = Si ses pas autre choses ses un mot
-// good FD = always after < > << >> |
+// good FD = always after < > << >>
 // good LIMITOR = Cat du HDOC le mot apres et le limiteur || voir si autre cas
 // good R_IN = Redirection in donc <
 // good HDOC (HEREDOC)= Redirection << [LIMITEUR]
@@ -30,14 +30,14 @@ static int	heredoc_or_append(char *s)
 	return (WORD);
 }
 
-static int	check_token(char *s, int last)
-{
+static int	check_token(char *s, int last)// << coucou
+{// << <<
 	size_t	len;
 
 	len = ft_strlen(s);
-	if (last == HEREDOC)
+	if (last == HEREDOC && heredoc_or_append(s) != HEREDOC)
 		return (LIMITOR);
-	if (last == APPEND || last == PIPE || last == R_OUT || last == R_IN)
+	if (last == APPEND || last == R_OUT || last == R_IN)
 		return (FD);
 	if (len == 1)
 	{
@@ -66,5 +66,7 @@ int	tokeniser(t_list *list)
 		last = check_token(tmp->word, last);
 		tmp = tmp->next;
 	}
+	tmp_print(list);
+	expand(list, env);
 	return (true);
 }

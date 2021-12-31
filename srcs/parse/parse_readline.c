@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 00:05:31 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/29 16:01:03 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/31 19:13:28 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,14 @@ static void	free_tab(char ***tab)
 	free_tab = NULL;
 }
 
-static int	push_tab_in_list(t_list *list, char **tab)
+static t_list	*push_tab_in_list(t_list *list, char **tab)
 {
+	t_list	list;
 	char	**free_tab;
 
+	list = (t_list){0};
+	if (!tab)
+		return (false);
 	free_tab = tab;
 	while (*tab)
 	{
@@ -65,7 +69,7 @@ static int	push_tab_in_list(t_list *list, char **tab)
 	return (true);
 }
 
-int	shell_split_rec(char ***tab, char *line, int index)
+static int	shell_split_rec(char ***tab, char *line, int index)
 {
 	int	i[MAX_SPLIT];
 	int	ret;
@@ -94,32 +98,16 @@ int	shell_split_rec(char ***tab, char *line, int index)
 	return (true);
 }
 
-int	shell_split(t_list *list, char ***tab, char *line)
+void	shell_split(char *line)
 {
-	if (!shell_split_rec(tab, line, 0))
-	{
-		free_tab(tab);
-		return (false);
-	}
-	if (!push_tab_in_list(list, *tab))
-	{
-		free_tab(tab);
-		return (false);
-	}
-	return (true);
-}
+	t_list *list;
+	char	**tab;
 
-int	parse_readline(t_list *list, char *s)
-{
-	char	**split;
-
-	if (!shell_split(list, &split, s))
-	{
-		free(s);
-		return (false);
-	}
-	free(s);
-	tokeniser(list);
-	tmp_print(list);
-	return (true);
+	tab = NULL;
+	shell_split_rec(&tab, line, 0);
+	push_tab_in_list(&list, tab);
+	free_tab(tab);
+	if (list->head)
+		tokeniser(&list);
+	return ;
 }

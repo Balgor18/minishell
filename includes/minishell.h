@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/29 11:00:17 by fcatinau         ###   ########.fr       */
+/*   Updated: 2021/12/31 19:13:23 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,14 @@
 # include <readline/history.h>
 # include <signal.h>
 
+/*
+**--------------Global--------------
+*/
+extern int				g_error;
+
+/*
+**--------------struct--------------
+*/
 typedef struct s_node	t_node;
 typedef struct s_list	t_list;
 
@@ -67,6 +75,18 @@ enum e_token
 	PIPE,
 };
 
+// enum e_token
+// {
+// 	WORD = 0,// mot
+// 	FD, // operateur
+// 	LIMITOR, // operateur
+// 	R_IN, // operateur
+// 	HEREDOC, // operateur
+// 	R_OUT, // operateur
+// 	APPEND, // operateur
+// 	PIPE, // operateur // check if pipe do a error
+// };
+
 enum e_split
 {
 	START = 0,
@@ -81,21 +101,16 @@ enum e_quote
 	DOUBLE,
 };
 
-// Vois si on as besoin
-// enum e_error
-// {
-// 	MALLOC = "Error\n Malloc",
-// }
-
 /*
 **----------------------------------
 **------------Readline--------------
 **----------------------------------
 */
-int		parse_readline(t_list *list, char *s);
-int		shell_split(t_list *list, char ***tab, char *line);
+int		parse_readline(char *s);
 int		split_start_word(char *line);
 int		split_end_word(char *line, int start);
+int		verif_parsing(t_list *list);
+
 /*
 **----------------------------------
 **--------------Token---------------

@@ -28,6 +28,7 @@ SOURCES		+=                             		\
 
 SOURCES		+=                             		\
 		srcs/parse/shell_split.c              	\
+		srcs/parse/verif_parsing.c            	\
 		srcs/parse/parse_readline.c           	\
 
 
