@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/03 14:03:53 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/03 17:38:23 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,12 @@ extern int				g_error;
 typedef struct s_node	t_node;
 typedef struct s_list	t_list;
 
-// struct s_list
-// {
-// 	size_t	lenght;
-// 	t_node	*head;
-// 	t_node	*tail;
-// };
-
 struct s_node
 {
 	char			*word;
 	int				token;
 	t_node			*next;
 	t_node			*prev;
-	// t_list			*list;
 };
 
 typedef struct s_cmd
@@ -65,7 +57,6 @@ typedef struct s_cmd
 
 enum e_token
 {
-	NOTHING = -1,// check if need do write this
 	WORD,
 	FD,
 	LIMITOR,

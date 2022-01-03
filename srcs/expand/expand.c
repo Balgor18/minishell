@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 10:57:09 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/03 10:26:25 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/03 18:57:47 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@
 // }
 
 // // It works
-// static char	*only_dollar(char *word, int quote)//possibility to add second enter param for have min line in dollar found
+// Possibility to add second enter param for have min line in dollar found
+// static char	*only_dollar(char *word, int quote)
 // {
 // 	char	*mal;
 // 	size_t	start;
@@ -71,7 +72,8 @@
 // 	mal = ft_substr(word, start, stop);
 // 	if (!mal)
 // 		return (NULL);// test if work
-// 	dprintf(2, BLUE"only_dollar |mal = |%s|\n"WHITE, mal);//-->return pas la bonne value
+// 	dprintf(2, BLUE"only_dollar |mal = |%s|\n"WHITE, mal);
+// 	-->return pas la bonne value
 // 	// cpy = the specific string
 // 	return (mal);
 // }
@@ -90,10 +92,11 @@
 // 		return (false);
 // 	if (quote == NO_QUOTE)
 // 	{
-// 		// add the expand and check if keep space --> we dont keep space -> just one per word
+// 		// add the expand and check if keep space -->
+// 		// If i call only_dollar need to free it inside get_env_var
 // 		// if NO_QUOTE == need to add 1 word by 1 word in the list
-
-// 		do_magic(node, get_env_var(env, var));// If i call only_dollar need to free it inside get_env_var
+// 		// If i call only_dollar need to free it inside get_env_var
+// 		do_magic(node, get_env_var(env, var));
 // 	}
 // 	else if (quote == DOUBLE)
 // 	{
@@ -124,6 +127,5 @@ void	expand(t_node *list)
 		start = start->next;
 	}
 	dprintf(2, RED"End expand \n"WHITE);
-	// return (false);
 	return ;
 }

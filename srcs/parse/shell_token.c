@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 21:58:56 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/03 14:10:55 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/03 17:36:38 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	tmp_print(t_node *list)
 	}
 }
 
-static int	heredoc_or_append(char *s, int last)// modif name
+static int	check_token2(char *s, int last)
 {
 	if (s[0] == '>' && s[1] == '>')
 		return (APPEND);
@@ -43,8 +43,8 @@ static int	heredoc_or_append(char *s, int last)// modif name
 	return (WORD);
 }
 
-static int	check_token(char *s, int last)// << coucou
-{// << <<
+static int	check_token(char *s, int last)
+{
 	size_t	len;
 
 	len = ft_strlen(s);
@@ -57,7 +57,7 @@ static int	check_token(char *s, int last)// << coucou
 		else if (*s == '|')
 			return (PIPE);
 	}
-	return (heredoc_or_append(s, last));
+	return (check_token2(s, last));
 }
 
 void	tokeniser(t_node *list)
@@ -67,7 +67,6 @@ void	tokeniser(t_node *list)
 
 	last = -1;
 	start = list;
-	dprintf(2, "Je rentre dans token\n");
 	while (start)
 	{
 		start->token = check_token(start->word, last);

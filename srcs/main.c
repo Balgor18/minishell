@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:41:23 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/03 15:59:35 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/03 17:27:49 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 // Pas encore d'arret sur la boucle || voir quoi mettre
 // rl_clear_history(); --> check le leaks
 
+// check for a singelton for env
+
 int	g_error;
 
 int	main(int argc, char **argv, char **env)
@@ -22,7 +24,7 @@ int	main(int argc, char **argv, char **env)
 	char	*line;
 
 	(void)argv;
-	(void)env;// check for a singelton for env
+	(void)env;
 	line = NULL;
 	g_error = 0;
 	if (argc != 1)

@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 18:12:55 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/03 14:17:58 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/03 17:35:19 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@ void	error_parsing(char *word)
 {
 	error_msg(ERROR_PARSING);
 	write(STDERR_FILENO, " '", 2);
-	ft_putstr_fd(STDERR_FILENO ,word);
+	ft_putstr_fd(STDERR_FILENO, word);
 	write(STDERR_FILENO, "'", 1);
 	write(STDERR_FILENO, "\n", 1);
 }
 
 // good WORD = Si ses pas autre choses ses un mot
 // good FD = always after < > >>
-// good LIMITOR = Cat du HEREDOC le mot apres et le limiteur || voir si autre cas
+// good LIMITOR = Cat du HEREDOC le mot apres et le limit|| voir si autre cas
 // good R_IN = Redirection in donc <
 // good HEREDOC (HEREDOC)= Redirection << [LIMITEUR]
 // good R_OUT = redirection out donc >
@@ -44,19 +44,19 @@ void	error_parsing(char *word)
 
 // if not a word
 // and if double same operateur
+
 int	verif_token(int actual, int last)
 {
-	// if ()
 	if (last == HEREDOC && actual != LIMITOR)
 		return (false);
 	if ((last == R_IN || last == R_OUT || last == APPEND) && actual != FD)
 		return (false);
 	if (last == PIPE && actual == PIPE)
 		return (false);
-	// check different error case
 	return (true);
 }
 
+// syntax error --> print line of syntax ??
 int	verif_parsing(t_node *list)
 {
 	int		last_token;
@@ -66,8 +66,9 @@ int	verif_parsing(t_node *list)
 	{
 		if (!verif_token(list->token, last_token))
 		{
-			dprintf(2, "Error because\n"GREEN"actu = %d\n"CYAN"last = %d\n"RESET, list->token, last_token);
-			g_error = 2;// syntax error --> print line of syntax ??
+			dprintf(2, "Error because\n"GREEN"actu = %d\n"CYAN"last = %d\n"RESET,
+				list->token, last_token);
+			g_error = 2;
 			error_parsing(list->word);
 			return (false);
 		}
