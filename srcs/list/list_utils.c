@@ -6,7 +6,7 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 14:38:22 by elaachac          #+#    #+#             */
-/*   Updated: 2021/12/21 14:47:31 by elaachac         ###   ########.fr       */
+/*   Updated: 2021/12/27 18:24:15 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void	dellist(t_list **list)
 	{
 		tmp = (*list)->head;
 		while ((*list)->lenght > 0)
-		while ((*list)->list)
 		{
 			(*list)->lenght--;
 			del = tmp;
