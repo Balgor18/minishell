@@ -6,7 +6,7 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 15:47:52 by elaachac          #+#    #+#             */
-/*   Updated: 2021/12/21 17:01:41 by elaachac         ###   ########.fr       */
+/*   Updated: 2022/01/03 15:21:45 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,7 @@ int	check_redir(t_node *iterator, int *fd, int next_pipe)
 		else
 			return (error_filename());
 	}
-	while (i < next_pipe && (iterator->token == R_IN || \
-		iterator->token == HEREDOC || iterator->token == R_OUT || \
-		iterator->token == APPEND)) // condition a changer
+	while (i < next_pipe) // condition changee, ps surquece soit la bonne
 	{
 		if (iterator->token == R_IN || iterator->token == HEREDOC)
 		{
@@ -75,6 +73,8 @@ int	check_redir(t_node *iterator, int *fd, int next_pipe)
 				return (error_filename());
 			}
 			switch_fd(*fd, iterator);
+			delnode(iterator->next, &iterator->list);
+			delnode(iterator, &iterator->list);
 		}
 		else if (iterator->token == R_OUT || iterator->token == APPEND)
 		{
@@ -88,9 +88,9 @@ int	check_redir(t_node *iterator, int *fd, int next_pipe)
 				return (error_filename());
 			}
 			switch_fd(*fd + 1, iterator);
+			iterator = delnode(iterator, &iterator->list);
+			iterator = delnode(iterator, &iterator->list);
 		}
-		delnode(iterator->next, &iterator->list);
-		delnode(iterator, &iterator->list);
 		i++;
 		iterator = iterator->next;
 	}
