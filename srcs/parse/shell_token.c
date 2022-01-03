@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token.c                                            :+:      :+:    :+:   */
+/*   shell_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 21:58:56 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/31 18:49:31 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/03 14:10:55 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,25 @@
 // good APPEND = >>
 // good PIPE = |
 
-static int	heredoc_or_append(char *s)
+static void	tmp_print(t_node *list)
+{
+	while (list)
+	{
+		printf(BLUE"world = |%s|\n"YELLOW"token = %d\n-------\n"RESET, list->word, list->token);
+		list = list->next;
+	}
+}
+
+static int	heredoc_or_append(char *s, int last)// modif name
 {
 	if (s[0] == '>' && s[1] == '>')
 		return (APPEND);
-	if (s[0] == '<' && s[1] == '<')
+	else if (s[0] == '<' && s[1] == '<')
 		return (HEREDOC);
+	else if (last == HEREDOC)
+		return (LIMITOR);
+	else if (last == APPEND || last == R_OUT || last == R_IN)
+		return (FD);
 	return (WORD);
 }
 
@@ -35,10 +48,6 @@ static int	check_token(char *s, int last)// << coucou
 	size_t	len;
 
 	len = ft_strlen(s);
-	if (last == HEREDOC && heredoc_or_append(s) != HEREDOC)
-		return (LIMITOR);
-	if (last == APPEND || last == R_OUT || last == R_IN)
-		return (FD);
 	if (len == 1)
 	{
 		if (*s == '<')
@@ -48,25 +57,27 @@ static int	check_token(char *s, int last)// << coucou
 		else if (*s == '|')
 			return (PIPE);
 	}
-	else if (len == 2)
-		return (heredoc_or_append(s));
-	return (WORD);
+	return (heredoc_or_append(s, last));
 }
 
-int	tokeniser(t_list *list)
+void	tokeniser(t_node *list)
 {
+	t_node	*start;
 	int		last;
-	t_node	*tmp;
 
-	last = WORD;
-	tmp = list->head;
-	while (tmp)
+	last = -1;
+	start = list;
+	dprintf(2, "Je rentre dans token\n");
+	while (start)
 	{
-		tmp->token = check_token(tmp->word, last);
-		last = check_token(tmp->word, last);
-		tmp = tmp->next;
+		start->token = check_token(start->word, last);
+		last = check_token(start->word, last);
+		start = start->next;
 	}
 	tmp_print(list);
-	expand(list, env);
-	return (true);
+	if (!verif_parsing(list))
+		delall(&list);
+	if (list)
+		expand(list);
+	return ;
 }

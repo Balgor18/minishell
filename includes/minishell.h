@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/31 19:13:23 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/03 14:03:53 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ extern int				g_error;
 typedef struct s_node	t_node;
 typedef struct s_list	t_list;
 
-struct s_list
-{
-	size_t	lenght;
-	t_node	*head;
-	t_node	*tail;
-};
+// struct s_list
+// {
+// 	size_t	lenght;
+// 	t_node	*head;
+// 	t_node	*tail;
+// };
 
 struct s_node
 {
@@ -47,7 +47,7 @@ struct s_node
 	int				token;
 	t_node			*next;
 	t_node			*prev;
-	t_list			*list;
+	// t_list			*list;
 };
 
 typedef struct s_cmd
@@ -65,7 +65,8 @@ typedef struct s_cmd
 
 enum e_token
 {
-	WORD = 0,
+	NOTHING = -1,// check if need do write this
+	WORD,
 	FD,
 	LIMITOR,
 	R_IN,
@@ -74,18 +75,6 @@ enum e_token
 	APPEND,
 	PIPE,
 };
-
-// enum e_token
-// {
-// 	WORD = 0,// mot
-// 	FD, // operateur
-// 	LIMITOR, // operateur
-// 	R_IN, // operateur
-// 	HEREDOC, // operateur
-// 	R_OUT, // operateur
-// 	APPEND, // operateur
-// 	PIPE, // operateur // check if pipe do a error
-// };
 
 enum e_split
 {
@@ -101,37 +90,43 @@ enum e_quote
 	DOUBLE,
 };
 
+// Define Error_msg
+
+# define NO_ARG "Minishell don't need arg\n"
+# define ERROR_FILE "Error filename after redir -> function to do\n"
+# define ERROR_PARSING "Minishell rose : syntax error near unexpected token"
+
 /*
 **----------------------------------
 **------------Readline--------------
 **----------------------------------
 */
-int		parse_readline(char *s);
 int		split_start_word(char *line);
 int		split_end_word(char *line, int start);
-int		verif_parsing(t_list *list);
+int		verif_parsing(t_node *list);
+void	shell_split(char *line);
 
 /*
 **----------------------------------
 **--------------Token---------------
 **----------------------------------
 */
-int		tokeniser(t_list *list);
+void	tokeniser(t_node *list);
 
 /*
 **----------------------------------
 **-------------Expand---------------
 **----------------------------------
 */
-int		expand(t_list *list, char **env);
+void	expand(t_node *list);
 
 /*
 **----------------------------------
 **--------------Error---------------
 **----------------------------------
 */
-int		error_arg(void);
-int		error_filename(void);
+void	ft_putstr_fd(int fd, char *s);
+int		error_msg(char *s);
 
 /*
 **----------------------------------
@@ -160,10 +155,15 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 **---------------List---------------
 **----------------------------------
 */
-t_list	*newlist(void);
-void	dellist(t_list **list);
-t_node	*init_node(t_node *node, char *word, t_list *list);
-t_node	*add_tail_list(t_list **list, char *word);
-t_node	*delnode(t_node *node, t_list **list);
+// t_list	*newlist(void);
+// void	dellist(t_list **list);
+// t_node	*init_node(t_node *node, char *word, t_list *list);
+// t_node	*add_tail_list(t_list **list, char *word);
+// t_node	*delnode(t_node *node, t_list **list);
+
+t_node	*add_tail_list(t_node **node, char *word);
+t_node	*init_node(t_node *node, char *word);
+t_node	*delall(t_node **node);
+t_node	*delnode(t_node **node);
 
 #endif

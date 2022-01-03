@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:41:23 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/31 19:03:20 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/03 15:59:35 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,18 @@ int	main(int argc, char **argv, char **env)
 	char	*line;
 
 	(void)argv;
-	(void)env;
+	(void)env;// check for a singelton for env
+	line = NULL;
 	g_error = 0;
 	if (argc != 1)
-		return (error_arg());
+		return (error_msg(NO_ARG));
 	while (1)
 	{
-		line = readline("Minishell rose :");
+		line = readline("Minishell rose : ");
 		if (line == NULL)
 			break ;
 		if (line)
-			shell_split(line)
+			shell_split(line);
 	}
 	rl_clear_history();
 	return (EXIT_SUCCESS);

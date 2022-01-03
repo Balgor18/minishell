@@ -18,18 +18,13 @@ SOURCES		+=                             		\
 		srcs/list/list_utils.c                	\
 
 
-## SRCS/TOKENISER ##
-
-SOURCES		+=                             		\
-		srcs/tokeniser/token.c                	\
-
-
 ## SRCS/PARSE ##
 
 SOURCES		+=                             		\
+		srcs/parse/shell_split_utils.c        	\
 		srcs/parse/shell_split.c              	\
-		srcs/parse/verif_parsing.c            	\
-		srcs/parse/parse_readline.c           	\
+		srcs/parse/shell_verif.c              	\
+		srcs/parse/shell_token.c              	\
 
 
 ## SRCS/UTILS ##
