@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/03 17:38:23 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/03 19:29:18 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,12 +146,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 **---------------List---------------
 **----------------------------------
 */
-// t_list	*newlist(void);
-// void	dellist(t_list **list);
-// t_node	*init_node(t_node *node, char *word, t_list *list);
-// t_node	*add_tail_list(t_list **list, char *word);
-// t_node	*delnode(t_node *node, t_list **list);
-
 t_node	*add_tail_list(t_node **node, char *word);
 t_node	*init_node(t_node *node, char *word);
 t_node	*delall(t_node **node);
