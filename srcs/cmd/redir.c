@@ -6,7 +6,7 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 15:47:52 by elaachac          #+#    #+#             */
-/*   Updated: 2022/01/03 15:21:45 by elaachac         ###   ########.fr       */
+/*   Updated: 2022/01/03 17:31:44 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ int	manage_file(t_node *iterator)
 		return (open(iterator->word, O_WRONLY | O_TRUNC | O_CREAT, 0644));
 }
 
-void	switch_fd(int fd, t_node *iterator)
+void	switch_fd(int *fd, t_node *iterator)
 {
 	if (iterator->token == R_IN)
 	{
 		if (file_check(iterator->word) == true)
 		{
-			fd = open(iterator->word, O_RDONLY);
+			*fd = open(iterator->word, O_RDONLY);
 		}
 		else
 		{
@@ -39,15 +39,15 @@ void	switch_fd(int fd, t_node *iterator)
 	}
 	else if (iterator->token == APPEND)
 	{
-		fd = open(iterator->word, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		*fd = open(iterator->word, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	}
 	else
 	{
-		fd = open(iterator->word, O_WRONLY | O_TRUNC | O_CREAT, 0644);
+		*fd = open(iterator->word, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	}
 }
 
-int	check_redir(t_node *iterator, int *fd, int next_pipe)
+int	check_redir(t_node *iterator, int fd[2], int next_pipe)
 {
 	int i;
 
@@ -72,7 +72,7 @@ int	check_redir(t_node *iterator, int *fd, int next_pipe)
 			{
 				return (error_filename());
 			}
-			switch_fd(*fd, iterator);
+			switch_fd(&fd[0], iterator);
 			delnode(iterator->next, &iterator->list);
 			delnode(iterator, &iterator->list);
 		}
@@ -87,7 +87,7 @@ int	check_redir(t_node *iterator, int *fd, int next_pipe)
 			{
 				return (error_filename());
 			}
-			switch_fd(*fd + 1, iterator);
+			switch_fd(&fd[1], iterator);
 			iterator = delnode(iterator, &iterator->list);
 			iterator = delnode(iterator, &iterator->list);
 		}

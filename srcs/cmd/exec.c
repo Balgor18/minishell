@@ -6,11 +6,19 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 18:26:05 by elaachac          #+#    #+#             */
-/*   Updated: 2021/12/20 18:45:01 by elaachac         ###   ########.fr       */
+/*   Updated: 2022/01/03 17:21:14 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	manage_fd(int in_fd, int out_fd)
+{
+	if (in_fd != 0)
+		dup2(in_fd, STDIN_FILENO);
+	if (out_fd != 0)
+		dup2(out_fd, STDOUT_FILENO);
+}
 
 void	exec_child(t_cmd *cmd, char **env)
 {
@@ -21,6 +29,7 @@ void	exec_child(t_cmd *cmd, char **env)
 	if (child == 0)
 	{
 		//manage fd (close and dup2)
+		manage_fd(cmd->fd[0], cmd->fd[1]);
 		execve(cmd->cmd_path, cmd->args, env);
 	}
 	waitpid(child, &ret, 0);
