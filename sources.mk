@@ -18,6 +18,13 @@ SOURCES		+=                             		\
 		srcs/list/list_utils.c                	\
 
 
+## SRCS/ENV ##
+
+SOURCES		+=                             		\
+		srcs/env/get_env.c                    	\
+		srcs/env/ft_env.c                     	\
+
+
 ## SRCS/PARSE ##
 
 SOURCES		+=                             		\

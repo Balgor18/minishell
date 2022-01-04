@@ -6,13 +6,13 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 14:38:22 by elaachac          #+#    #+#             */
-/*   Updated: 2022/01/04 13:26:10 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/04 21:26:30 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_node	*ft_lstlast(t_node *lst)
+static t_node	*ft_node_last(t_node *lst)
 {
 	while (lst)
 	{
@@ -37,8 +37,6 @@ t_node	*delnode(t_node **node)
 	{
 		tmp = (*node);
 		(*node) = tmp->next;
-		tmp->prev->next = (*node);
-		(*node)->prev = tmp->prev;
 		free(tmp);
 	}
 	return ((*node));
@@ -71,7 +69,7 @@ t_node	*add_tail_list(t_node **node, char *word)
 	t_node	*newnode;
 	t_node	*last;
 
-	last = ft_lstlast(*node);
+	last = ft_node_last(*node);
 	newnode = (t_node *)malloc(sizeof(*newnode));
 	if (!newnode)
 		return (NULL);
@@ -79,13 +77,11 @@ t_node	*add_tail_list(t_node **node, char *word)
 	{
 		if ((*node) == NULL)
 		{
-			newnode->prev = NULL;
 			newnode->next = NULL;
 			(*node) = newnode;
 		}
 		else
 		{
-			newnode->prev = last;
 			newnode->next = NULL;
 			last->next = newnode;
 		}

@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:41:23 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/04 13:29:55 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/04 17:54:58 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,14 @@
 
 int	g_error;
 
-int	main(int argc, char **argv, char **env)
+int	main(int ac, char **av, char **env)
 {
 	char	*line;
 
-	(void)argv;
-	(void)env;
 	line = NULL;
-	if (argc != 1)
+	if (ac != 1)
 		return (error_msg(NO_ARG));
+	init_env(ac, av, env);
 	while (1)
 	{
 		g_error = 0;

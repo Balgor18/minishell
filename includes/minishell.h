@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/04 13:41:50 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/04 19:22:55 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,20 @@ extern int				g_error;
 **--------------struct--------------
 */
 typedef struct s_node	t_node;
-typedef struct s_list	t_list;
+typedef struct s_env	t_env;
 
 struct s_node
 {
 	char			*word;
 	int				token;
 	t_node			*next;
-	t_node			*prev;
 };
 
+struct s_env
+{
+	char	*env;
+	t_env	*next;
+};
 typedef struct s_cmd
 {
 	bool	relative_path;
@@ -101,6 +105,18 @@ void	tokeniser(t_node *list);
 
 /*
 **----------------------------------
+**---------------Env----------------
+**----------------------------------
+*/
+void	init_env(int ac, char **av, char **env);
+t_env	**ft_getall_env(void);
+void	add_env(char *add);
+void	delone_env(char *del);
+void	delall_env(void);
+t_env	**ft_env(char **env, char *add, char *del);
+
+/*
+**----------------------------------
 **-------------Expand---------------
 **----------------------------------
 */
@@ -135,6 +151,7 @@ void	ft_bzero(void *s, size_t n);
 bool	ft_strchr(const char *s, int c);
 char	*get_env_var(char **envp, char *to_find);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
+int		ft_strncmp(char *s1, char *s2, unsigned int n);
 
 /*
 **----------------------------------
