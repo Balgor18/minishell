@@ -6,109 +6,143 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 10:57:09 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/03 18:57:47 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/04 23:35:33 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// static int	is_env(int c)// change for all carac stop the env
+// static void	expand_double_quote(char **word, t_node *list)
 // {
-// 	if (c >= 'a' && c <= 'z')
-// 		return (true);
-// 	else if (c >= 'A' && c <= 'Z')
-// 		return (true);
-// 	else if (c == '$')
-// 		return (true);
-// 	return (false);
-// }
-
-// static int	check_quote(char *word, int *quote)
-// {
-// 	while (*word)
-// 	{
-// 		if (*word == '\'')
-// 			return (false);
-// 		if (*word == '"')
-// 		{
-// 			*quote = DOUBLE;
-// 			break ;
-// 		}
-// 		word++;
-// 	}
-// 	return (true);
-// }
-
-// // if NO_QUOTE == need to add 1 word by 1 word in the list
-// static int	do_magic(t_node *node, char *var)//name to change
-// {
-// 	dprintf(2, RED"Do_magic | var = |%s|\n"WHITE, var);
-// 	if (!var)
-// 		return (false);
-// 	dprintf(2, GREEN"I got something\n"WHITE);
-// 	(void)node;
-// 	(void)var;
-// 	return (false);
-// }
-
-// // It works
-// Possibility to add second enter param for have min line in dollar found
-// static char	*only_dollar(char *word, int quote)
-// {
-// 	char	*mal;
-// 	size_t	start;
-// 	size_t	stop;
-
-// 	start = 0;
-// 	if (quote == DOUBLE)
-// 		start++;
-// 	if (word[start] == '$')
-// 		start++;
-// 	stop = start;
-// 	while (is_env(word[stop + 1]))
-// 		stop++;
-// 	if (quote == DOUBLE)
-// 		stop--;
-// 	mal = ft_substr(word, start, stop);
-// 	if (!mal)
-// 		return (NULL);// test if work
-// 	dprintf(2, BLUE"only_dollar |mal = |%s|\n"WHITE, mal);
-// 	-->return pas la bonne value
-// 	// cpy = the specific string
-// 	return (mal);
-// }
-
-// static int	dollar_found(t_list *list, t_node *node, char **env)
-// {
-// 	int		quote;
-// 	char	*var;
-
+// 	(void)word;
 // 	(void)list;
-// 	quote = NO_QUOTE;
-// 	if (!check_quote(node->word, &quote))
-// 		return (false);
-// 	var = only_dollar(node->word, quote);
-// 	if (!var)
-// 		return (false);
-// 	if (quote == NO_QUOTE)
-// 	{
-// 		// add the expand and check if keep space -->
-// 		// If i call only_dollar need to free it inside get_env_var
-// 		// if NO_QUOTE == need to add 1 word by 1 word in the list
-// 		// If i call only_dollar need to free it inside get_env_var
-// 		do_magic(node, get_env_var(env, var));
-// 	}
-// 	else if (quote == DOUBLE)
-// 	{
-// 		// add the expand inside the double quote --> Keep all space
-// 		do_magic(node, get_env_var(env, var));
-// 		// if double quote need to modif the only one elem in list
-
-// 	}
-// 	dprintf(2, "node->word = %s\n", node->word);
-// 	free(var);
-// 	return (true);
 // }
+
+// // do nothing just remove quote
+// static void	expand_simple_quote(char **word, t_node *list)
+// {
+// 	(void)list;
+// 	(void)word;
+// }
+
+// //have to create some new maillons in list
+// static void	expand_no_quote(char **word, t_node *list)
+// {
+// 	(void)word;
+// 	(void)list;
+// }
+
+// static void	expand_mode(char **tab)
+// {
+// 	while (*tab)
+// 	{
+// 		if (*tab == '\"')
+// 		{
+// 			expand_double_quote(tab, list);
+// 			//do double quote fct
+// 		}
+// 		else if (*tab == '\'')
+// 		{
+// 			expand_simple_quote(tab, list);
+// 			//do simple quote fct
+// 		}
+// 		else
+// 		{
+// 			expand_no_quote(tab, list);
+// 		 	//do no_quote quote fct
+// 		}
+// 		tab++;
+// 	}
+// }
+
+static int	start_word(char *word)
+{
+	int	start;
+
+	start = 0;
+	while (word[start] == ' ')
+		start++;
+	return (start);
+}
+
+static int	end_word(int start, char *word)
+{
+	int	quote;
+
+	quote = NO_QUOTE;
+	if (!word[start])
+		return (0);
+	if (word[start] != '\'' && word[start] != '"')
+		return (start + 1);
+	while (word[start])
+	{
+		if (word[start] == '\'' || word[start] == '"')
+		{
+			if (word[start] == '\'' && !quote)
+				quote = SIMPLE;
+			else if (word[start] == '"' && !quote)
+				quote = DOUBLE;
+			else if (quote != NO_QUOTE)
+			{
+				quote = NO_QUOTE;
+				start++;
+				break ;
+			}
+		}
+		start++;
+	}
+	return (start);
+}
+
+static int	expand_split_rec(char ***tab, char *word, int index)
+{
+	int	i[MAX_SPLIT];
+
+	i[START] = start_word(word);
+	i[END] = end_word(i[START], word);
+	if (i[END] > 0)
+	{
+		if (!expand_split_rec(tab, word + i[END], index + 1))
+			return (false);
+		(*tab)[index] = ft_substr(word, i[START], i[END] - i[START]);
+		if (!(*tab)[index])
+			return (false);
+	}
+	else if (i[END] == 0)
+	{
+		(*tab) = (char **)malloc(sizeof(char *) * (index + 1));
+		if (!(*tab))
+			return (false);
+		(*tab)[index] = NULL;
+	}
+	return (true);
+}
+
+static void	tmp_print(char **tab)
+{
+	char	**free_tab;
+
+	free_tab = tab;
+	while (*tab)
+	{
+		dprintf(2, "tab = %s\n", *tab);
+		free(*tab);
+		tab++;
+	}
+	free(free_tab);
+}
+
+static void	expand_split(t_node *list, t_node *next)
+{
+	char	**tab;
+
+	tab = NULL;
+	(void)next;
+	expand_split_rec(&tab, list->word, 0);
+	tmp_print(tab);
+	// list->next = NULL;
+	// list->next = next;// need to do this after adding with no quote
+}
 
 void	expand(t_node *list)
 {
@@ -118,12 +152,8 @@ void	expand(t_node *list)
 	dprintf(2, GREEN"Do expand \n"WHITE);
 	while (start)
 	{
-		dprintf(2, "strchr %d \n", ft_strchr(start->word, '$'));
-		if (ft_strchr(start->word, '$'))
-		{
-			// dollar_found(list, list);
-			dprintf(2, "Do something but i don't know what\n");
-		}
+		if (start->token == WORD || start->token == FD)
+			expand_split(start, start->next);
 		start = start->next;
 	}
 	dprintf(2, RED"End expand \n"WHITE);
