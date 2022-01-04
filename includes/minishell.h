@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/03 19:29:18 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/04 13:41:50 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include "color.h"
+# include "error.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <stdbool.h>
@@ -80,12 +81,6 @@ enum e_quote
 	SIMPLE,
 	DOUBLE,
 };
-
-// Define Error_msg
-
-# define NO_ARG "Minishell don't need arg\n"
-# define ERROR_FILE "Error filename after redir -> function to do\n"
-# define ERROR_PARSING "Minishell rose : syntax error near unexpected token"
 
 /*
 **----------------------------------
