@@ -6,7 +6,7 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 12:21:41 by elaachac          #+#    #+#             */
-/*   Updated: 2021/12/21 14:57:24 by elaachac         ###   ########.fr       */
+/*   Updated: 2022/01/04 16:53:32 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	cmd_manage(t_node *iterator, t_list *line, int next_pipe)
 	while (i < next_pipe) //1er jet sans les pipes
 	{
 		//check redir -> dup le fd de chaque redir
-		check_redir(iterator, cmd->fd, next_pipe);
+		if (check_redir(iterator, cmd->fd, next_pipe) == 1)
 		//check cmd
 		which_cmd(iterator, &cmd);
 		//exec cmd

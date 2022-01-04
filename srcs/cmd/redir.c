@@ -6,7 +6,7 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 15:47:52 by elaachac          #+#    #+#             */
-/*   Updated: 2022/01/04 12:03:12 by elaachac         ###   ########.fr       */
+/*   Updated: 2022/01/04 16:53:30 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	manage_file(t_node *iterator)
 		return (open(iterator->word, O_WRONLY | O_TRUNC | O_CREAT, 0644));
 }
 
-void	switch_fd(int *fd, t_node *iterator)
+void	switch_fd(int *fd, t_node *iterator, bool *file_error)
 {
 	if (iterator->prev->token == R_IN)
 	{
@@ -35,6 +35,7 @@ void	switch_fd(int *fd, t_node *iterator)
 		else
 		{
 			g_error = 1;
+			*file_error = true;
 		}
 	}
 	else if (iterator->prev->token == APPEND)
@@ -49,9 +50,11 @@ void	switch_fd(int *fd, t_node *iterator)
 
 int	check_redir(t_node *iterator, int fd[2], int next_pipe)
 {
-	int i;
+	int		i;
+	bool	file_error;
 
 	i = 0;
+	file_error = false;
 	if (iterator->token == PIPE)
 	{
 		if (iterator->next != NULL)
@@ -59,7 +62,7 @@ int	check_redir(t_node *iterator, int fd[2], int next_pipe)
 		else
 			return (error_filename());
 	}
-	while (i < next_pipe) // condition changee, ps surquece soit la bonne
+	while (i < next_pipe) // condition changee, ps sur que ce soit la bonne
 	{
 		if (iterator->token == R_IN || iterator->token == HEREDOC)
 		{
@@ -72,7 +75,7 @@ int	check_redir(t_node *iterator, int fd[2], int next_pipe)
 			{
 				return (error_filename());
 			}
-			switch_fd(&fd[0], iterator);
+			switch_fd(&fd[0], iterator, &file_error);
 			iterator = delnode(iterator, &iterator->list);
 			iterator = delnode(iterator, &iterator->list);
 		}
@@ -87,10 +90,12 @@ int	check_redir(t_node *iterator, int fd[2], int next_pipe)
 			{
 				return (error_filename());
 			}
-			switch_fd(&fd[1], iterator);
+			switch_fd(&fd[1], iterator, &file_error);
 			iterator = delnode(iterator, &iterator->list);
 			iterator = delnode(iterator, &iterator->list);
 		}
+		// if (file_error == true)
+		// 	return (1);
 		i++;
 		iterator = iterator->next;
 	}

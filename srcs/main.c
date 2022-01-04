@@ -6,7 +6,7 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:41:23 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/04 12:09:15 by elaachac         ###   ########.fr       */
+/*   Updated: 2022/01/04 17:08:03 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	mainTestElias(int argc, char **argv, char **envp)
 	// if (argv[2])
 		add_tail_list(&list, R_IN, "<");
 	add_tail_list(&list, WORD, "Makefile");
+		add_tail_list(&list, R_IN, "<");
+	add_tail_list(&list, WORD, "sources.mk");
 	// add_tail_list(&list, WORD, argv[4]);
 	exec(list);
 	dellist(&list);
