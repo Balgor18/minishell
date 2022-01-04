@@ -6,7 +6,7 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 15:47:52 by elaachac          #+#    #+#             */
-/*   Updated: 2022/01/03 17:31:44 by elaachac         ###   ########.fr       */
+/*   Updated: 2022/01/04 12:03:12 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	manage_file(t_node *iterator)
 
 void	switch_fd(int *fd, t_node *iterator)
 {
-	if (iterator->token == R_IN)
+	if (iterator->prev->token == R_IN)
 	{
 		if (file_check(iterator->word) == true)
 		{
@@ -37,11 +37,11 @@ void	switch_fd(int *fd, t_node *iterator)
 			g_error = 1;
 		}
 	}
-	else if (iterator->token == APPEND)
+	else if (iterator->prev->token == APPEND)
 	{
 		*fd = open(iterator->word, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	}
-	else
+	else if (iterator->prev->token == R_OUT)
 	{
 		*fd = open(iterator->word, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	}
@@ -73,8 +73,8 @@ int	check_redir(t_node *iterator, int fd[2], int next_pipe)
 				return (error_filename());
 			}
 			switch_fd(&fd[0], iterator);
-			delnode(iterator->next, &iterator->list);
-			delnode(iterator, &iterator->list);
+			iterator = delnode(iterator, &iterator->list);
+			iterator = delnode(iterator, &iterator->list);
 		}
 		else if (iterator->token == R_OUT || iterator->token == APPEND)
 		{
