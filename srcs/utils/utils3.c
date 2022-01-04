@@ -6,7 +6,7 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 14:41:08 by elaachac          #+#    #+#             */
-/*   Updated: 2021/12/20 14:41:18 by elaachac         ###   ########.fr       */
+/*   Updated: 2022/01/04 12:57:28 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,10 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	while (s1[i] && s2[i] && i < n - 1 && s1[i] == s2[i])
 		i++;
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+}
+
+void	set_return(int ret)
+{
+	if (WIFEXITED(ret) == 1)
+		g_error = WEXITSTATUS(ret);
 }

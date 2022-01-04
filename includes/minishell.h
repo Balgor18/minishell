@@ -6,7 +6,7 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/21 16:28:34 by elaachac         ###   ########.fr       */
+/*   Updated: 2022/01/04 12:46:58 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 
 typedef struct s_node	t_node;
 typedef struct s_list	t_list;
-extern int	g_error;
+extern int				g_error;
 
 struct s_list
 {
@@ -92,7 +92,7 @@ int		parse_readline(t_list *list, char *s);
 **-------------Expand---------------
 **----------------------------------
 */
-int	expand(t_list *list, char **env);
+int		expand(t_list *list, char **env);
 
 /*
 **----------------------------------
@@ -127,6 +127,7 @@ void	free_split(char **array);
 bool	ft_strcmp(char *s1, char *s2);
 bool	file_check(char *path);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
+void	set_return(int ret);
 
 /*
 **----------------------------------

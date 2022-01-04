@@ -6,7 +6,7 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 18:26:05 by elaachac          #+#    #+#             */
-/*   Updated: 2022/01/03 17:21:14 by elaachac         ###   ########.fr       */
+/*   Updated: 2022/01/04 12:57:53 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,5 @@ void	exec_child(t_cmd *cmd, char **env)
 		execve(cmd->cmd_path, cmd->args, env);
 	}
 	waitpid(child, &ret, 0);
+	set_return(ret);
 }
