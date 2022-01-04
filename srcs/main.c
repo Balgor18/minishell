@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:41:23 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/03 19:28:15 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/04 13:29:55 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ int	main(int argc, char **argv, char **env)
 	(void)argv;
 	(void)env;
 	line = NULL;
-	g_error = 0;
 	if (argc != 1)
 		return (error_msg(NO_ARG));
 	while (1)
 	{
+		g_error = 0;
 		line = readline("Minishell rose : ");
 		if (line == NULL)
 			break ;

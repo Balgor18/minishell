@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 14:38:22 by elaachac          #+#    #+#             */
-/*   Updated: 2022/01/03 17:31:45 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/04 13:26:10 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,10 @@ t_node	*delall(t_node **node)
 	{
 		tmp = (*node);
 		free((*node)->word);
-		(*node) = tmp->next;
+		(*node) = (*node)->next;
 		free(tmp);
 	}
+	node = NULL;
 	return (NULL);
 }
 

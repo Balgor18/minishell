@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 18:12:55 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/03 17:35:19 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/04 13:33:28 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,6 @@ int	verif_parsing(t_node *list)
 	{
 		if (!verif_token(list->token, last_token))
 		{
-			dprintf(2, "Error because\n"GREEN"actu = %d\n"CYAN"last = %d\n"RESET,
-				list->token, last_token);
 			g_error = 2;
 			error_parsing(list->word);
 			return (false);
