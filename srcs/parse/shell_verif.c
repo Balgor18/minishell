@@ -6,20 +6,11 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 18:12:55 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/04 13:33:28 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/04 13:40:00 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	error_parsing(char *word)
-{
-	error_msg(ERROR_PARSING);
-	write(STDERR_FILENO, " '", 2);
-	ft_putstr_fd(STDERR_FILENO, word);
-	write(STDERR_FILENO, "'", 1);
-	write(STDERR_FILENO, "\n", 1);
-}
 
 // good WORD = Si ses pas autre choses ses un mot
 // good FD = always after < > >>
@@ -42,8 +33,14 @@ void	error_parsing(char *word)
 // 	PIPE = 7, // operateur // check if pipe do a error
 // };
 
-// if not a word
-// and if double same operateur
+void	error_parsing(char *word)
+{
+	error_msg(ERROR_PARSING);
+	write(STDERR_FILENO, " '", 2);
+	ft_putstr_fd(STDERR_FILENO, word);
+	write(STDERR_FILENO, "'", 1);
+	write(STDERR_FILENO, "\n", 1);
+}
 
 int	verif_token(int actual, int last)
 {
@@ -56,7 +53,6 @@ int	verif_token(int actual, int last)
 	return (true);
 }
 
-// syntax error --> print line of syntax ??
 int	verif_parsing(t_node *list)
 {
 	int		last_token;
