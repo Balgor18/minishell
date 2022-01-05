@@ -6,13 +6,11 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 15:47:52 by elaachac          #+#    #+#             */
-/*   Updated: 2022/01/04 16:53:30 by elaachac         ###   ########.fr       */
+/*   Updated: 2022/01/05 14:13:20 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-
 
 int	manage_file(t_node *iterator)
 {
@@ -30,6 +28,8 @@ void	switch_fd(int *fd, t_node *iterator, bool *file_error)
 	{
 		if (file_check(iterator->word) == true)
 		{
+			if (*fd != 0)
+				close(*fd);
 			*fd = open(iterator->word, O_RDONLY);
 		}
 		else
@@ -40,10 +40,14 @@ void	switch_fd(int *fd, t_node *iterator, bool *file_error)
 	}
 	else if (iterator->prev->token == APPEND)
 	{
+		if (*fd != 0)
+			close(*fd);
 		*fd = open(iterator->word, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	}
 	else if (iterator->prev->token == R_OUT)
 	{
+		if (*fd != 0)
+			close(*fd);
 		*fd = open(iterator->word, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	}
 }
