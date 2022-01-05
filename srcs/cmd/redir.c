@@ -6,7 +6,7 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 15:47:52 by elaachac          #+#    #+#             */
-/*   Updated: 2022/01/05 14:13:20 by elaachac         ###   ########.fr       */
+/*   Updated: 2022/01/05 14:20:13 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	check_redir(t_node *iterator, int fd[2], int next_pipe)
 		else
 			return (error_filename());
 	}
-	while (i < next_pipe) // condition changee, ps sur que ce soit la bonne
+	while (i < next_pipe)
 	{
 		if (iterator->token == R_IN || iterator->token == HEREDOC)
 		{
@@ -103,5 +103,5 @@ int	check_redir(t_node *iterator, int fd[2], int next_pipe)
 		i++;
 		iterator = iterator->next;
 	}
-	return(0);
+	return(file_error);
 }
