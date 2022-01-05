@@ -6,7 +6,7 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 14:38:22 by elaachac          #+#    #+#             */
-/*   Updated: 2022/01/05 11:22:13 by elaachac         ###   ########.fr       */
+/*   Updated: 2022/01/05 16:42:50 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,6 @@ t_node	*delnode(t_node *node, t_list **list)
 	else
 	{
 		tmp = node;
-		// if (tmp->next && tmp->prev)
-		// {
-		// 	tmp->next->prev = tmp->prev;
-		// 	tmp->prev->next = tmp->next;
-		// }
-		// if (tmp->prev)
-		// {
-		// 	node = tmp->prev;
-		// 	node->next = NULL;
-		// }
 		if (node->prev == NULL)
 		{
 			if (tmp->next != NULL)
@@ -89,11 +79,10 @@ void	dellist(t_list **list)
 		tmp = (*list)->head;
 		while ((*list)->lenght > 0)
 		{
-			(*list)->lenght--;
 			del = tmp;
 			if (tmp->next)
 				tmp = tmp->next;
-			free(del);
+			delnode(del, &del->list);
 		}
 		free(*list);
 		*list = NULL;

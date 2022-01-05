@@ -6,7 +6,7 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 15:32:32 by elaachac          #+#    #+#             */
-/*   Updated: 2022/01/03 13:51:52 by elaachac         ###   ########.fr       */
+/*   Updated: 2022/01/05 16:33:44 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	free_cmd(t_cmd **cmd)
 		free((*cmd)->cmd_path);
 		(*cmd)->cmd_path = NULL;
 	}
-	while ((*cmd)->args[i])
+	while ((*cmd)->args && (*cmd)->args[i])
 	{
 		free((*cmd)->args[i]);
 		(*cmd)->args[i] = NULL;

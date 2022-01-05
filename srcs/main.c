@@ -6,7 +6,7 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:41:23 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/05 14:22:11 by elaachac         ###   ########.fr       */
+/*   Updated: 2022/01/05 16:51:31 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,16 @@ int	mainTestElias(int argc, char **argv, char **envp)
 	// if (argv[2])
 		add_tail_list(&list, R_IN, "<");
 	add_tail_list(&list, WORD, "sources.mk");
-		add_tail_list(&list, R_IN, "<");
+		add_tail_list(&list, R_OUT, ">");
 	add_tail_list(&list, WORD, "prout");
+		add_tail_list(&list, R_OUT, ">");
+	add_tail_list(&list, WORD, "croquette");
+		add_tail_list(&list, R_OUT, ">");
+	add_tail_list(&list, WORD, "jambonneau");
+		add_tail_list(&list, R_OUT, ">");
+	add_tail_list(&list, WORD, "tabouley");
+		add_tail_list(&list, R_OUT, ">");
+	add_tail_list(&list, WORD, "ojordui");
 	// add_tail_list(&list, WORD, argv[4]);
 	exec(list);
 	dellist(&list);

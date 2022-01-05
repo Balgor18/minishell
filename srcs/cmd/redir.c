@@ -6,7 +6,7 @@
 /*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 15:47:52 by elaachac          #+#    #+#             */
-/*   Updated: 2022/01/05 14:20:13 by elaachac         ###   ########.fr       */
+/*   Updated: 2022/01/05 16:48:28 by elaachac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,12 @@ void	switch_fd(int *fd, t_node *iterator, bool *file_error)
 			if (*fd != 0)
 				close(*fd);
 			*fd = open(iterator->word, O_RDONLY);
+			if (*fd < 0)
+			{
+				printf("%s: %s\n", iterator->word, strerror(errno));
+				*file_error = true;
+				g_error = 1;
+			}
 		}
 		else
 		{
@@ -43,12 +49,24 @@ void	switch_fd(int *fd, t_node *iterator, bool *file_error)
 		if (*fd != 0)
 			close(*fd);
 		*fd = open(iterator->word, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		if (*fd < 0)
+		{
+			printf("%s: %s\n", iterator->word, strerror(errno));
+			*file_error = true;
+			g_error = 1;
+		}
 	}
 	else if (iterator->prev->token == R_OUT)
 	{
 		if (*fd != 0)
 			close(*fd);
 		*fd = open(iterator->word, O_WRONLY | O_TRUNC | O_CREAT, 0644);
+		if (*fd < 0)
+		{
+			printf("%s: %s\n", iterator->word, strerror(errno));
+			*file_error = true;
+			g_error = 1;
+		}
 	}
 }
 
@@ -98,10 +116,10 @@ int	check_redir(t_node *iterator, int fd[2], int next_pipe)
 			iterator = delnode(iterator, &iterator->list);
 			iterator = delnode(iterator, &iterator->list);
 		}
-		// if (file_error == true)
-		// 	return (1);
+		if (file_error)
+			break ;
 		i++;
 		iterator = iterator->next;
 	}
-	return(file_error);
+	return (file_error);
 }
