@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 00:18:50 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/06 06:04:30 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/06 06:09:49 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ static void	expand_single_quote(char **tab)
 	char	*tmp;
 
 	tmp = ft_strtrim((*tab), "'");
-	dprintf(2, PURPLE"double tmp = %s\n"RESET, tmp);
 	free((*tab));
 	(*tab) = tmp;
 }
@@ -53,7 +52,6 @@ void	expand_modif_tab(char **tab)
 {
 	while (*tab)
 	{
-		dprintf(2, "start modif_tab %s\n", *tab);
 		if ((*tab)[0] == '\'')
 		{
 			expand_single_quote(tab);
@@ -62,7 +60,6 @@ void	expand_modif_tab(char **tab)
 			expand_double_and_no_quote(tab, DOUBLE);
 		else
 			expand_double_and_no_quote(tab, NO_QUOTE);
-		dprintf(2, "end modif_tab %s\n", *tab);
 		tab++;
 	}
 }
