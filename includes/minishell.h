@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/04 19:22:55 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/06 05:41:18 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ void	add_env(char *add);
 void	delone_env(char *del);
 void	delall_env(void);
 t_env	**ft_env(char **env, char *add, char *del);
+char	*ft_env_value(char *find);
 
 /*
 **----------------------------------
@@ -121,6 +122,8 @@ t_env	**ft_env(char **env, char *add, char *del);
 **----------------------------------
 */
 void	expand(t_node *list);
+void	expand_modif_tab(char **tab);
+void	expand_split_dollar(char **line);
 
 /*
 **----------------------------------
@@ -149,9 +152,10 @@ char	*ft_strdup(char *s1);
 size_t	ft_strlen(char *str);
 void	ft_bzero(void *s, size_t n);
 bool	ft_strchr(const char *s, int c);
-char	*get_env_var(char **envp, char *to_find);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		ft_strncmp(char *s1, char *s2, unsigned int n);
+char	*ft_strtrim(char const *s1, char const *set);
+char	*ft_joinstr_from_tab(char **tab);
 
 /*
 **----------------------------------

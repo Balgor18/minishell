@@ -6,56 +6,13 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 10:57:09 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/04 23:35:33 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/06 04:13:35 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// static void	expand_double_quote(char **word, t_node *list)
-// {
-// 	(void)word;
-// 	(void)list;
-// }
-
-// // do nothing just remove quote
-// static void	expand_simple_quote(char **word, t_node *list)
-// {
-// 	(void)list;
-// 	(void)word;
-// }
-
-// //have to create some new maillons in list
-// static void	expand_no_quote(char **word, t_node *list)
-// {
-// 	(void)word;
-// 	(void)list;
-// }
-
-// static void	expand_mode(char **tab)
-// {
-// 	while (*tab)
-// 	{
-// 		if (*tab == '\"')
-// 		{
-// 			expand_double_quote(tab, list);
-// 			//do double quote fct
-// 		}
-// 		else if (*tab == '\'')
-// 		{
-// 			expand_simple_quote(tab, list);
-// 			//do simple quote fct
-// 		}
-// 		else
-// 		{
-// 			expand_no_quote(tab, list);
-// 		 	//do no_quote quote fct
-// 		}
-// 		tab++;
-// 	}
-// }
-
-static int	start_word(char *word)
+static int	expand_start_word(char *word)
 {
 	int	start;
 
@@ -65,29 +22,28 @@ static int	start_word(char *word)
 	return (start);
 }
 
-static int	end_word(int start, char *word)
+static int	expand_end_word(int start, char *word)
 {
 	int	quote;
 
 	quote = NO_QUOTE;
 	if (!word[start])
 		return (0);
-	if (word[start] != '\'' && word[start] != '"')
-		return (start + 1);
+	if (word[start] == '\'' || word[start] == '"')
+	{
+		if (word[start] == '\'')
+			quote = SIMPLE;
+		else if (word[start] == '"')
+			quote = DOUBLE;
+		start++;
+	}
 	while (word[start])
 	{
 		if (word[start] == '\'' || word[start] == '"')
 		{
-			if (word[start] == '\'' && !quote)
-				quote = SIMPLE;
-			else if (word[start] == '"' && !quote)
-				quote = DOUBLE;
-			else if (quote != NO_QUOTE)
-			{
-				quote = NO_QUOTE;
+			if (quote != NO_QUOTE)
 				start++;
-				break ;
-			}
+			break ;
 		}
 		start++;
 	}
@@ -98,8 +54,8 @@ static int	expand_split_rec(char ***tab, char *word, int index)
 {
 	int	i[MAX_SPLIT];
 
-	i[START] = start_word(word);
-	i[END] = end_word(i[START], word);
+	i[START] = expand_start_word(word);
+	i[END] = expand_end_word(i[START], word);
 	if (i[END] > 0)
 	{
 		if (!expand_split_rec(tab, word + i[END], index + 1))
@@ -120,16 +76,11 @@ static int	expand_split_rec(char ***tab, char *word, int index)
 
 static void	tmp_print(char **tab)
 {
-	char	**free_tab;
-
-	free_tab = tab;
 	while (*tab)
 	{
-		dprintf(2, "tab = %s\n", *tab);
-		free(*tab);
+		dprintf(2, BLUE"|%s|\n"YELLOW"--------\n"RESET, *tab);
 		tab++;
 	}
-	free(free_tab);
 }
 
 static void	expand_split(t_node *list, t_node *next)
@@ -139,6 +90,9 @@ static void	expand_split(t_node *list, t_node *next)
 	tab = NULL;
 	(void)next;
 	expand_split_rec(&tab, list->word, 0);
+	dprintf(2, "Je rentre dans expand_modif_tab\n");
+	expand_modif_tab(tab);
+	dprintf(2, "Je ressors de expand_modif_tab\n");
 	tmp_print(tab);
 	// list->next = NULL;
 	// list->next = next;// need to do this after adding with no quote
