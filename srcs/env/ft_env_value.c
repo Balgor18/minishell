@@ -1,50 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_env.c                                          :+:      :+:    :+:   */
+/*   ft_env_value.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/04 19:19:53 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/06 05:58:07 by fcatinau         ###   ########.fr       */
+/*   Created: 2022/01/06 05:58:10 by fcatinau          #+#    #+#             */
+/*   Updated: 2022/01/06 05:58:17 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	init_env(int ac, char **av, char **env)
+char	*ft_env_value(char *find)
 {
-	(void)ac;
-	(void)av;
-	ft_env(env, NULL, NULL);
-}
-
-void	add_env(char *add)
-{
-	ft_env(NULL, add, NULL);
-}
-
-void	delone_env(char *del)
-{
-	ft_env(NULL, NULL, del);
-}
-
-void	delall_env(void)
-{
-	t_env	*tmp;
 	t_env	*env;
 
-	tmp = NULL;
+	if (!find)
+		return (NULL);
 	env = *ft_getall_env();
 	while (env)
 	{
-		tmp = env;
+		if (ft_strncmp(env->env, find, ft_strlen(find)) == 0)
+		{
+			while (*(env->env) != '=')
+				env->env++;
+			env->env++;
+			return (env->env);
+		}
 		env = env->next;
-		free(tmp);
 	}
-}
-
-t_env	**ft_getall_env(void)
-{
-	return (ft_env(NULL, NULL, NULL));
+	return (NULL);
 }
