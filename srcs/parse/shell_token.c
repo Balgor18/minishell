@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 21:58:56 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/04 13:20:54 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/07 20:28:07 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 // good APPEND = >>
 // good PIPE = |
 
-static void	tmp_print(t_node *list)
+static void	tmp_print(t_node *list) // have to remove
 {
 	while (list)
 	{

@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 15:47:24 by elaachac          #+#    #+#             */
-/*   Updated: 2022/01/06 05:46:05 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/07 20:26:50 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,11 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 //return NULL if error
 //size[0] == LEN MAX OF EVERY *TAB
 //size[1] == Get the return elem of ft_strlcpy
+
 char	*ft_joinstr_from_tab(char **tab)
 {
 	char	*ret;
-	size_t	size[2];//<--check for size of 2;
+	size_t	size[2];
 	char	**start;
 
 	start = tab;

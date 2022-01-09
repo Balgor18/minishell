@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 00:18:50 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/06 06:09:49 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/08 11:43:12 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ static void	expand_single_quote(char **tab)
 	(*tab) = tmp;
 }
 
-// cas double expand all space || cas no qoute only 1 space
+// cas double expand all space || cas no quote only 1 space
+
 static int	expand_double_and_no_quote(char **tab, int quote)
 {
 	char	*tmp;
@@ -35,27 +36,18 @@ static int	expand_double_and_no_quote(char **tab, int quote)
 		(*tab) = tmp;
 	}
 	if (ft_strchr(*tab, '$'))
-		expand_split_dollar(tab);// check what i get to the split !!!
+		expand_split_dollar(tab);
+	// if (tab && quote == NO_QUOTE)// check for create new function and add elem to list but probably not in this function
+		//do something for remove space
 	return (true);
 }
-
-// dont know if a keep this function
-
-// static void	expand_no_quote(char **tab)
-// {
-// 	if (ft_strchr((*tab), '$'))
-// 		expand_modif_env(tab);// chekc what can i do if malloc failed
-// 	// check if space and add maillon if create
-// }
 
 void	expand_modif_tab(char **tab)
 {
 	while (*tab)
 	{
 		if ((*tab)[0] == '\'')
-		{
 			expand_single_quote(tab);
-		}
 		else if ((*tab)[0] == '"')
 			expand_double_and_no_quote(tab, DOUBLE);
 		else

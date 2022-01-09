@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 01:17:24 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/06 06:03:20 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/07 20:29:37 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,13 +85,13 @@ static void	expand_modif_tab_dollar(char **tab_dollar)
 			{
 				tmp = malloc(sizeof(char) * 1);
 				if (!tmp)
-					return ;//<--error case
+					return ;
 				tmp[0] = '\0';
 			}
 			else
 				tmp = ft_strdup(env);
 			if (!tmp)
-				return ;// <-- check error malloc
+				return ;
 			free(*tab_dollar);
 			*tab_dollar = tmp;
 		}
@@ -109,7 +109,6 @@ void	expand_split_dollar(char **line)
 		expand_modif_tab_dollar(tab_dollar);
 	tmp_print(tab_dollar);
 	free(*line);
-	// *line = expand_rejoin_split_dollar(tab_dollar);
-	*line = ft_joinstr_from_tab(tab_dollar);// --> check error case
+	*line = ft_joinstr_from_tab(tab_dollar);
 	return ;
 }

@@ -25,7 +25,7 @@ SOURCES		+=                              		\
 SOURCES		+=                              		\
 		srcs/env/get_env.c                     	\
 		srcs/env/ft_env.c                      	\
-
+		srcs/env/ft_env_value.c                	\
 
 ## SRCS/PARSE ##
 

@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 15:56:16 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/04 22:48:21 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/08 21:34:49 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,18 @@ static t_env	*ft_env_last(t_env *lst)
 	return (lst);
 }
 
-static t_env	*ft_push_add_back(t_env *env, char *add)
+static t_env	*ft_push_add_back(t_env **env, char *add)
 {
 	t_env	*new;
 
-	if (!env)
+	if (!(*env))
 	{
-		env = malloc(sizeof(*env) * 1);
-		if (!env)
+		(*env) = malloc(sizeof(*env) * 1);
+		if (!(*env))
 			return (NULL);
-		env->next = NULL;
-		env->env = add;
-		return (env);
+		(*env)->next = NULL;
+		(*env)->env = add;
+		return (*env);
 	}
 	else
 	{
@@ -42,22 +42,30 @@ static t_env	*ft_push_add_back(t_env *env, char *add)
 		if (!new)
 			return (NULL);
 	}
-	ft_env_last(env)->next = new;
+	ft_env_last(*env)->next = new;
 	new->env = add;
 	new->next = NULL;
-	return (env);
+	return (*env);
 }
 
 static t_env	*ft_env_create(char **env)
 {
 	t_env	*list;
+	t_env	*tmp;
 
 	list = NULL;
 	while (*env)
 	{
-		list = ft_push_add_back(list, *env);
-		if (!list)
+		if (!ft_push_add_back(&list, *env))
+		{
+			while (list)
+			{
+				tmp = list;
+				list = list->next;
+				free(tmp);
+			}
 			return (NULL);
+		}
 		env++;
 	}
 	return (list);
@@ -93,7 +101,7 @@ t_env	**ft_env(char **env, char *add, char *del)
 	if (env)
 		list = ft_env_create(env);
 	else if (add)
-		list = ft_push_add_back(list, add);
+		ft_push_add_back(&list, add);
 	else if (del)
 		list = ft_env_delone(list, del);
 	return (&list);
