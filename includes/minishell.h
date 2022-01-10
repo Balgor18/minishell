@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/10 16:11:21 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/10 22:49:32 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ int		split_end_word(char *line, int start);
 int		verif_parsing(t_node *list);
 void	shell_split(char *line);
 int		shell_split_rec(char ***tab, char *line, int index);
-int	push_tab_in_list(t_node **list, char **tab);
 
 /*
 **----------------------------------
@@ -124,6 +123,8 @@ char	*ft_env_value(char *find);
 **----------------------------------
 */
 void	expand(t_node *list);
+void	expand_find_dollar(char **tab);
+void	expand_dollar_split(char **line);
 
 /*
 **----------------------------------

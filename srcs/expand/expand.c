@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 10:57:09 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/10 16:39:41 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/10 22:37:09 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,9 @@ static void	expand_split(t_node *list, t_node *next)
 	tab = NULL;
 	(void)next;
 	expand_split_rec(&tab, list->word, 0);
-	// expand_modif_tab(tab);//->did i need to send elem
+	expand_find_dollar(tab);//->did i need to send elem
 	tmp_print(tab);
-	// list->next = tmp;// need to do this after adding with no quote
+	list->next = tmp;// need to do this after adding with no quote
 }
 
 void	expand(t_node *list)
