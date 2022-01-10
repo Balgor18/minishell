@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/10 14:51:57 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/10 16:11:21 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,6 @@ char	*ft_env_value(char *find);
 **----------------------------------
 */
 void	expand(t_node *list);
-void	expand_modif_tab(char **tab);
-void	expand_split_dollar(char **line);
 
 /*
 **----------------------------------
