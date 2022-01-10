@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 10:57:09 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/06 06:09:28 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/10 14:51:21 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,15 +85,17 @@ static void	tmp_print(char **tab)
 
 static void	expand_split(t_node *list, t_node *next)
 {
+	t_node	*tmp;
 	char	**tab;
 
+	tmp = list->next;
+	list->next = NULL;
 	tab = NULL;
 	(void)next;
 	expand_split_rec(&tab, list->word, 0);
 	expand_modif_tab(tab);
 	tmp_print(tab);
-	// list->next = NULL;
-	// list->next = next;// need to do this after adding with no quote
+	// list->next = tmp;// need to do this after adding with no quote
 }
 
 void	expand(t_node *list)

@@ -6,13 +6,13 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 00:05:31 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/07 20:27:48 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/10 14:16:16 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	push_tab_in_list(t_node **list, char **tab)
+int	push_tab_in_list(t_node **list, char **tab)
 {
 	if (!tab)
 		return (false);
@@ -28,7 +28,7 @@ static int	push_tab_in_list(t_node **list, char **tab)
 	return (true);
 }
 
-static int	shell_split_rec(char ***tab, char *line, int index)
+int	shell_split_rec(char ***tab, char *line, int index)
 {
 	int	i[MAX_SPLIT];
 

@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 00:18:50 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/08 11:43:12 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/10 14:52:29 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,10 @@ static void	expand_single_quote(char **tab)
 	(*tab) = tmp;
 }
 
-// cas double expand all space || cas no quote only 1 space
-
 static int	expand_double_and_no_quote(char **tab, int quote)
 {
 	char	*tmp;
+	// char**	split_shell;
 
 	if (quote == DOUBLE)
 	{
@@ -37,8 +36,13 @@ static int	expand_double_and_no_quote(char **tab, int quote)
 	}
 	if (ft_strchr(*tab, '$'))
 		expand_split_dollar(tab);
-	// if (tab && quote == NO_QUOTE)// check for create new function and add elem to list but probably not in this function
-		//do something for remove space
+	if (tab && quote == NO_QUOTE)// check for create new function and add elem to list but probably not in this function
+	{
+		// function space -1
+		// shell_split_rec(&split_shell, *tab, 0);
+		// tmp_print(split_shell);
+		// push_tab_in_list(&list, split_shell);
+	}
 	return (true);
 }
 
