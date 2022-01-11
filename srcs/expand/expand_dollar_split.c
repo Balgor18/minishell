@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 22:21:07 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/10 23:19:54 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/11 22:30:39 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,22 @@ static int	expand_start(char *line)
 	int	start;
 
 	start = 0;
-	while (line[start] == ' ')
+	while (line[start] == ' ')// nop not gound
 		start++;
 	return (start);
 }
 
 static int	expand_stop(int start, char *line)
 {
-	if (line[start])
+	if (line[start] == '$')
+	{
 		start++;
-	while (ft_is_alpha(line[start]) || line[start] == '_')
-		start++;
+		while (ft_is_alpha(line[start]) || line[start] == '_')
+			start++;
+	}
+	else
+		while (line[start] != '$' && line[start])
+			start++;
 	return (start);
 }
 
@@ -62,53 +67,79 @@ static int	expand_dollar_split_rec(char ***tab, char *line, int index)
 	return (true);
 }
 
-static void	tmp_print(char **tab)
+// static void	tmp_print(char **tab)
+// {
+// 	while (*tab)
+// 	{
+// 		dprintf(2, RED"|%s|\n"CYAN"--------\n"RESET, *tab);
+// 		tab++;
+// 	}
+// }
+
+static void	expand_modif_dollar_line(char **tab)
 {
-	while (*tab)
+	char	*tmp;
+	char	*env;
+
+	while ((*tab))
 	{
-		dprintf(2, RED"|%s|\n"CYAN"--------\n"RESET, *tab);
+		if (ft_strlen((*tab)) > 1 && ft_strchr(*tab, '$'))
+		{
+			// $? !!!
+			env = ft_env_value((*tab) + 1);
+			if (!env)
+			{
+				tmp = malloc(sizeof(char) * 1);
+				if (!tmp)
+					return ;
+				tmp[0] = '\0';
+			}
+			else
+				tmp = ft_strdup(env);
+			if (!tmp)
+				return ;
+			free(*tab);
+			*tab = tmp;
+		}
 		tab++;
 	}
 }
 
-// static void	expand_modif_tab_dollar(char **tab_dollar)
-// {
-// 	char	*tmp;
-// 	char	*env;
-
-// 	while ((*tab_dollar))
-// 	{
-// 		if (ft_strlen((*tab_dollar)) > 1)
-// 		{
-// 			env = ft_env_value((*tab_dollar) + 1);
-// 			if (!env)
-// 			{
-// 				tmp = malloc(sizeof(char) * 1);
-// 				if (!tmp)
-// 					return ;
-// 				tmp[0] = '\0';
-// 			}
-// 			else
-// 				tmp = ft_strdup(env);
-// 			if (!tmp)
-// 				return ;
-// 			free(*tab_dollar);
-// 			*tab_dollar = tmp;
-// 		}
-// 		tab_dollar++;
-// 	}
-// }
-
-void	expand_dollar_split(char **line)
+static void	expand_space_neg(char *line)
 {
-	char	**tab_dollar;
+	while (*line)
+	{
+		if (*line == ' ')
+			*line *= -1;
+		line++;
+	}
+}
 
+//check is the most is to free tab_quote here
+//or in expand_quote_split
+void	expand_dollar_split(char **tab_quote)
+{
+	// char	**free_tab_quote;
+	char	**tab_dollar;
+	int		ret;
+
+	// free_tab_quote = tab_quote;
 	tab_dollar = NULL;
-	expand_dollar_split_rec(&tab_dollar, *line, 0);
-	// if (tab_dollar)
-	// 	expand_modif_tab_dollar(tab_dollar);
-	tmp_print(tab_dollar);
-	free(*line);
-	*line = ft_joinstr_from_tab(tab_dollar);
+	while (*tab_quote)
+	{
+		ret = expand_remove_quote(tab_quote);
+		if (ret != SIMPLE)
+		{
+			expand_dollar_split_rec(&tab_dollar, *tab_quote, 0);
+			expand_modif_dollar_line(tab_dollar);
+			free(*tab_quote);
+			*tab_quote = ft_joinstr_from_tab(tab_dollar);
+		}
+		if (ret == DOUBLE)
+			expand_space_neg(*tab_quote);
+		tab_quote++;
+	}
+	// tmp_print(tab_quote);
+	//
 	return ;
 }

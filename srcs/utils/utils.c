@@ -6,22 +6,11 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 15:48:08 by elaachac          #+#    #+#             */
-/*   Updated: 2022/01/03 15:22:54 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/11 22:51:43 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// int	is_special_char(char c, char *is)
-// {
-// 	while (*is)
-// 	{
-// 		if (c == *is)
-// 			return (true);
-// 		is++;
-// 	}
-// 	return (false);
-// }
 
 bool	ft_strcmp(char *s1, char *s2)
 {

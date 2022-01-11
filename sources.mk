@@ -9,32 +9,14 @@ SOURCES		+=                              		\
 ## SRCS/EXPAND ##
 
 SOURCES		+=                              		\
-		srcs/expand/expand_dollar_split.c      	\
-		srcs/expand/expand_modif_line.c        	\
 		srcs/expand/expand.c                   	\
+		srcs/expand/expand_dollar_split.c      	\
 
 
-## SRCS/PARSE ##
-
-SOURCES		+=                              		\
-		srcs/parse/shell_token.c               	\
-		srcs/parse/shell_split.c               	\
-		srcs/parse/shell_split_utils.c         	\
-		srcs/parse/shell_verif.c               	\
-
-
-## SRCS/UTILS ##
+## SRCS/LIST ##
 
 SOURCES		+=                              		\
-		srcs/utils/utils2.c                    	\
-		srcs/utils/utils.c                     	\
-		srcs/utils/error.c                     	\
-
-
-## SRCS/UTILS/CHECKERS ##
-
-SOURCES		+=                              		\
-		srcs/utils/checkers/file_check.c       	\
+		srcs/list/list_utils.c                 	\
 
 
 ## SRCS/ENV ##
@@ -45,9 +27,28 @@ SOURCES		+=                              		\
 		srcs/env/ft_env.c                      	\
 
 
-## SRCS/LIST ##
+## SRCS/PARSE ##
 
 SOURCES		+=                              		\
-		srcs/list/list_utils.c                 	\
+		srcs/parse/shell_split_utils.c         	\
+		srcs/parse/shell_split.c               	\
+		srcs/parse/shell_verif.c               	\
+		srcs/parse/shell_token.c               	\
+
+
+## SRCS/UTILS ##
+
+SOURCES		+=                              		\
+		srcs/utils/ft_split.c                  	\
+		srcs/utils/utils.c                     	\
+		srcs/utils/free.c                      	\
+		srcs/utils/error.c                     	\
+		srcs/utils/utils2.c                    	\
+
+
+## SRCS/UTILS/CHECKERS ##
+
+SOURCES		+=                              		\
+		srcs/utils/checkers/file_check.c       	\
 
 

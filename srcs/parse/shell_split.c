@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 00:05:31 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/10 14:16:16 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/11 22:51:12 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,22 +50,6 @@ int	shell_split_rec(char ***tab, char *line, int index)
 		(*tab)[index] = NULL;
 	}
 	return (true);
-}
-
-static void	free_tab(char **tab)
-{
-	char	**free_tab;
-
-	if (!tab)
-		return ;
-	free_tab = tab;
-	while (*tab)
-	{
-		free(*tab);
-		tab++;
-	}
-	free(free_tab);
-	return ;
 }
 
 void	shell_split(char *line)

@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 21:58:56 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/07 20:28:07 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/11 19:39:03 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@
 // good APPEND = >>
 // good PIPE = |
 
-static void	tmp_print(t_node *list) // have to remove
-{
-	while (list)
-	{
-		printf(BLUE"world = |%s|\n"YELLOW"token = %d\n-------\n"RESET, list->word, list->token);
-		list = list->next;
-	}
-}
+// static void	tmp_print(t_node *list) // have to remove
+// {
+// 	while (list)
+// 	{
+// 		printf(BLUE"world = |%s|\n"YELLOW"token = %d\n-------\n"RESET, list->word, list->token);
+// 		list = list->next;
+// 	}
+// }
 
 static int	check_token2(char *s, int last)
 {
@@ -73,7 +73,7 @@ void	tokeniser(t_node *list)
 		last = check_token(start->word, last);
 		start = start->next;
 	}
-	tmp_print(list);
+	// tmp_print(list);
 	if (!verif_parsing(list))
 		delall(&list);
 	if (list)

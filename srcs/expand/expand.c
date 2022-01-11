@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 10:57:09 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/10 22:37:09 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/11 23:21:07 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	expand_start_word(char *word)
 	int	start;
 
 	start = 0;
-	while (word[start] == ' ')
+	while (word[start] == ' ' && word[start])
 		start++;
 	return (start);
 }
@@ -39,20 +39,24 @@ static int	expand_end_word(int start, char *word)
 	}
 	while (word[start])
 	{
-		if (word[start] == '\'' || word[start] == '"')
+		if (word[start] == '\'')
 		{
-			if (quote != NO_QUOTE)
-				start++;
-			break ;
+			start++;
+			if (quote == SIMPLE)
+				break ;
+		}
+		else if (word[start] == '"')
+		{
+			start++;
+			if (quote == DOUBLE)
+				break ;
 		}
 		start++;
 	}
 	return (start);
 }
 
-// Split on every '" or ' '
-
-static int	expand_split_rec(char ***tab, char *word, int index)
+static int	expand_quote_split_rec(char ***tab, char *word, int index)
 {
 	int	i[MAX_SPLIT];
 
@@ -60,7 +64,7 @@ static int	expand_split_rec(char ***tab, char *word, int index)
 	i[END] = expand_end_word(i[START], word);
 	if (i[END] > 0)
 	{
-		if (!expand_split_rec(tab, word + i[END], index + 1))
+		if (!expand_quote_split_rec(tab, word + i[END], index + 1))
 			return (false);
 		(*tab)[index] = ft_substr(word, i[START], i[END] - i[START]);
 		if (!(*tab)[index])
@@ -76,40 +80,93 @@ static int	expand_split_rec(char ***tab, char *word, int index)
 	return (true);
 }
 
-static void	tmp_print(char **tab)
+static void	tmp_print(t_node *list)
 {
-	while (*tab)
+	while (list)
 	{
-		dprintf(2, BLUE"|%s|\n"YELLOW"--------\n"RESET, *tab);
-		tab++;
+		dprintf(2, BLUE"|%s|\n"YELLOW"--------\n"RESET, list->word);
+		list = list->next;
 	}
 }
 
-static void	expand_split(t_node *list, t_node *next)
+// static void	expand_remove_quote(char **line, int *quote)
+int	expand_remove_quote(char **line)
 {
-	t_node	*tmp;
-	char	**tab;
+	char	*tmp;
+	int		quote;
 
-	tmp = list->next;
-	list->next = NULL;
-	tab = NULL;
-	(void)next;
-	expand_split_rec(&tab, list->word, 0);
-	expand_find_dollar(tab);//->did i need to send elem
-	tmp_print(tab);
-	list->next = tmp;// need to do this after adding with no quote
+	if ((*line)[0] == '"')
+	{
+		quote = DOUBLE;
+		tmp = ft_strtrim(*line, "\"");
+	}
+	else if ((*line)[0] == '\'')
+	{
+		quote = SIMPLE;
+		tmp = ft_strtrim(*line, "'");
+	}
+	else
+	{
+		quote = NO_QUOTE;
+		return (quote);
+	}
+	if (!tmp)
+		return (SIMPLE);
+	free(*line);
+	*line = tmp;
+	return (quote);
 }
+
+static void	expand_quote_split(t_node *prev, t_node *list, t_node *next)
+{
+	char	**tab;
+	char	*rejoin;
+	t_node	*tmp;
+
+	if (!ft_strchr(list->word, '$'))
+	{
+		expand_remove_quote(&list->word);
+		return ;
+	}
+	tab = NULL;
+	expand_quote_split_rec(&tab, list->word, 0);
+	expand_dollar_split(tab);
+	rejoin = ft_joinstr_from_tab(tab);
+	if (!rejoin)
+	{
+		free_tab(tab);
+		return ;
+	}
+	tab = ft_split(rejoin, ' ');
+	free(rejoin);
+	if (!tab)
+		return ;
+	delnode(*list);// !!!
+	if (!push_tab_in_list(&list, tab))// check what to do
+		return ;
+	prev->next = list;// !!!
+
+}
+
+//echo "$TEST'$TEST'$TEST"
+//echo $$$$$$$$$$$$$$$$$$HOME$$$$$$$$$$$$$$
+//echo "$HOME"'$home'
 
 void	expand(t_node *list)
 {
 	t_node	*start;
+	t_node	*next;
+	t_node	*prev;// !!!
 
 	start = list;
+	prev = start;// !!!
 	dprintf(2, GREEN"Do expand \n"WHITE);
 	while (start)
 	{
+		next = start->next;// check for the next ==> ERROR
 		if (start->token == WORD || start->token == FD)
-			expand_split(start, start->next);
+			expand_quote_split(prev, start, next);// check prev !!!
+		prev = start;// !!!
 		start = start->next;
 	}
 	dprintf(2, RED"End expand \n"WHITE);

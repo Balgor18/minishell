@@ -6,13 +6,13 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 14:38:22 by elaachac          #+#    #+#             */
-/*   Updated: 2022/01/04 21:26:30 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/11 23:12:09 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_node	*ft_node_last(t_node *lst)
+t_node	*ft_node_last(t_node *lst)
 {
 	while (lst)
 	{

@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/10 22:49:32 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/11 23:12:22 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ int		split_end_word(char *line, int start);
 int		verif_parsing(t_node *list);
 void	shell_split(char *line);
 int		shell_split_rec(char ***tab, char *line, int index);
+int		push_tab_in_list(t_node **list, char **tab);
 
 /*
 **----------------------------------
@@ -123,8 +124,9 @@ char	*ft_env_value(char *find);
 **----------------------------------
 */
 void	expand(t_node *list);
-void	expand_find_dollar(char **tab);
+void	expand_split_dollar(char **tab);
 void	expand_dollar_split(char **line);
+int		expand_remove_quote(char **line);
 
 /*
 **----------------------------------
@@ -157,6 +159,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		ft_strncmp(char *s1, char *s2, unsigned int n);
 char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_joinstr_from_tab(char **tab);
+void	free_tab(char **tab);
+char	**ft_split(char const *str, char charset);
 
 /*
 **----------------------------------
@@ -167,5 +171,6 @@ t_node	*add_tail_list(t_node **node, char *word);
 t_node	*init_node(t_node *node, char *word);
 t_node	*delall(t_node **node);
 t_node	*delnode(t_node **node);
+t_node	*ft_node_last(t_node *lst);
 
 #endif

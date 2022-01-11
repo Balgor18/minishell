@@ -1,36 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env_value.c                                     :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/06 05:58:10 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/11 18:43:49 by fcatinau         ###   ########.fr       */
+/*   Created: 2022/01/11 19:23:51 by fcatinau          #+#    #+#             */
+/*   Updated: 2022/01/11 19:24:02 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_env_value(char *find)
+void	free_tab(char **tab)
 {
-	t_env	*env;
-	char	*tmp;
+	char	**free_tab;
 
-	if (!find)
-		return (NULL);
-	env = *ft_getall_env();
-	while (env)
+	if (!tab)
+		return ;
+	free_tab = tab;
+	while (*tab)
 	{
-		if (ft_strncmp(env->env, find, ft_strlen(find)) == 0)
-		{
-			tmp = env->env;
-			while (*tmp != '=')
-				tmp++;
-			tmp++;
-			return (tmp);
-		}
-		env = env->next;
+		free(*tab);
+		tab++;
 	}
-	return (NULL);
+	free(free_tab);
+	return ;
 }
