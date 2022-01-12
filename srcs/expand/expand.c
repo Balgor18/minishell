@@ -6,12 +6,13 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 10:57:09 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/12 13:02:49 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/12 23:30:51 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+t_node	*g_debug;
 static int	expand_start_word(char *word)
 {
 	int	start;
@@ -85,6 +86,9 @@ int	expand_remove_quote(char **line)
 	char	*tmp;
 	int		quote;
 
+	// delall_env();
+	// delall(&g_debug);
+	printf("%s\n", *line);
 	if ((*line)[0] == '"')
 	{
 		quote = DOUBLE;
@@ -100,10 +104,14 @@ int	expand_remove_quote(char **line)
 		quote = NO_QUOTE;
 		return (quote);
 	}
+	printf("%s = %p\n", tmp, tmp);
 	if (!tmp)
 		return (SIMPLE);
+	printf("line free\n");
 	free(*line);
 	*line = tmp;
+	printf("line = %s\n", *line);
+	// exit(128);
 	return (quote);
 }
 
@@ -117,7 +125,6 @@ static int	expand_quote_split(t_node *list, t_node *next)
 		expand_remove_quote(&list->word);
 		return (false);
 	}
-
 	tab = NULL;
 	list->next = NULL;
 	expand_quote_split_rec(&tab, list->word, 0);
@@ -132,23 +139,41 @@ static int	expand_quote_split(t_node *list, t_node *next)
 	free(rejoin);
 	if (!tab)
 		return (false);
-	delnode(&list);
+	// if (list)
+	// {
+	// 	free(list->word);
+	// 	free(list);
+	// }
 	if (!push_tab_in_list(&list, tab))
+	{
+		free_tab(tab);
 		return (false);
+	}
+	free_tab(tab);
 	ft_node_last(list)->next = next;
 	return (true);
 }
 
 //echo "$TEST'$TEST'$TEST"
+
+// invalid free
 //echo $$$$$$$$$$$$$$$$$$HOME$$$$$$$$$$$$$$
+
+// Conditional jump or move 
 //echo "$HOME"'$home'
+
+//leaks error
 //echo "$TEST"'$TEST'$TEST
 
+// leaks error
+// echo '$TEST'"$TEST"'$TEST'
 void	expand(t_node *list)
 {
 	t_node	*last;
 	t_node	*start;
 	t_node	*next;
+
+	g_debug = list;
 
 	start = list;
 	last = start;
@@ -166,6 +191,9 @@ void	expand(t_node *list)
 		last = start;
 		start = start->next;
 	}
+	delall(&list);
+	delall_env();
+	exit(126);
 	// dprintf(2, RED"End expand \n"WHITE);
 	return ;
 }

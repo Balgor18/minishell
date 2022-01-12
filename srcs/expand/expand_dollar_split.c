@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 22:21:07 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/12 12:37:17 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/12 22:46:25 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,11 +120,14 @@ void	expand_dollar_split(char **tab_quote)
 			expand_dollar_split_rec(&tab_dollar, *tab_quote, 0);
 			expand_modif_dollar_line(tab_dollar);
 			free(*tab_quote);
+			*tab_quote = NULL;
 			*tab_quote = ft_joinstr_from_tab(tab_dollar);
+			free_tab(tab_dollar);
+			if (ret == DOUBLE && *tab_quote)
+				expand_space_neg(*tab_quote);
 		}
-		if (ret == DOUBLE && *tab_quote)
-			expand_space_neg(*tab_quote);
 		tab_quote++;
 	}
+	// exit(125);
 	return ;
 }
