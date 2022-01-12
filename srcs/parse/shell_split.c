@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 00:05:31 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/11 22:51:12 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/12 12:23:04 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,10 @@ void	shell_split(char *line)
 	free_tab(tab);
 	if (node)
 		tokeniser(node);
+	// have to remove
 	delall(&node);
-	dprintf(2, RED"g_error = %d\n"RESET, g_error);// have to remove
-	if (g_error == 0) // have to remove
-		delall(&node);
+	// dprintf(2, RED"g_error = %d\n"RESET, g_error);
+	// if (g_error == 0)
+	// 	delall(&node);
 	return ;
 }

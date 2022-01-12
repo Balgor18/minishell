@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 22:21:07 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/11 22:30:39 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/12 12:37:17 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	expand_start(char *line)
 	int	start;
 
 	start = 0;
-	while (line[start] == ' ')// nop not gound
+	while (line[start] == ' ')
 		start++;
 	return (start);
 }
@@ -67,15 +67,6 @@ static int	expand_dollar_split_rec(char ***tab, char *line, int index)
 	return (true);
 }
 
-// static void	tmp_print(char **tab)
-// {
-// 	while (*tab)
-// 	{
-// 		dprintf(2, RED"|%s|\n"CYAN"--------\n"RESET, *tab);
-// 		tab++;
-// 	}
-// }
-
 static void	expand_modif_dollar_line(char **tab)
 {
 	char	*tmp;
@@ -115,15 +106,11 @@ static void	expand_space_neg(char *line)
 	}
 }
 
-//check is the most is to free tab_quote here
-//or in expand_quote_split
 void	expand_dollar_split(char **tab_quote)
 {
-	// char	**free_tab_quote;
 	char	**tab_dollar;
 	int		ret;
 
-	// free_tab_quote = tab_quote;
 	tab_dollar = NULL;
 	while (*tab_quote)
 	{
@@ -135,11 +122,9 @@ void	expand_dollar_split(char **tab_quote)
 			free(*tab_quote);
 			*tab_quote = ft_joinstr_from_tab(tab_dollar);
 		}
-		if (ret == DOUBLE)
+		if (ret == DOUBLE && *tab_quote)
 			expand_space_neg(*tab_quote);
 		tab_quote++;
 	}
-	// tmp_print(tab_quote);
-	//
 	return ;
 }

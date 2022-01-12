@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 10:57:09 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/11 23:21:07 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/12 13:02:49 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,16 +80,6 @@ static int	expand_quote_split_rec(char ***tab, char *word, int index)
 	return (true);
 }
 
-static void	tmp_print(t_node *list)
-{
-	while (list)
-	{
-		dprintf(2, BLUE"|%s|\n"YELLOW"--------\n"RESET, list->word);
-		list = list->next;
-	}
-}
-
-// static void	expand_remove_quote(char **line, int *quote)
 int	expand_remove_quote(char **line)
 {
 	char	*tmp;
@@ -117,58 +107,65 @@ int	expand_remove_quote(char **line)
 	return (quote);
 }
 
-static void	expand_quote_split(t_node *prev, t_node *list, t_node *next)
+static int	expand_quote_split(t_node *list, t_node *next)
 {
 	char	**tab;
 	char	*rejoin;
-	t_node	*tmp;
 
 	if (!ft_strchr(list->word, '$'))
 	{
 		expand_remove_quote(&list->word);
-		return ;
+		return (false);
 	}
+
 	tab = NULL;
+	list->next = NULL;
 	expand_quote_split_rec(&tab, list->word, 0);
 	expand_dollar_split(tab);
 	rejoin = ft_joinstr_from_tab(tab);
 	if (!rejoin)
 	{
 		free_tab(tab);
-		return ;
+		return (false);
 	}
 	tab = ft_split(rejoin, ' ');
 	free(rejoin);
 	if (!tab)
-		return ;
-	delnode(*list);// !!!
-	if (!push_tab_in_list(&list, tab))// check what to do
-		return ;
-	prev->next = list;// !!!
-
+		return (false);
+	delnode(&list);
+	if (!push_tab_in_list(&list, tab))
+		return (false);
+	ft_node_last(list)->next = next;
+	return (true);
 }
 
 //echo "$TEST'$TEST'$TEST"
 //echo $$$$$$$$$$$$$$$$$$HOME$$$$$$$$$$$$$$
 //echo "$HOME"'$home'
+//echo "$TEST"'$TEST'$TEST
 
 void	expand(t_node *list)
 {
+	t_node	*last;
 	t_node	*start;
 	t_node	*next;
-	t_node	*prev;// !!!
 
 	start = list;
-	prev = start;// !!!
-	dprintf(2, GREEN"Do expand \n"WHITE);
+	last = start;
+	// dprintf(2, GREEN"Do expand \n"WHITE);
 	while (start)
 	{
-		next = start->next;// check for the next ==> ERROR
+		next = start->next;
 		if (start->token == WORD || start->token == FD)
-			expand_quote_split(prev, start, next);// check prev !!!
-		prev = start;// !!!
+		{
+			// dprintf(2, "last->word = %s\n", last->word);
+			if (expand_quote_split(start, next))
+				last->next = start;
+			// dprintf(2, "start->word = %s\n", start->word);
+		}
+		last = start;
 		start = start->next;
 	}
-	dprintf(2, RED"End expand \n"WHITE);
+	// dprintf(2, RED"End expand \n"WHITE);
 	return ;
 }

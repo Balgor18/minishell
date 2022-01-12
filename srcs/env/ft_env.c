@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 15:56:16 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/08 21:34:49 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/12 12:29:18 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static t_env	*ft_push_add_back(t_env **env, char *add)
 
 	if (!(*env))
 	{
-		(*env) = malloc(sizeof(*env) * 1);
+		(*env) = malloc(sizeof(t_env));
 		if (!(*env))
 			return (NULL);
 		(*env)->next = NULL;
@@ -38,7 +38,7 @@ static t_env	*ft_push_add_back(t_env **env, char *add)
 	}
 	else
 	{
-		new = malloc(sizeof(*env) * 1);
+		new = malloc(sizeof(t_env));
 		if (!new)
 			return (NULL);
 	}
@@ -54,6 +54,7 @@ static t_env	*ft_env_create(char **env)
 	t_env	*tmp;
 
 	list = NULL;
+	tmp = NULL;
 	while (*env)
 	{
 		if (!ft_push_add_back(&list, *env))
