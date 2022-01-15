@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 15:47:24 by elaachac          #+#    #+#             */
-/*   Updated: 2022/01/11 16:27:39 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/14 19:18:57 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,6 @@ char	*ft_joinstr_from_tab(char **tab)
 			size[0] += ft_strlen(*tab);
 		tab++;
 	}
-	if (size[0] == 0)
-		return (NULL);
 	ret = malloc(sizeof(char *) * (size[0] + 1));
 	if (!ret)
 		return (NULL);
@@ -105,5 +103,6 @@ char	*ft_joinstr_from_tab(char **tab)
 		start++;
 	}
 	free(tab);
+	// printf("Return joinstr_from_tab %s\n", ret);
 	return (ret);
 }

@@ -6,13 +6,21 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 10:57:09 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/12 23:30:51 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/14 19:18:36 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_node	*g_debug;
+void	tmp_print_list(t_node *list)
+{
+	while (list)
+	{
+		printf(PURPLE"mot = %s\n"YELLOW"token = %d\n"RESET, list->word, list->token);
+		list = list->next;
+	}
+}
+
 static int	expand_start_word(char *word)
 {
 	int	start;
@@ -88,7 +96,7 @@ int	expand_remove_quote(char **line)
 
 	// delall_env();
 	// delall(&g_debug);
-	printf("%s\n", *line);
+	// printf("%s\n", *line);
 	if ((*line)[0] == '"')
 	{
 		quote = DOUBLE;
@@ -104,30 +112,30 @@ int	expand_remove_quote(char **line)
 		quote = NO_QUOTE;
 		return (quote);
 	}
-	printf("%s = %p\n", tmp, tmp);
+	// printf("%s = %p\n", tmp, tmp);
 	if (!tmp)
 		return (SIMPLE);
-	printf("line free\n");
+	// printf("line free\n");
 	free(*line);
 	*line = tmp;
-	printf("line = %s\n", *line);
+	// printf("line = %s\n", *line);
 	// exit(128);
 	return (quote);
 }
 
-static int	expand_quote_split(t_node *list, t_node *next)
+static int	expand_quote_split(t_node **list, t_node *next)
 {
 	char	**tab;
 	char	*rejoin;
 
-	if (!ft_strchr(list->word, '$'))
+	if (!ft_strchr((*list)->word, '$'))
 	{
-		expand_remove_quote(&list->word);
+		expand_remove_quote(&(*list)->word);
 		return (false);
 	}
 	tab = NULL;
-	list->next = NULL;
-	expand_quote_split_rec(&tab, list->word, 0);
+	(*list)->next = NULL;
+	expand_quote_split_rec(&tab, (*list)->word, 0);
 	expand_dollar_split(tab);
 	rejoin = ft_joinstr_from_tab(tab);
 	if (!rejoin)
@@ -139,18 +147,19 @@ static int	expand_quote_split(t_node *list, t_node *next)
 	free(rejoin);
 	if (!tab)
 		return (false);
-	// if (list)
-	// {
-	// 	free(list->word);
-	// 	free(list);
-	// }
-	if (!push_tab_in_list(&list, tab))
+	free((*list)->word);
+	free(*list);
+	if (!push_tab_in_list(list, tab))
 	{
 		free_tab(tab);
 		return (false);
 	}
 	free_tab(tab);
-	ft_node_last(list)->next = next;
+	if (next)
+		ft_node_last(*list)->next = next;// problem here
+	else
+		ft_node_last(*list)->next = NULL;
+	// printf("list->next = %p\nnext = %p\n", (*list)->next, next);
 	return (true);
 }
 
@@ -163,7 +172,8 @@ static int	expand_quote_split(t_node *list, t_node *next)
 //echo "$HOME"'$home'
 
 //leaks error
-//echo "$TEST"'$TEST'$TEST
+// echo "$TEST"'$TEST'$TEST
+// echo "$TEST"'$TEST''$TEST'
 
 // leaks error
 // echo '$TEST'"$TEST"'$TEST'
@@ -173,27 +183,38 @@ void	expand(t_node *list)
 	t_node	*start;
 	t_node	*next;
 
-	g_debug = list;
-
 	start = list;
 	last = start;
 	// dprintf(2, GREEN"Do expand \n"WHITE);
+	// printf(BLUE"Print list\n"RESET);
+	// tmp_print_list(list);
 	while (start)
 	{
 		next = start->next;
 		if (start->token == WORD || start->token == FD)
 		{
 			// dprintf(2, "last->word = %s\n", last->word);
-			if (expand_quote_split(start, next))
+			if (expand_quote_split(&start, next))
+			{
 				last->next = start;
+				// printf("------------\nlast\n%p\n%s\n%d\n%p\n------------\n", last, last->word, last->token, last->next);
+				// printf("------------\nstart\n%p\n%s\n%d\n%p\n------------\n", start, start->word, start->token, start->next);
+				// if (next)
+				// 	printf("------------\nnext\n%p\n%s\n%d\n%p\n------------\n", next, next->word, next->token, next->next);
+				// printf("----------------\n");
+				// tmp_print_list(list);
+				// printf("----------------\n");
+				start = start->next;
+			}
 			// dprintf(2, "start->word = %s\n", start->word);
 		}
 		last = start;
 		start = start->next;
 	}
+	// tmp_print_list(list);
 	delall(&list);
+	// dprintf(2, RED"End expand \n"WHITE);
 	delall_env();
 	exit(126);
-	// dprintf(2, RED"End expand \n"WHITE);
 	return ;
 }

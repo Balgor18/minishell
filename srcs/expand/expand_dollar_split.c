@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 22:21:07 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/12 22:46:25 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/14 19:19:57 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ static void	expand_modif_dollar_line(char **tab)
 
 static void	expand_space_neg(char *line)
 {
+	if (!*line)
+		return ;
 	while (*line)
 	{
 		if (*line == ' ')
@@ -106,14 +108,30 @@ static void	expand_space_neg(char *line)
 	}
 }
 
+void	tmp_print_tab(char **tab)
+{
+	while (*tab)
+	{
+		printf("*tab = %s\n",*tab);
+		tab++;
+	}
+}
+
 void	expand_dollar_split(char **tab_quote)
 {
+	char	**print;
 	char	**tab_dollar;
 	int		ret;
+	int		turn;
 
+	turn = 0;
+	print = tab_quote;
 	tab_dollar = NULL;
+	// printf(GREEN"Start\n"RESET);
+	// tmp_print_tab(print);
 	while (*tab_quote)
 	{
+		turn ++;
 		ret = expand_remove_quote(tab_quote);
 		if (ret != SIMPLE)
 		{
@@ -122,12 +140,16 @@ void	expand_dollar_split(char **tab_quote)
 			free(*tab_quote);
 			*tab_quote = NULL;
 			*tab_quote = ft_joinstr_from_tab(tab_dollar);
-			free_tab(tab_dollar);
 			if (ret == DOUBLE && *tab_quote)
 				expand_space_neg(*tab_quote);
 		}
+		// printf("%d %s\n", turn, *tab_quote);
+		// tmp_print_tab(print);
 		tab_quote++;
 	}
+	// printf("---------------\n");
+	// tmp_print_tab(print);
+	// printf(RED"End\n"RESET);
 	// exit(125);
 	return ;
 }
