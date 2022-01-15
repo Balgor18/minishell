@@ -149,6 +149,7 @@ static int	expand_quote_split(t_node **list, t_node *next)
 		return (false);
 	free((*list)->word);
 	free(*list);
+	*list = NULL;
 	if (!push_tab_in_list(list, tab))
 	{
 		free_tab(tab);
@@ -156,26 +157,17 @@ static int	expand_quote_split(t_node **list, t_node *next)
 	}
 	free_tab(tab);
 	if (next)
-		ft_node_last(*list)->next = next;// problem here
+		ft_node_last(*list)->next = next;
 	else
 		ft_node_last(*list)->next = NULL;
-	// printf("list->next = %p\nnext = %p\n", (*list)->next, next);
 	return (true);
 }
 
 //echo "$TEST'$TEST'$TEST"
 
-// invalid free
-//echo $$$$$$$$$$$$$$$$$$HOME$$$$$$$$$$$$$$
-
-// Conditional jump or move 
-//echo "$HOME"'$home'
-
-//leaks error
+//conditional jump
 // echo "$TEST"'$TEST'$TEST
 // echo "$TEST"'$TEST''$TEST'
-
-// leaks error
 // echo '$TEST'"$TEST"'$TEST'
 void	expand(t_node *list)
 {
@@ -190,6 +182,7 @@ void	expand(t_node *list)
 	// tmp_print_list(list);
 	while (start)
 	{
+		dprintf(2, "boucle \n");
 		next = start->next;
 		if (start->token == WORD || start->token == FD)
 		{
@@ -204,14 +197,17 @@ void	expand(t_node *list)
 				// printf("----------------\n");
 				// tmp_print_list(list);
 				// printf("----------------\n");
-				start = start->next;
+				// start = start->next;
+				// if (!start)
+				// 	break ;
 			}
 			// dprintf(2, "start->word = %s\n", start->word);
 		}
 		last = start;
 		start = start->next;
+		dprintf(2, "end boucle \n");
 	}
-	// tmp_print_list(list);
+	tmp_print_list(list);
 	delall(&list);
 	// dprintf(2, RED"End expand \n"WHITE);
 	delall_env();

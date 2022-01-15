@@ -98,7 +98,7 @@ static void	expand_modif_dollar_line(char **tab)
 
 static void	expand_space_neg(char *line)
 {
-	if (!*line)
+	if (!line[0])
 		return ;
 	while (*line)
 	{
@@ -119,19 +119,13 @@ void	tmp_print_tab(char **tab)
 
 void	expand_dollar_split(char **tab_quote)
 {
-	char	**print;
 	char	**tab_dollar;
 	int		ret;
-	int		turn;
 
-	turn = 0;
-	print = tab_quote;
 	tab_dollar = NULL;
-	// printf(GREEN"Start\n"RESET);
-	// tmp_print_tab(print);
 	while (*tab_quote)
 	{
-		turn ++;
+		printf("tab_quote = %s\n", *tab_quote);
 		ret = expand_remove_quote(tab_quote);
 		if (ret != SIMPLE)
 		{
@@ -143,13 +137,7 @@ void	expand_dollar_split(char **tab_quote)
 			if (ret == DOUBLE && *tab_quote)
 				expand_space_neg(*tab_quote);
 		}
-		// printf("%d %s\n", turn, *tab_quote);
-		// tmp_print_tab(print);
 		tab_quote++;
 	}
-	// printf("---------------\n");
-	// tmp_print_tab(print);
-	// printf(RED"End\n"RESET);
-	// exit(125);
 	return ;
 }
