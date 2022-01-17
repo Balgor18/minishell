@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 17:24:03 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/16 17:25:57 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/17 23:14:20 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,21 +37,16 @@ static int	expand_end_word(int start, char *word)
 			quote = DOUBLE;
 		start++;
 	}
-	while (word[start])
+	while (word[++start])
 	{
 		if (word[start] == '\'')
 		{
-			start++;
 			if (quote == SIMPLE)
-				break ;
+				return (++start);
 		}
 		else if (word[start] == '"')
-		{
-			start++;
 			if (quote == DOUBLE)
-				break ;
-		}
-		start++;
+				return (++start);
 	}
 	return (start);
 }
@@ -80,42 +75,57 @@ static int	expand_quote_split_rec(char ***tab, char *word, int index)
 	return (true);
 }
 
+static int	expand_quote_split_bis(char **rejoin, char ***tab, t_node **list)
+{
+	int	nb_word;
+
+	*rejoin = NULL;
+	expand_quote_split_rec(tab, (*list)->word, 0);
+	nb_word = ft_strlen_tab(*tab);
+	(*tab) = expand_dollar_split((*tab), (*tab));
+	(*rejoin) = ft_joinstr_from_tab((*tab), nb_word);
+	if (!(*rejoin))
+	{
+		free_tab((*tab));
+		return (false);
+	}
+	return (true);
+}
+
 int	expand_quote_split(t_node **list, t_node *next)
 {
 	char	**tab;
 	char	*rejoin;
 
+	printf("\n---------\nexpand_quote_split\n%p\n%p\n%p\n",*list, list, &list);
 	if (!ft_strchr((*list)->word, '$'))
 	{
 		expand_remove_quote(&(*list)->word);
 		return (false);
 	}
-	tab = NULL;
-	(*list)->next = NULL;
-	expand_quote_split_rec(&tab, (*list)->word, 0);
-	expand_dollar_split(tab);
-	rejoin = ft_joinstr_from_tab(tab, tab);
-	if (!rejoin)
-	{
-		free_tab(tab);
-		return (false);
-	}
+	tab = ((*list)->next = NULL, NULL);
+	expand_quote_split_bis(&rejoin, &tab, list);
 	tab = ft_split(rejoin, ' ');
 	free(rejoin);
 	if (!tab)
 		return (false);
+	printf("\n---------\n%p\n%p\n",*list, list);
+	// expand_clear_list(list);
 	free((*list)->word);
 	free(*list);
 	*list = NULL;
+	printf("\n---------\n%p\n%p\n",*list, list);
 	if (!push_tab_in_list(list, tab))
 	{
 		free_tab(tab);
 		return (false);
 	}
 	free_tab(tab);
-	if (next)
-		ft_node_last(*list)->next = next;
-	else
-		ft_node_last(*list)->next = NULL;
+	ft_node_last(*list)->next = next;
+	printf("\n---------\n%p\n%p\n",*list, list);
 	return (true);
 }
+
+// export L="s -la"
+// echo aaaaaaa > l$L
+// add ''

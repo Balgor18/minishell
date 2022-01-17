@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 15:47:24 by elaachac          #+#    #+#             */
-/*   Updated: 2022/01/16 15:58:22 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/17 16:24:43 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,30 +76,31 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 //size[0] == LEN MAX OF EVERY *TAB
 //size[1] == Get the return elem of ft_strlcpy
 
-char	*ft_joinstr_from_tab(char **tab, char **start)
+char	*ft_joinstr_from_tab(char **tab, int nb_word)
 {
 	char	*ret;
+	int		w;
 	size_t	size[2];
 
-	size[0] = 0;
-	size[1] = 0;
-	while (*tab)
+	w = (size[1] = 0, size[0] = 0, 0);
+	while (w < nb_word)
 	{
-		if (*(*tab))
-			size[0] += ft_strlen(*tab);
-		tab++;
+		if (tab[w])
+			size[0] += ft_strlen(tab[w]);
+		w++;
 	}
+	if (size[0] == 0)
+		return (NULL);
 	ret = malloc(sizeof(char *) * (size[0] + 1));
 	if (!ret)
 		return (NULL);
-	tab = start;
-	while (*start)
+	w = 0;
+	while (w < nb_word)
 	{
-		if (*(*start))
-			size[1] += ft_strlcpy(ret + size[1], *start, ft_strlen(*start) + 1);
-		free(*start);
-		start++;
+		if (tab[w])
+			size[1] += ft_strlcpy(ret + size[1], tab[w], ft_strlen(tab[w]) + 1);
+		free(tab[w]);
+		w++;
 	}
-	free(tab);
-	return (ret);
+	return (free(tab), ret);
 }

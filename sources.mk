@@ -10,6 +10,8 @@ SOURCES		+=                              		\
 
 SOURCES		+=                              		\
 		srcs/expand/expand.c                   	\
+		srcs/expand/expand_quote_split.c       	\
+		srcs/expand/expand_utils.c             	\
 		srcs/expand/expand_dollar_split.c      	\
 
 
@@ -40,15 +42,11 @@ SOURCES		+=                              		\
 
 SOURCES		+=                              		\
 		srcs/utils/ft_split.c                  	\
+		srcs/utils/ft_itoa.c                   	\
 		srcs/utils/utils.c                     	\
 		srcs/utils/free.c                      	\
 		srcs/utils/error.c                     	\
+		srcs/utils/put_utils.c                 	\
 		srcs/utils/utils2.c                    	\
-
-
-## SRCS/UTILS/CHECKERS ##
-
-SOURCES		+=                              		\
-		srcs/utils/checkers/file_check.c       	\
 
 

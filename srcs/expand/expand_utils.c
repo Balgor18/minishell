@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 16:51:08 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/16 17:23:35 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/17 23:03:42 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	expand_space_neg(char *line)
 	while (*line)
 	{
 		if (*line == ' ')
-			*line *= -1;
+			*line = *line * -1;
 		line++;
 	}
 }
@@ -56,4 +56,11 @@ int	expand_remove_quote(char **line)
 	free(*line);
 	*line = tmp;
 	return (quote);
+}
+
+void	expand_clear_list(t_node **list)
+{
+	printf("\n---------\nexpand_clear_list\n%p\n%p\n",*list, list);
+	free((*list)->word);
+	free(*list);
 }

@@ -1,44 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   put_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/11 19:23:51 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/17 22:20:13 by fcatinau         ###   ########.fr       */
+/*   Created: 2022/01/17 12:07:21 by fcatinau          #+#    #+#             */
+/*   Updated: 2022/01/17 12:08:09 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_tab(char **tab)
+static void	ft_putchar_fd(char c, int fd)
 {
-	char	**free_tab;
-
-	if (!tab)
-		return ;
-	free_tab = tab;
-	while (*tab)
-	{
-		free(*tab);
-		tab++;
-	}
-	free(free_tab);
-	return ;
+	write(fd, &c, 1);
 }
 
-void	free_list(t_node *list)
+void	ft_putnbr_fd(int nb, int fd)
 {
-	t_node	*tmp;
+	unsigned int	nbr;
 
-	tmp = NULL;
-	while (list)
+	if (nb < 0)
 	{
-		tmp = list->next;
-		free(list->word);
-		free(list);
-		list = tmp;
+		ft_putchar_fd('-', fd);
+		nbr = (unsigned int)(nb * -1);
 	}
-	list = NULL;
+	else
+		nbr = (unsigned int)nb;
+	if (nbr >= 10)
+		ft_putnbr_fd(nbr / 10, fd);
+	ft_putchar_fd((char)(nbr % 10 + 48), fd);
 }

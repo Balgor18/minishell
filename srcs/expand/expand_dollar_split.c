@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 22:21:07 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/16 17:04:07 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/17 17:15:24 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,39 +60,49 @@ static int	expand_dollar_split_rec(char ***tab, char *line, int index)
 	return (true);
 }
 
-static void	expand_modif_dollar_line(char **tab)
+// static void	tmp_print_tab(char **tab)
+// {
+// 	while (*tab)
+// 	{
+// 		printf("%s\n", *tab);
+// 		tab++;
+// 	}
+// }
+
+//probably leaks
+static void	expand_modif_dollar_line(char **tab, int nb_word)
 {
+	int		word;
 	char	*tmp;
 	char	*env;
 
-	while ((*tab))
+	word = 0;
+	while (word < nb_word)
 	{
-		if (ft_strlen((*tab)) > 1 && ft_strchr(*tab, '$'))
+		if (ft_strlen((tab[word])) > 1 && ft_strchr(tab[word], '$'))
 		{
-			// $? !!!
-			env = ft_env_value((*tab) + 1);
+			if ((tab[word])[1] == '?')
+				env = ft_itoa(g_error);
+			else
+				env = ft_env_value((tab[word]) + 1);
 			if (!env)
-			{
-				tmp = malloc(sizeof(char) * 1);
-				if (!tmp)
-					return ;
-				tmp[0] = '\0';
-			}
+				tmp = NULL;
 			else
 				tmp = ft_strdup(env);
 			if (!tmp)
 				return ;
-			free(*tab);
-			*tab = tmp;
+			free(tab[word]);
+			tab[word] = tmp;
 		}
-		tab++;
+		word++;
 	}
 }
 
-void	expand_dollar_split(char **tab_quote)
+char	**expand_dollar_split(char **tab_quote, char **tab)
 {
 	char	**tab_dollar;
 	int		ret;
+	int		nb_word;
 
 	tab_dollar = NULL;
 	while (*tab_quote)
@@ -101,14 +111,15 @@ void	expand_dollar_split(char **tab_quote)
 		if (ret != SIMPLE)
 		{
 			expand_dollar_split_rec(&tab_dollar, *tab_quote, 0);
-			expand_modif_dollar_line(tab_dollar);
+			nb_word = ft_strlen_tab(tab_dollar);
+			expand_modif_dollar_line(tab_dollar, nb_word);
 			free(*tab_quote);
 			*tab_quote = NULL;
-			*tab_quote = ft_joinstr_from_tab(tab_dollar, tab_dollar);
+			*tab_quote = ft_joinstr_from_tab(tab_dollar, nb_word);
 			if (ret == DOUBLE && *tab_quote)
 				expand_space_neg(*tab_quote);
 		}
 		tab_quote++;
 	}
-	return ;
+	return (tab);
 }

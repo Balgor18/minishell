@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/16 17:25:46 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/17 22:10:01 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,11 +125,12 @@ char	*ft_env_value(char *find);
 */
 void	expand(t_node *list);
 void	expand_split_dollar(char **tab);
-void	expand_dollar_split(char **line);
+char	**expand_dollar_split(char **tab_quote, char **tab);
 int		expand_remove_quote(char **line);
 int		ft_is_alpha(char c);
 void	expand_space_neg(char *line);
 int		expand_quote_split(t_node **list, t_node *next);
+void	expand_clear_list(t_node **list);
 
 /*
 **----------------------------------
@@ -161,9 +162,13 @@ bool	ft_strchr(const char *s, int c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		ft_strncmp(char *s1, char *s2, unsigned int n);
 char	*ft_strtrim(char const *s1, char const *set);
-char	*ft_joinstr_from_tab(char **tab, char **start);
+char	*ft_joinstr_from_tab(char **tab, int nb_word);
 void	free_tab(char **tab);
+void	free_list(t_node *list);
 char	**ft_split(char const *str, char charset);
+void	ft_putnbr_fd(int nb, int fd);
+char	*ft_itoa(int n);
+int		ft_strlen_tab(char **tab);
 
 /*
 **----------------------------------
