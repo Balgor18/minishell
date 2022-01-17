@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:41:23 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/14 18:50:29 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/16 17:21:14 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,6 @@ int	main(int ac, char **av, char **env)
 			shell_split(line);
 	}
 	delall_env();
-	// rl_clear_history();
+	rl_clear_history();
 	return (EXIT_SUCCESS);
 }

@@ -6,18 +6,11 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 22:21:07 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/14 19:19:57 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/16 17:04:07 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static int	ft_is_alpha(char c)
-{
-	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
-		return (1);
-	return (0);
-}
 
 static int	expand_start(char *line)
 {
@@ -96,27 +89,6 @@ static void	expand_modif_dollar_line(char **tab)
 	}
 }
 
-static void	expand_space_neg(char *line)
-{
-	if (!line[0])
-		return ;
-	while (*line)
-	{
-		if (*line == ' ')
-			*line *= -1;
-		line++;
-	}
-}
-
-void	tmp_print_tab(char **tab)
-{
-	while (*tab)
-	{
-		printf("*tab = %s\n",*tab);
-		tab++;
-	}
-}
-
 void	expand_dollar_split(char **tab_quote)
 {
 	char	**tab_dollar;
@@ -125,7 +97,6 @@ void	expand_dollar_split(char **tab_quote)
 	tab_dollar = NULL;
 	while (*tab_quote)
 	{
-		printf("tab_quote = %s\n", *tab_quote);
 		ret = expand_remove_quote(tab_quote);
 		if (ret != SIMPLE)
 		{
@@ -133,7 +104,7 @@ void	expand_dollar_split(char **tab_quote)
 			expand_modif_dollar_line(tab_dollar);
 			free(*tab_quote);
 			*tab_quote = NULL;
-			*tab_quote = ft_joinstr_from_tab(tab_dollar);
+			*tab_quote = ft_joinstr_from_tab(tab_dollar, tab_dollar);
 			if (ret == DOUBLE && *tab_quote)
 				expand_space_neg(*tab_quote);
 		}

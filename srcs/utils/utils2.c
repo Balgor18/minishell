@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 15:47:24 by elaachac          #+#    #+#             */
-/*   Updated: 2022/01/14 19:18:57 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/16 15:58:22 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,11 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 //size[0] == LEN MAX OF EVERY *TAB
 //size[1] == Get the return elem of ft_strlcpy
 
-char	*ft_joinstr_from_tab(char **tab)
+char	*ft_joinstr_from_tab(char **tab, char **start)
 {
 	char	*ret;
 	size_t	size[2];
-	char	**start;
 
-	start = tab;
 	size[0] = 0;
 	size[1] = 0;
 	while (*tab)
@@ -103,6 +101,5 @@ char	*ft_joinstr_from_tab(char **tab)
 		start++;
 	}
 	free(tab);
-	// printf("Return joinstr_from_tab %s\n", ret);
 	return (ret);
 }
