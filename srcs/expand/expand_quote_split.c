@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 17:24:03 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/18 19:05:33 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/18 22:26:33 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,10 @@ int	expand_quote_split(t_node *list, t_node **new)
 	tab = ft_split(rejoin, ' ');
 	free(rejoin);
 	if (!tab)
+	{
+		free_tab(tab);
 		return (false);
+	}
 	if (!push_tab_in_list(new, tab))
 	{
 		free_tab(tab);

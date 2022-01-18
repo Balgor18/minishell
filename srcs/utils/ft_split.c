@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 22:54:23 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/18 19:04:40 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/18 22:10:01 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,6 @@ char	**ft_split(char const *str, char charset)
 	int			j;
 	char		**tab_str;
 
-	if (str == 0)
-		return (0);
 	i[0] = -1;
 	i[1] = 0;
 	tab_str = ft_malloc(str, charset);

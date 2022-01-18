@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 19:23:51 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/18 14:25:10 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/18 22:34:55 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,12 @@ void	free_tab(char **tab)
 	free_tab = tab;
 	while (*tab)
 	{
-		free(*tab);
+		if (*tab)
+			free(*tab);
 		tab++;
 	}
-	free(free_tab);
+	if (free_tab)
+		free(free_tab);
 	return ;
 }
 

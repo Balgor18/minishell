@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 22:21:07 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/17 17:15:24 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/18 22:35:55 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,16 +60,6 @@ static int	expand_dollar_split_rec(char ***tab, char *line, int index)
 	return (true);
 }
 
-// static void	tmp_print_tab(char **tab)
-// {
-// 	while (*tab)
-// 	{
-// 		printf("%s\n", *tab);
-// 		tab++;
-// 	}
-// }
-
-//probably leaks
 static void	expand_modif_dollar_line(char **tab, int nb_word)
 {
 	int		word;
@@ -88,11 +78,12 @@ static void	expand_modif_dollar_line(char **tab, int nb_word)
 			if (!env)
 				tmp = NULL;
 			else
+			{
 				tmp = ft_strdup(env);
-			if (!tmp)
-				return ;
-			free(tab[word]);
-			tab[word] = tmp;
+				if (!tmp)
+					return ;
+			}
+			tab[word] = (free(tab[word]), tmp);
 		}
 		word++;
 	}
@@ -118,6 +109,7 @@ char	**expand_dollar_split(char **tab_quote, char **tab)
 			*tab_quote = ft_joinstr_from_tab(tab_dollar, nb_word);
 			if (ret == DOUBLE && *tab_quote)
 				expand_space_neg(*tab_quote);
+			free_tab(tab_dollar);// check $TEST || $HOME
 		}
 		tab_quote++;
 	}
