@@ -109,7 +109,7 @@ char	**expand_dollar_split(char **tab_quote, char **tab)
 			*tab_quote = ft_joinstr_from_tab(tab_dollar, nb_word);
 			if (ret == DOUBLE && *tab_quote)
 				expand_space_neg(*tab_quote);
-			free_tab(tab_dollar);// check $TEST || $HOME
+			tab_dollar = NULL;
 		}
 		tab_quote++;
 	}

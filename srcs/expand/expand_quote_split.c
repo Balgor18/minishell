@@ -85,10 +85,7 @@ static int	expand_quote_split_bis(char **rejoin, char ***tab, t_node *list)
 	(*tab) = expand_dollar_split((*tab), (*tab));
 	(*rejoin) = ft_joinstr_from_tab((*tab), nb_word);
 	if (!(*rejoin))
-	{
-		free_tab((*tab));
 		return (false);
-	}
 	return (true);
 }
 

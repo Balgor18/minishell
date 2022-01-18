@@ -90,7 +90,7 @@ char	*ft_joinstr_from_tab(char **tab, int nb_word)
 		w++;
 	}
 	if (size[0] == 0)
-		return (NULL);
+		return (free(tab), NULL);
 	ret = malloc(sizeof(char *) * (size[0] + 1));
 	if (!ret)
 		return (NULL);
