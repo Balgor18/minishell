@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 10:57:09 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/17 23:10:06 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/18 19:05:15 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,30 +28,43 @@
 // 	}
 // }
 
+static void	expand_modif_list(t_node **last, t_node **new,
+	t_node **list, t_node **start)
+{
+	if (*last)
+		(*last)->next = *new;
+	if (*new)
+		ft_node_last(*new)->next = (*start)->next;
+	free((*start)->word);
+	free(*start);
+	*start = ft_node_last(*new);
+	if (!*last)
+	{
+		*start = *new;
+		*list = *start;
+	}
+}
+
 void	expand(t_node *list)
 {
 	t_node	*last;
 	t_node	*start;
+	t_node	*new;
 
+	new = NULL;
 	start = list;
-	last = start;
+	last = NULL;
 	dprintf(2, RED"Start expand\n"RESET);
-	printf("entre de expand\n\n%p\n&%p", list, &list);
 	while (start)
 	{
 		if (start->token == WORD || start->token == FD)
 		{
-			expand_quote_split(&start, start->next);
-			if (start->next && last != start)
-				last->next = start;
+			if (expand_quote_split(start, &new))
+				expand_modif_list(&last, &new, &list, &start);
+			new = NULL;
 		}
 		last = start;
 		start = start->next;
 	}
-	printf("%s\n", list->word);
-	free(list->word);
-	free(list);
-	delall_env();
-	exit(126);
 	return ;
 }
