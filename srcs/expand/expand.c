@@ -28,6 +28,28 @@ static void	tmp_print_list(t_node *l)
 	}
 }
 
+static void	absolut_char(char **word)
+{
+	char *tmp;
+
+	tmp = *word;
+	while (*tmp)
+	{
+		if (*tmp == -32)
+			*tmp *= -1;
+		tmp++;
+	}
+
+}
+static void	expand_absolut_char(t_node *list)
+{
+	while (list)
+	{
+		absolut_char(&list->word);
+		list = list->next;
+	}
+}
+
 static void	expand_modif_list(t_node **last, t_node **new,
 	t_node **list, t_node **start)
 {
