@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 10:57:09 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/18 22:17:34 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/19 12:03:29 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void	expand(t_node *list)
 	new = NULL;
 	start = list;
 	last = NULL;
-	dprintf(2, RED"Start expand\n"RESET);
 	while (start)
 	{
 		if (start->token == WORD || start->token == FD)
