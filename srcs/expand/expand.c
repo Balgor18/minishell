@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 10:57:09 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/19 15:11:31 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/19 23:47:03 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	tmp_print_list(t_node *l)
 
 static void	absolut_char(char **word)
 {
-	char *tmp;
+	char	*tmp;
 
 	tmp = *word;
 	while (*tmp)
@@ -39,8 +39,8 @@ static void	absolut_char(char **word)
 			*tmp *= -1;
 		tmp++;
 	}
-
 }
+
 static void	expand_absolut_char(t_node *list)
 {
 	while (list)
