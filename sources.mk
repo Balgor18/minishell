@@ -50,3 +50,9 @@ SOURCES		+=                              		\
 		srcs/utils/utils2.c                    	\
 
 
+## SRCS/EXEC ##
+
+SOURCES		+=                              		\
+		srcs/exec/exec.c                       	\
+
+

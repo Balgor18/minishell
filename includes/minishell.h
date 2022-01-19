@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/18 14:55:20 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/19 12:06:14 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,13 @@ int		expand_remove_quote(char **line);
 int		ft_is_alpha(char c);
 void	expand_space_neg(char *line);
 int		expand_quote_split(t_node *list, t_node **new);
+
+/*
+**----------------------------------
+**---------------Exec---------------
+**----------------------------------
+*/
+void	exec(t_node *list);
 
 /*
 **----------------------------------
