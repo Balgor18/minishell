@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 10:57:09 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/19 12:03:29 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/19 15:11:31 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	expand(t_node *list)
 		if (start)
 			start = start->next;
 	}
+	expand_absolut_char(list);
 	tmp_print_list(list);
 	free_list(list);
 	delall_env();
