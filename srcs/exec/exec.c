@@ -41,11 +41,6 @@ static void	tmp_print_cmd(t_cmd *c)
 		}
 		c = c->next;
 	}
-	// while (l)
-	// {
-	// 	dprintf(2, BLUE"w = %s\n"RED"t %d\n"RESET, l->word, l->token);
-	// 	l = l->next;
-	// }
 }
 
 static void	exec_init_cmd(t_cmd **cmd, t_node *list)
@@ -96,15 +91,25 @@ static void	exec_init_cmd(t_cmd **cmd, t_node *list)
 	*cmd = start;
 }
 
-// export TEST  = "a b c d e"
+static void tmp_print_list(t_node *list)
+{
+	while (list)
+	{
+		dprintf(2, "word = %s\ntoken = %d\n", list->word, list->token);
+		list = list->next;
+	}
+}
+// export TEST="a b c d e"
 //echo "Yolo" < $TEST
 
-//echo "Yolo" < $TEST | $HOME
+//echo "Yolo" < $TEST | $HOME 
+//check cas $TEST = NULL
+// $HOME NOT FOUND
 void	exec(t_node *list)
 {
 	t_cmd	*cmd;
 
-	// tmp_print_list(list);
+	tmp_print_list(list);
 	exec_init_cmd(&cmd, list);
 	tmp_print_cmd(cmd);
 	free_list(list);
