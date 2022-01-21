@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 16:51:08 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/18 14:44:29 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/21 15:12:20 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,16 @@ int	expand_remove_quote(char **line)
 	free(*line);
 	*line = tmp;
 	return (quote);
+}
+
+void	expand_token_in_new(t_node *list, t_node **new)
+{
+	t_node	*tmp;
+
+	tmp = *new;
+	while (tmp)
+	{
+		tmp->token = list->token;
+		tmp = tmp->next;
+	}
 }

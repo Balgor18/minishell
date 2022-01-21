@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 21:58:56 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/12 12:22:27 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/21 15:02:48 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	check_token2(char *s, int last)
 	return (WORD);
 }
 
-static int	check_token(char *s, int last)
+int	check_token(char *s, int last)
 {
 	size_t	len;
 

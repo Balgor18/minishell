@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 10:57:09 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/19 23:47:03 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/21 18:21:25 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ static void	expand_absolut_char(t_node *list)
 	}
 }
 
+//lldb here to check
 static void	expand_modif_list(t_node **last, t_node **new,
 	t_node **list, t_node **start)
 {
@@ -67,6 +68,8 @@ static void	expand_modif_list(t_node **last, t_node **new,
 	}
 }
 
+// Error on expand
+// echo "Yolo" < $TEST | $HOME
 void	expand(t_node *list)
 {
 	t_node	*last;
@@ -89,6 +92,8 @@ void	expand(t_node *list)
 			start = start->next;
 	}
 	expand_absolut_char(list);
+	// if (list)
+	// 	exec(list);
 	tmp_print_list(list);
 	free_list(list);
 	delall_env();

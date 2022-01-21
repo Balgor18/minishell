@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/19 12:06:14 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/21 15:39:13 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,37 +29,6 @@
 */
 extern int				g_error;
 
-/*
-**--------------struct--------------
-*/
-typedef struct s_node	t_node;
-typedef struct s_env	t_env;
-
-struct s_node
-{
-	char			*word;
-	int				token;
-	t_node			*next;
-};
-
-struct s_env
-{
-	char	*env;
-	t_env	*next;
-};
-typedef struct s_cmd
-{
-	bool	relative_path;
-	bool	absolute_path;
-	bool	no_path;
-	bool	built_in;
-	char	*cmd_path;
-	char	*env_path;
-	char	**args;
-	int		fd[2];
-	int		index;
-}				t_cmd;
-
 enum e_token
 {
 	WORD,
@@ -70,6 +39,13 @@ enum e_token
 	R_OUT,
 	APPEND,
 	PIPE,
+};
+
+enum e_fd
+{
+	IN,
+	OUT,
+	FD_MAX,
 };
 
 enum e_split
@@ -87,6 +63,35 @@ enum e_quote
 };
 
 /*
+**--------------struct--------------
+*/
+
+typedef struct s_node	t_node;
+typedef struct s_env	t_env;
+typedef struct s_cmd	t_cmd;
+
+struct s_node
+{
+	char			*word;
+	int				token;
+	t_node			*next;
+};
+
+struct s_cmd
+{
+	t_node	*arg;
+	t_node	*red;
+	int		fd[FD_MAX];
+	t_cmd	*next;
+};
+
+struct s_env
+{
+	char	*env;
+	t_env	*next;
+};
+
+/*
 **----------------------------------
 **------------Readline--------------
 **----------------------------------
@@ -97,6 +102,7 @@ int		verif_parsing(t_node *list);
 void	shell_split(char *line);
 int		shell_split_rec(char ***tab, char *line, int index);
 int		push_tab_in_list(t_node **list, char **tab);
+int		check_token(char *s, int last);
 
 /*
 **----------------------------------
@@ -130,6 +136,7 @@ int		expand_remove_quote(char **line);
 int		ft_is_alpha(char c);
 void	expand_space_neg(char *line);
 int		expand_quote_split(t_node *list, t_node **new);
+void	expand_token_in_new(t_node *list, t_node **new);
 
 /*
 **----------------------------------
