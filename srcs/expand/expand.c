@@ -40,8 +40,10 @@ static void	expand_modif_list(t_node **last, t_node **new,
 	t_node	*tmp;
 
 	tmp = (*start)->next;
-	if (*last)
+	if (*last && *new)
 		(*last)->next = *new;
+	else
+		(*last)->next = tmp;
 	if (*new)
 		ft_node_last(*new)->next = tmp;
 	free((*start)->word);
@@ -78,5 +80,9 @@ void	expand(t_node *list)
 	expand_absolut_char(list);
 	if (list)
 		exec(list);
+	// tmp_print_list(list);
+	// free_list(list);
+	// delall_env();
+	// exit(180);
 	return ;
 }

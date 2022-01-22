@@ -102,9 +102,10 @@ static void tmp_print_list(t_node *list)
 // export TEST="a b c d e"
 //echo "Yolo" < $TEST
 
-//echo "Yolo" < $TEST | $HOME 
+//echo "Yolo" < $TEST | $HOME
 //check cas $TEST = NULL
-// $HOME NOT FOUND
+//$HOME NOT FOUND
+
 void	exec(t_node *list)
 {
 	t_cmd	*cmd;
