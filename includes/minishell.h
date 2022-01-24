@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/21 20:04:12 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/24 15:27:54 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,10 @@ void	expand_token_in_new(t_node *list, t_node **new);
 **----------------------------------
 */
 void	exec(t_node *list);
+void	exec_init_cmd(t_cmd **cmd, t_node *list);
+void	exec_malloc_cmd(t_cmd **cmd);
+void	exec_launch(t_cmd *cmd);
+t_cmd	*ft_cmd_last(t_cmd *cmd);
 
 /*
 **----------------------------------

@@ -53,6 +53,8 @@ SOURCES		+=                              		\
 ## SRCS/EXEC ##
 
 SOURCES		+=                              		\
+		srcs/exec/exec_launch.c                	\
 		srcs/exec/exec.c                       	\
+		srcs/exec/exec_init.c                  	\
 
 

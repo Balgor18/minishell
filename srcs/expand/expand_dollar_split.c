@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 22:21:07 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/18 22:35:55 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/24 17:25:34 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ static int	expand_stop(int start, char *line)
 	if (line[start] == '$')
 	{
 		start++;
+		if (line[start] == '?')
+			return (start + 1);
 		while (ft_is_alpha(line[start]) || line[start] == '_')
 			start++;
 	}
@@ -72,13 +74,12 @@ static void	expand_modif_dollar_line(char **tab, int nb_word)
 		if (ft_strlen((tab[word])) > 1 && ft_strchr(tab[word], '$'))
 		{
 			if ((tab[word])[1] == '?')
-				env = ft_itoa(g_error);
-			else
-				env = ft_env_value((tab[word]) + 1);
-			if (!env)
-				tmp = NULL;
+				tmp = ft_itoa(g_error);
 			else
 			{
+				env = ft_env_value((tab[word]) + 1);
+				if (!env)
+					tmp = NULL;
 				tmp = ft_strdup(env);
 				if (!tmp)
 					return ;

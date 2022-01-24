@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 10:57:09 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/21 18:21:25 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/24 13:05:47 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,5 @@ void	expand(t_node *list)
 	expand_absolut_char(list);
 	if (list)
 		exec(list);
-	// tmp_print_list(list);
-	// free_list(list);
-	// delall_env();
-	// exit(180);
 	return ;
 }
