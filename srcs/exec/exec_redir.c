@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 15:44:00 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/25 09:15:44 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/25 10:47:57 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,10 @@ static int	exec_redir_rin(t_cmd *cmd)
 	if (cmd->fd[IN] != 0)
 		close(cmd->fd[IN]);
 	cmd->fd[IN] = fd;
+	return (true);
 }
 
-static void	exec_redir_rout(t_cmd *cmd)
+static int	exec_redir_rout(t_cmd *cmd)
 {
 	int	fd;
 
@@ -34,9 +35,10 @@ static void	exec_redir_rout(t_cmd *cmd)
 	if (cmd->fd[OUT] != 1)
 		close(cmd->fd[OUT]);
 	cmd->fd[OUT] = fd;
+	return (true);
 }
 
-static void	exec_redir_append(t_cmd *cmd)
+static int	exec_redir_append(t_cmd *cmd)
 {
 	int	fd;
 
@@ -46,11 +48,7 @@ static void	exec_redir_append(t_cmd *cmd)
 	if (cmd->fd[OUT] != 1)
 		close(cmd->fd[OUT]);
 	cmd->fd[OUT] = fd;
-}
-
-static void	exec_redir_heredoc()
-{
-
+	return (true);
 }
 
 // if find a quote inside no expand to do.
@@ -69,7 +67,7 @@ void	exec_redir(t_cmd *cmd)
 		else if (cpy->red->token == APPEND)
 			exec_redir_append(cpy);
 		else if (cpy->red->token == HEREDOC)
-			exec_redir_heredoc();// <-- Need to to for expand on not expand
+			exec_redir_heredoc(cpy);// <-- Need to to for expand on not expand
 		cpy->red = cpy->red->next;
 	}
 }

@@ -24,6 +24,13 @@ int	ft_strncmp(char *s1, char *s2, unsigned int n)
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 
+/*
+** ft_strchr(char *S, int C)
+** This function research the char C in the string S
+** if he found the char C in S return TRUE
+** Or return FALSE if not found
+*/
+
 bool	ft_strchr(const char *s, int c)
 {
 	if ((char)c == '\0')

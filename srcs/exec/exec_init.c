@@ -22,6 +22,8 @@ void	exec_malloc_cmd(t_cmd **cmd)
 	tmp->arg = NULL;
 	tmp->red = NULL;
 	tmp->next = NULL;
+	tmp->fd[IN] = 0;
+	tmp->fd[OUT] = 1;
 	if (*cmd)
 		ft_cmd_last(*cmd)->next = tmp;
 	else

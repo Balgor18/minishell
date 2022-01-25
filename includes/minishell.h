@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/24 15:27:54 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/25 10:48:26 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,8 @@ void	exec(t_node *list);
 void	exec_init_cmd(t_cmd **cmd, t_node *list);
 void	exec_malloc_cmd(t_cmd **cmd);
 void	exec_launch(t_cmd *cmd);
-t_cmd	*ft_cmd_last(t_cmd *cmd);
+void	exec_redir(t_cmd *cmd);
+void	exec_redir_heredoc(t_cmd *cmd);
 
 /*
 **----------------------------------
@@ -172,7 +173,6 @@ bool	file_check(char *path);
 **--------------Utils---------------
 **----------------------------------
 */
-int		is_special_char(char c, char *is);
 char	**ft_split(char const *str, char charset);
 void	ft_putstr_fd(int fd, char *s);
 char	*ft_strdup(char *s1);
@@ -189,6 +189,7 @@ char	**ft_split(char const *str, char charset);
 void	ft_putnbr_fd(int nb, int fd);
 char	*ft_itoa(int n);
 int		ft_strlen_tab(char **tab);
+t_cmd	*ft_cmd_last(t_cmd *cmd);
 
 /*
 **----------------------------------
