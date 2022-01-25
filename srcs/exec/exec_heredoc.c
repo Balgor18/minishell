@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 10:47:21 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/25 19:10:19 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/25 21:22:54 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ static int	heredoc_no_expand(t_node *red)
 		if (ft_strcmp(line, limit))
 			break ;
 		write(fd, line, ft_strlen(line));
+		write(fd, "\n", 1);
 		free(line);
 	}
 	return (fd);
@@ -99,6 +100,7 @@ static int	heredoc_expand(t_node *red)
 		}
 		else
 			write(fd, line, ft_strlen(line));
+		write(fd, "\n", 1);
 		free(line);
 	}
 	return (fd);
