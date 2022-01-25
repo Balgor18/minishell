@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 15:44:00 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/25 10:47:57 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/25 16:26:11 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@ static int	exec_redir_append(t_cmd *cmd)
 	return (true);
 }
 
-// if find a quote inside no expand to do.
-// But if we got a dollar inside the limitor dont expand
 void	exec_redir(t_cmd *cmd)
 {
 	t_cmd	*cpy;
@@ -61,13 +59,25 @@ void	exec_redir(t_cmd *cmd)
 	while (cpy->red)
 	{
 		if (cpy->red->token == R_IN)
-			exec_redir_rin(cpy);
+		{
+			if (exec_redir_rin(cpy))
+				break ;
+		}
 		else if (cpy->red->token == R_OUT)
-			exec_redir_rout(cpy);
+		{
+			if (exec_redir_rout(cpy))
+				break ;
+		}
 		else if (cpy->red->token == APPEND)
-			exec_redir_append(cpy);
+		{
+			if (exec_redir_append(cpy))
+				break ;
+		}
 		else if (cpy->red->token == HEREDOC)
-			exec_redir_heredoc(cpy);// <-- Need to to for expand on not expand
+		{
+			if (exec_redir_heredoc(cpy))
+				break ;
+		}
 		cpy->red = cpy->red->next;
 	}
 }

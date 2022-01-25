@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 22:21:07 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/24 17:25:34 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/25 19:07:03 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	expand_stop(int start, char *line)
 	return (start);
 }
 
-static int	expand_dollar_split_rec(char ***tab, char *line, int index)
+int	expand_dollar_split_rec(char ***tab, char *line, int index)
 {
 	int	i[MAX_SPLIT];
 
@@ -62,7 +62,7 @@ static int	expand_dollar_split_rec(char ***tab, char *line, int index)
 	return (true);
 }
 
-static void	expand_modif_dollar_line(char **tab, int nb_word)
+void	expand_modif_dollar_line(char **tab, int nb_word)
 {
 	int		word;
 	char	*tmp;

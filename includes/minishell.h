@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/25 10:48:26 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/25 19:07:08 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "color.h"
 # include "error.h"
+# include "get_next_line.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <stdbool.h>
@@ -140,6 +141,8 @@ int		ft_is_alpha(char c);
 void	expand_space_neg(char *line);
 int		expand_quote_split(t_node *list, t_node **new);
 void	expand_token_in_new(t_node *list, t_node **new);
+int		expand_dollar_split_rec(char ***tab, char *line, int index);
+void	expand_modif_dollar_line(char **tab, int nb_word);
 
 /*
 **----------------------------------
@@ -151,7 +154,7 @@ void	exec_init_cmd(t_cmd **cmd, t_node *list);
 void	exec_malloc_cmd(t_cmd **cmd);
 void	exec_launch(t_cmd *cmd);
 void	exec_redir(t_cmd *cmd);
-void	exec_redir_heredoc(t_cmd *cmd);
+int		exec_redir_heredoc(t_cmd *cmd);
 
 /*
 **----------------------------------
@@ -173,6 +176,8 @@ bool	file_check(char *path);
 **--------------Utils---------------
 **----------------------------------
 */
+
+bool	ft_strcmp(char *s1, char *s2);
 char	**ft_split(char const *str, char charset);
 void	ft_putstr_fd(int fd, char *s);
 char	*ft_strdup(char *s1);
@@ -190,6 +195,9 @@ void	ft_putnbr_fd(int nb, int fd);
 char	*ft_itoa(int n);
 int		ft_strlen_tab(char **tab);
 t_cmd	*ft_cmd_last(t_cmd *cmd);
+void	*ft_memchr(const void *s, int c, size_t n);
+void	*ft_memcpy(void *dest, const void *src, size_t n);
+void	*ft_memmove(void *dst, const void *src, size_t len);
 
 /*
 **----------------------------------
