@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/25 19:07:08 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/26 21:49:36 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ void	delone_env(char *del);
 void	delall_env(void);
 t_env	**ft_env(char **env, char *add, char *del);
 char	*ft_env_value(char *find);
+char	**env_to_tab(void);
 
 /*
 **----------------------------------
@@ -153,8 +154,11 @@ void	exec(t_node *list);
 void	exec_init_cmd(t_cmd **cmd, t_node *list);
 void	exec_malloc_cmd(t_cmd **cmd);
 void	exec_launch(t_cmd *cmd);
-void	exec_redir(t_cmd *cmd);
+int		exec_redir(t_cmd *cmd);
 int		exec_redir_heredoc(t_cmd *cmd);
+void	exec_fork(t_cmd *cmd);
+void	free_cmd(t_cmd *cmd);
+int		create_heredoc(int type);
 
 /*
 **----------------------------------
@@ -163,6 +167,7 @@ int		exec_redir_heredoc(t_cmd *cmd);
 */
 void	ft_putstr_fd(int fd, char *s);
 int		error_msg(char *s);
+void	error_redir(char *file);
 
 /*
 **----------------------------------
@@ -198,6 +203,7 @@ t_cmd	*ft_cmd_last(t_cmd *cmd);
 void	*ft_memchr(const void *s, int c, size_t n);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
 void	*ft_memmove(void *dst, const void *src, size_t len);
+char	*ft_strjoin(char const *s1, char const *s2);
 
 /*
 **----------------------------------

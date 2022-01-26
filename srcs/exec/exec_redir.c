@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 15:44:00 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/25 16:26:11 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/26 19:43:13 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,22 @@ static int	exec_redir_append(t_cmd *cmd)
 	return (true);
 }
 
-void	exec_redir(t_cmd *cmd)
+static int	exec_redir_2(t_cmd *cpy)
+{
+	if (cpy->red->token == APPEND)
+	{
+		if (!exec_redir_append(cpy))
+			return (false);
+	}
+	else if (cpy->red->token == HEREDOC)
+	{
+		if (!exec_redir_heredoc(cpy))
+			return (false);
+	}
+	return (true);
+}
+
+int	exec_redir(t_cmd *cmd)
 {
 	t_cmd	*cpy;
 
@@ -60,24 +75,22 @@ void	exec_redir(t_cmd *cmd)
 	{
 		if (cpy->red->token == R_IN)
 		{
-			if (exec_redir_rin(cpy))
+			if (!exec_redir_rin(cpy))
 				break ;
 		}
 		else if (cpy->red->token == R_OUT)
 		{
-			if (exec_redir_rout(cpy))
+			if (!exec_redir_rout(cpy))
 				break ;
 		}
-		else if (cpy->red->token == APPEND)
-		{
-			if (exec_redir_append(cpy))
-				break ;
-		}
-		else if (cpy->red->token == HEREDOC)
-		{
-			if (exec_redir_heredoc(cpy))
-				break ;
-		}
+		if (!exec_redir_2(cpy))
+			break ;
 		cpy->red = cpy->red->next;
 	}
+	if (cpy->red)
+	{
+		error_redir(cpy->red->next->word);
+		return (false);
+	}
+	return (true);
 }

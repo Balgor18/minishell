@@ -60,6 +60,8 @@ SOURCES		+=                              		\
 		srcs/exec/exec_launch.c                	\
 		srcs/exec/exec_heredoc.c               	\
 		srcs/exec/exec.c                       	\
+		srcs/exec/exec_utils.c                 	\
+		srcs/exec/exec_fork.c                  	\
 		srcs/exec/exec_init.c                  	\
 
 

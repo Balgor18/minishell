@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 23:13:35 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/17 15:32:41 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/26 19:37:35 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,13 @@ int	error_msg(char *s)
 	ft_putstr_fd(STDERR_FILENO, RED"Error\n"RESET);
 	ft_putstr_fd(STDERR_FILENO, s);
 	return (false);
+}
+
+void	error_redir(char *file)
+{
+	write(STDERR_FILENO, "minishell : ", 13);
+	write(STDERR_FILENO, file, ft_strlen(file));
+	write(STDERR_FILENO, ": ", 2);
+	write(STDERR_FILENO, ERROR_RED, ft_strlen(ERROR_RED));
+	g_error = 1;
 }

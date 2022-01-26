@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 10:47:21 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/25 21:22:54 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/26 18:37:11 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,40 +31,6 @@ static int	check_quote_limitor(t_node *red)
 	return (true);
 }
 
-// ADD O_READ with type in enter
-static int	create_heredoc(void)
-{
-	int		ret;
-
-	ret = open("/tmp/.heredoc", O_WRONLY | O_CREAT | O_TRUNC);
-	if (ret < 0)
-	{
-		ret = open(".heredoc", O_WRONLY | O_CREAT | O_TRUNC);
-			return (ret);
-	}
-	return (ret);
-}
-
-static int	heredoc_no_expand(t_node *red)
-{
-	char	*limit;
-	char	*line;
-	int		fd;
-
-	fd = create_heredoc();
-	if (red->next->token == LIMITOR)
-		limit = red->next->word;
-	while (get_next_line(0, &line, 0) > 0)
-	{
-		if (ft_strcmp(line, limit))
-			break ;
-		write(fd, line, ft_strlen(line));
-		write(fd, "\n", 1);
-		free(line);
-	}
-	return (fd);
-}
-
 static char	*exec_dollar_split(char *word)
 {
 	char	**tab_dollar;
@@ -86,7 +52,9 @@ static int	heredoc_expand(t_node *red)
 	char	*line;
 	int		fd;
 
-	fd = create_heredoc();
+	fd = create_heredoc(1);
+	if (fd < 0)
+		return (fd);
 	if (red->next->token == LIMITOR)
 		limit = red->next->word;
 	while (get_next_line(0, &line, 0) > 0)
@@ -94,15 +62,36 @@ static int	heredoc_expand(t_node *red)
 		if (ft_strcmp(line, limit))
 			break ;
 		if (ft_strchr(line, '$'))
-		{
 			line = exec_dollar_split(line);
-			write(fd, line, ft_strlen(line));
-		}
-		else
+		if (line)
 			write(fd, line, ft_strlen(line));
 		write(fd, "\n", 1);
 		free(line);
 	}
+	free(line);
+	return (fd);
+}
+
+static int	heredoc_no_expand(t_node *red)
+{
+	char	*limit;
+	char	*line;
+	int		fd;
+
+	fd = create_heredoc(1);
+	if (fd < 0)
+		return (fd);
+	if (red->next->token == LIMITOR)
+		limit = red->next->word;
+	while (get_next_line(0, &line, 0) > 0)
+	{
+		if (ft_strcmp(line, limit))
+			break ;
+		write(fd, line, ft_strlen(line));
+		write(fd, "\n", 1);
+		free(line);
+	}
+	free(line);
 	return (fd);
 }
 
@@ -111,11 +100,14 @@ int	exec_redir_heredoc(t_cmd *cmd)
 	int	fd;
 
 	fd = check_quote_limitor(cmd->red);
-	dprintf(2, "ret quote limitor = %d\n", fd);
 	if (fd)
 		fd = heredoc_no_expand(cmd->red);
 	else
 		fd = heredoc_expand(cmd->red);
-
+	close(fd);
+	fd = create_heredoc(0);
+	if (cmd->fd[IN] != 0)
+		close(cmd->fd[IN]);
+	cmd->fd[IN] = fd;
 	return (true);
 }

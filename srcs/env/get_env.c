@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 19:19:53 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/06 05:58:07 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/26 21:50:57 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,37 @@ void	delall_env(void)
 t_env	**ft_getall_env(void)
 {
 	return (ft_env(NULL, NULL, NULL));
+}
+
+static int	len_tab(t_env *env)
+{
+	int	i;
+
+	i = 0;
+	while (env)
+	{
+		i++;
+		env = env->next;
+	}
+	return (i);
+}
+
+char	**env_to_tab(void)
+{
+	char	**start;
+	char	**tab;
+	t_env	*env;
+
+	env = *ft_getall_env();
+	tab = malloc(sizeof(char *) * (len_tab(env) + 1));
+	if (!tab)
+		return (NULL);
+	tab[len_tab(env)] = NULL;
+	start = tab;
+	while (env)
+	{
+		*tab = env->env;
+		env = env->next;
+	}
+	return (start);
 }

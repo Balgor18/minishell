@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 22:21:07 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/25 19:07:03 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/26 18:35:12 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,9 @@ void	expand_modif_dollar_line(char **tab, int nb_word)
 {
 	int		word;
 	char	*tmp;
-	char	*env;
 
-	word = 0;
-	while (word < nb_word)
+	word = -1;
+	while (++word < nb_word)
 	{
 		if (ft_strlen((tab[word])) > 1 && ft_strchr(tab[word], '$'))
 		{
@@ -77,16 +76,18 @@ void	expand_modif_dollar_line(char **tab, int nb_word)
 				tmp = ft_itoa(g_error);
 			else
 			{
-				env = ft_env_value((tab[word]) + 1);
-				if (!env)
-					tmp = NULL;
-				tmp = ft_strdup(env);
+				tmp = ft_env_value((tab[word]) + 1);
 				if (!tmp)
-					return ;
+					tmp = NULL;
+				else
+				{
+					tmp = ft_strdup(tmp);
+					if (!tmp)
+						return ;
+				}
 			}
 			tab[word] = (free(tab[word]), tmp);
 		}
-		word++;
 	}
 }
 
