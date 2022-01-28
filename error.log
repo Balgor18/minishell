@@ -1,0 +1,10 @@
+Error :
+
+cat
+----
+Only cat alone
+----
+ls -la
+
+cat | ls
+

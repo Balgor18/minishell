@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:41:23 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/21 15:12:06 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/27 15:25:36 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ int	main(int ac, char **av, char **env)
 	char	*line;
 
 	line = NULL;
-	if (ac != 1)
-		return (error_msg(NO_ARG));
 	init_env(ac, av, env);
 	while (1)
 	{

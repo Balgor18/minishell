@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 15:44:00 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/26 19:43:13 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/27 23:01:01 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 static int	exec_redir_rin(t_cmd *cmd)
 {
 	int	fd;
+	char	*name;
 
-	fd = open(cmd->red->word, O_RDONLY);
+	name = cmd->red->next->word;
+	fd = open(name, O_RDONLY);
 	if (fd < 0)
 		return (false);
 	if (cmd->fd[IN] != 0)
@@ -27,9 +29,11 @@ static int	exec_redir_rin(t_cmd *cmd)
 
 static int	exec_redir_rout(t_cmd *cmd)
 {
-	int	fd;
+	int		fd;
+	char	*name;
 
-	fd = open(cmd->red->word, O_WRONLY);
+	name = cmd->red->next->word;
+	fd = open(name, O_WRONLY | O_CREAT, 0644);
 	if (fd < 0)
 		return (false);
 	if (cmd->fd[OUT] != 1)
@@ -41,8 +45,10 @@ static int	exec_redir_rout(t_cmd *cmd)
 static int	exec_redir_append(t_cmd *cmd)
 {
 	int	fd;
+	char	*name;
 
-	fd = open(cmd->red->word, O_WRONLY | O_APPEND);
+	name = cmd->red->next->word;
+	fd = open(name, O_WRONLY | O_APPEND, 0644);
 	if (fd < 0)
 		return (false);
 	if (cmd->fd[OUT] != 1)

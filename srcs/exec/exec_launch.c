@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 15:10:09 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/26 19:49:33 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/28 01:29:59 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	exec_launch(t_cmd *cmd)
 		if (!exec_redir(cmd))
 			dprintf(2, "Error in redir\n");
 		//check les builtins !!!
-		exec_fork(cmd);
-		cmd = cmd->next;
+		exec_fork(&cmd);
 	}
 }

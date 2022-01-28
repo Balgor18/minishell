@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 19:02:24 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/26 23:26:20 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/28 05:12:32 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static char	*find_cmd_path(char *cmd)// if not found path return NULL
 	char	**tab2;
 	char	**tab;
 	char	*path;
+	int		ret;
 
 	path = ft_env_value("PATH");
 	tab = ft_split(path, ':');
@@ -52,8 +53,13 @@ static char	*find_cmd_path(char *cmd)// if not found path return NULL
 	while (*tab)
 	{
 		path = ft_strjoin_add_slash(*tab, cmd);
-		if (open(path, O_RDONLY) > 0)
+		ret = open(path, O_RDONLY);
+		if (ret > 0)
+		{
+			close(ret);
 			break ;
+		}
+		path = NULL;
 		free(*tab);
 		tab++;
 	}
@@ -63,22 +69,8 @@ static char	*find_cmd_path(char *cmd)// if not found path return NULL
 		tab++;
 	}
 	free(tab2);
-	printf("find path = %s\n", path);
 	return (path);
 }
-
-// do a function in env for change the type of env
-static void	exec_fork_child(char **cmd, char *path, char **env)
-{
-	execve(path, cmd, env);
-	// execve();//lets see if execve free all the infos
-	return ;
-}
-
-// static void	exec_fork_parent()
-// {
-
-// }
 
 static int	list_len(t_node *list)
 {
@@ -101,7 +93,9 @@ char	**exec_move_list_in_char(t_node *list)
 	ret = malloc(sizeof(char *) * (list_len(list) + 1));
 	if (!ret)
 		return (NULL);
+	// printf("list_len %d\n", list_len(list));
 	ret[list_len(list)] = NULL;
+	// printf("list->word = %s\n", list->word);
 	tab = ret;
 	while (list)
 	{
@@ -109,25 +103,59 @@ char	**exec_move_list_in_char(t_node *list)
 		list = list->next;
 		ret++;
 	}
+	// printf("tab[0] = %s\n", tab[0]);
+	// printf("tab[1] = %s\n", tab[1]);
 	return (tab);
 }
 
-void	exec_fork(t_cmd *cmd)// modif cmd->arg in char **
+// do a function in env for change the type of env
+static void	exec_fork_child(t_cmd *cmd)
 {
-	pid_t	pid;
 	char	**cmd_tab;
 	char	*path;
 	char	**env;
 
-	path = find_cmd_path(cmd->arg->word);// need while on arg
+	path = find_cmd_path(cmd->arg->word);// access
 	if (!path)
 		g_error = 127;
 	cmd_tab = exec_move_list_in_char(cmd->arg);
 	env = env_to_tab();
+	if (cmd->fd[OUT] != 1)
+	{
+		dup2(cmd->fd[OUT], STDOUT_FILENO);
+		close(cmd->fd[OUT]);
+	}
+
+	// dup2(cmd->fd[IN], STDIN_FILENO);
+	// dup2(cmd->fd[OUT], STDOUT_FILENO);
+	printf("g_Error %d\n", g_error);
+	printf("fd[IN] = %d fd[OUT] = %d\n", cmd->fd[IN], cmd->fd[OUT]);
+	printf("path = %s\n", path);
+	printf("cmd_tab[0] = %s\ncmd_tab[1] = %s\n", cmd_tab[0], cmd_tab[1]);
+	execve(path, cmd_tab, env);
+	printf("Do a error\n");
+	exit(1);
+}
+
+void	exec_fork(t_cmd **cmd)// modif cmd->arg in char **
+{
+	pid_t	pid;
+	t_cmd	*cpy;
 
 	pid = fork();
-	if (!pid)
-		exec_fork_child(cmd_tab, path, env);
-	// else
-	// 	exec_fork_parent();
+	// if (pid == -1)
+		//do error
+	if (pid == 0)
+		exec_fork_child(*cmd);
+	else
+	{
+		cpy = *cmd;
+		*cmd = (*cmd)->next;
+		free_list(cpy->arg);
+		free_list(cpy->red);
+		close(cpy->fd[IN]);
+		close(cpy->fd[OUT]);
+		free(cpy);
+	}
+
 }

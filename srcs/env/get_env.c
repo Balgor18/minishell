@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 19:19:53 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/26 21:50:57 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/28 01:52:51 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,19 @@ char	**env_to_tab(void)
 	char	**start;
 	char	**tab;
 	t_env	*env;
+	int		len;
 
 	env = *ft_getall_env();
-	tab = malloc(sizeof(char *) * (len_tab(env) + 1));
+	len = len_tab(env);
+	tab = malloc(sizeof(char *) * (len + 1));
 	if (!tab)
 		return (NULL);
-	tab[len_tab(env)] = NULL;
+	tab[len] = NULL;
 	start = tab;
 	while (env)
 	{
-		*tab = env->env;
+		*tab = ft_strdup(env->env);
+		tab++;
 		env = env->next;
 	}
 	return (start);

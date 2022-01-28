@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/26 21:49:36 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/28 01:29:47 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ void	exec_malloc_cmd(t_cmd **cmd);
 void	exec_launch(t_cmd *cmd);
 int		exec_redir(t_cmd *cmd);
 int		exec_redir_heredoc(t_cmd *cmd);
-void	exec_fork(t_cmd *cmd);
+void	exec_fork(t_cmd **cmd);
 void	free_cmd(t_cmd *cmd);
 int		create_heredoc(int type);
 

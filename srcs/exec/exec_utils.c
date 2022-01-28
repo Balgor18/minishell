@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 18:18:07 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/26 18:37:20 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/27 17:51:25 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,15 @@ int	create_heredoc(int type)
 
 	if (type)
 	{
-		ret = open("/tmp/.heredoc", O_WRONLY | O_CREAT | O_TRUNC);
+		ret = open("/tmp/.heredoc", O_WRONLY | O_CREAT | O_TRUNC, 0777);
 		if (ret < 0)
-			ret = open(".heredoc", O_WRONLY | O_CREAT | O_TRUNC);
+			ret = open(".heredoc", O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	}
 	else
 	{
-		ret = open("/tmp/.heredoc", O_RDONLY | O_CREAT);
+		ret = open("/tmp/.heredoc", O_RDONLY | O_CREAT, 0777);
 		if (ret < 0)
-			ret = open(".heredoc", O_RDONLY | O_CREAT);
+			ret = open(".heredoc", O_RDONLY | O_CREAT, 0777);
 	}
 	return (ret);
 }
