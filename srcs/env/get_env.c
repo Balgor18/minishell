@@ -6,12 +6,17 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 19:19:53 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/28 01:52:51 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/29 06:33:18 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
+** init_env
+** function cast in void AC and AV
+** But fill my env of minishell
+*/
 void	init_env(int ac, char **av, char **env)
 {
 	(void)ac;
@@ -19,16 +24,28 @@ void	init_env(int ac, char **av, char **env)
 	ft_env(env, NULL, NULL);
 }
 
+/*
+** add_env
+** add the string ADD to env
+*/
 void	add_env(char *add)
 {
 	ft_env(NULL, add, NULL);
 }
 
+/*
+** delone_env
+** del the string DEL to env
+*/
 void	delone_env(char *del)
 {
 	ft_env(NULL, NULL, del);
 }
 
+/*
+** delall_env
+** del all the env
+*/
 void	delall_env(void)
 {
 	t_env	*tmp;
@@ -44,43 +61,11 @@ void	delall_env(void)
 	}
 }
 
+/*
+** ft_getall_env
+** Function return all the env of the project
+*/
 t_env	**ft_getall_env(void)
 {
 	return (ft_env(NULL, NULL, NULL));
-}
-
-static int	len_tab(t_env *env)
-{
-	int	i;
-
-	i = 0;
-	while (env)
-	{
-		i++;
-		env = env->next;
-	}
-	return (i);
-}
-
-char	**env_to_tab(void)
-{
-	char	**start;
-	char	**tab;
-	t_env	*env;
-	int		len;
-
-	env = *ft_getall_env();
-	len = len_tab(env);
-	tab = malloc(sizeof(char *) * (len + 1));
-	if (!tab)
-		return (NULL);
-	tab[len] = NULL;
-	start = tab;
-	while (env)
-	{
-		*tab = ft_strdup(env->env);
-		tab++;
-		env = env->next;
-	}
-	return (start);
 }

@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 15:10:09 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/28 01:29:59 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/29 06:48:52 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ static void	exec_pipe(t_cmd **cmd)
 
 	if (pipe(pip) < 0)
 		return ;
-	(*cmd)->fd[OUT] = pip[IN];
-	(*cmd)->next->fd[IN] = pip[OUT];
+	(*cmd)->fd[OUT] = pip[OUT];
+	(*cmd)->next->fd[IN] = pip[IN];
 }
 
 void	exec_launch(t_cmd *cmd)
@@ -31,9 +31,11 @@ void	exec_launch(t_cmd *cmd)
 	{
 		if (cmd->next)
 			exec_pipe(&cmd);
-		if (!exec_redir(cmd))
-			dprintf(2, "Error in redir\n");
+		if (cmd->red)
+			if (!exec_redir(cmd))
+				dprintf(2, "Error in redir\n");
 		//check les builtins !!!
+		//erreur dans le fork because no cmd exist
 		exec_fork(&cmd);
 	}
 }

@@ -1,10 +1,11 @@
 Error :
 
-cat
 ----
-Only cat alone
+
+find . | grep "exec"
+// do nothing
+
 ----
-ls -la
 
 cat | ls
-
+Inversez les deux check why

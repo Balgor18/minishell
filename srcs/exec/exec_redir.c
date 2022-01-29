@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 15:44:00 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/27 23:01:01 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/29 06:37:25 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ static int	exec_redir_rin(t_cmd *cmd)
 	if (fd < 0)
 		return (false);
 	if (cmd->fd[IN] != 0)
+	{
+		dup2(fd, cmd->fd[IN]);
 		close(cmd->fd[IN]);
+	}
 	cmd->fd[IN] = fd;
 	return (true);
 }
@@ -37,7 +40,10 @@ static int	exec_redir_rout(t_cmd *cmd)
 	if (fd < 0)
 		return (false);
 	if (cmd->fd[OUT] != 1)
+	{
+		dup2(fd, cmd->fd[OUT]);
 		close(cmd->fd[OUT]);
+	}
 	cmd->fd[OUT] = fd;
 	return (true);
 }
@@ -52,7 +58,10 @@ static int	exec_redir_append(t_cmd *cmd)
 	if (fd < 0)
 		return (false);
 	if (cmd->fd[OUT] != 1)
+	{
+		dup2(fd, cmd->fd[OUT]);
 		close(cmd->fd[OUT]);
+	}
 	cmd->fd[OUT] = fd;
 	return (true);
 }
@@ -98,5 +107,8 @@ int	exec_redir(t_cmd *cmd)
 		error_redir(cpy->red->next->word);
 		return (false);
 	}
+	printf("redir %s\nfd[IN] = %d\nfd[OUT] = %d\n---------------\n", cmd->arg->word, cmd->fd[IN], cmd->fd[OUT]);
+	if (cmd->next->arg)
+		printf("redir %s\nfd[IN] = %d\nfd[OUT] = %d\n",  cmd->next->arg->word, cmd->next->fd[IN], cmd->next->fd[OUT]);
 	return (true);
 }

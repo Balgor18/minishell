@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/28 01:29:47 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/29 01:33:06 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <signal.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 
 /*
 **--------------Global--------------
@@ -159,6 +161,20 @@ int		exec_redir_heredoc(t_cmd *cmd);
 void	exec_fork(t_cmd **cmd);
 void	free_cmd(t_cmd *cmd);
 int		create_heredoc(int type);
+
+/*
+**----------------------------------
+**-------------Builtins-------------
+**----------------------------------
+*/
+// Builtins to do
+// echo
+// cd
+// pwd
+// export
+// unset
+// env
+// exit
 
 /*
 **----------------------------------

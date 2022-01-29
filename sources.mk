@@ -24,6 +24,7 @@ SOURCES		+=                              		\
 ## SRCS/ENV ##
 
 SOURCES		+=                              		\
+		srcs/env/env_to_tab.c                 	\
 		srcs/env/get_env.c                     	\
 		srcs/env/ft_env_value.c                	\
 		srcs/env/ft_env.c                      	\

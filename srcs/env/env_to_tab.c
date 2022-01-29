@@ -1,37 +1,49 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   env_to_tab.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/06 14:41:23 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/28 23:07:58 by fcatinau         ###   ########.fr       */
+/*   Created: 2022/01/29 04:14:33 by fcatinau          #+#    #+#             */
+/*   Updated: 2022/01/29 04:14:34 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Pas encore d'arret sur la boucle || voir quoi mettre
-// rl_clear_history(); --> check le leaks
-
-int	g_error;
-
-int	main(int ac, char **av, char **env)
+static int	len_tab(t_env *env)
 {
-	char	*line;
+	int	i;
 
-	line = NULL;
-	init_env(ac, av, env);
-	while (1)
+	i = 0;
+	while (env)
 	{
-		line = readline("Minishell rose : ");
-		if (line == NULL)
-			break ;
-		if (line)
-			shell_split(line);
+		i++;
+		env = env->next;
 	}
-	delall_env();
-	rl_clear_history();
-	return (EXIT_SUCCESS);
+	return (i);
+}
+
+char	**env_to_tab(void)
+{
+	char	**start;
+	char	**tab;
+	t_env	*env;
+	int		len;
+
+	env = *ft_getall_env();
+	len = len_tab(env);
+	tab = malloc(sizeof(char *) * (len + 1));
+	if (!tab)
+		return (NULL);
+	tab[len] = NULL;
+	start = tab;
+	while (env)
+	{
+		*tab = ft_strdup(env->env);
+		tab++;
+		env = env->next;
+	}
+	return (start);
 }

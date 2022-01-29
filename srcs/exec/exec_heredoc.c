@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 10:47:21 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/26 18:37:11 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/29 03:19:43 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,10 @@ int	exec_redir_heredoc(t_cmd *cmd)
 	close(fd);
 	fd = create_heredoc(0);
 	if (cmd->fd[IN] != 0)
+	{
+		dup2(fd, cmd->fd[IN]);
 		close(cmd->fd[IN]);
+	}
 	cmd->fd[IN] = fd;
 	return (true);
 }

@@ -6,47 +6,60 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 19:02:24 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/28 05:12:32 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/29 04:09:23 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
+** ft_strjoin_add_slash
+** join S1 and S2
+** and add '/' between us
+** return NULL if error
+** else return malloc char
+*/
 static char	*ft_strjoin_add_slash(char const *s1, char const *s2)
 {
 	int		i[3];
 	char	*str;
 
-	if (s1 && s2)
+	if (!s1 || !s2)
+		return (NULL);
+	i[1] = ft_strlen((char *)s1);
+	i[2] = ft_strlen((char *)s2);
+	str = (char *)malloc(sizeof(char) * (i[1] + i[2] + 2));
+	if (str == NULL)
+		return (NULL);
+	i[0] = -1;
+	while (s1[++i[0]])
+		str[i[0]] = s1[i[0]];
+	i[0] = -1;
+	str[i[1]++] = '/';
+	while (s2[++i[0]])
 	{
-		i[1] = ft_strlen((char *)s1);
-		i[2] = ft_strlen((char *)s2);
-		str = (char *)malloc(sizeof(char) * (i[1] + i[2] + 2));
-		if (str == NULL)
-			return (NULL);
-		i[0] = -1;
-		while (s1[++i[0]])
-			str[i[0]] = s1[i[0]];
-		i[0] = -1;
-		str[i[1]++] = '/';
-		while (s2[++i[0]])
-		{
-			str[i[1]] = s2[i[0]];
-			i[1]++;
-		}
-		str[i[1]] = '\0';
-		return (str);
+		str[i[1]] = s2[i[0]];
+		i[1]++;
 	}
-	return (NULL);
+	str[i[1]] = '\0';
+	return (str);
 }
 
-static char	*find_cmd_path(char *cmd)// if not found path return NULL
+/*
+** find_cmd_path
+** find in all env the path of the cmd
+** return malloc line with the path and tje cmd
+** return NULL if found nothing
+*/
+static char	*find_cmd_path(char *cmd)
 {
 	char	**tab2;
 	char	**tab;
 	char	*path;
 	int		ret;
 
+	if (*cmd == '.' || *cmd == '/')
+		return (cmd);
 	path = ft_env_value("PATH");
 	tab = ft_split(path, ':');
 	tab2 = tab;
@@ -72,6 +85,10 @@ static char	*find_cmd_path(char *cmd)// if not found path return NULL
 	return (path);
 }
 
+/*
+** list_len
+** return the size of t_node
+*/
 static int	list_len(t_node *list)
 {
 	int	nb;
@@ -93,9 +110,7 @@ char	**exec_move_list_in_char(t_node *list)
 	ret = malloc(sizeof(char *) * (list_len(list) + 1));
 	if (!ret)
 		return (NULL);
-	// printf("list_len %d\n", list_len(list));
 	ret[list_len(list)] = NULL;
-	// printf("list->word = %s\n", list->word);
 	tab = ret;
 	while (list)
 	{
@@ -103,59 +118,56 @@ char	**exec_move_list_in_char(t_node *list)
 		list = list->next;
 		ret++;
 	}
-	// printf("tab[0] = %s\n", tab[0]);
-	// printf("tab[1] = %s\n", tab[1]);
 	return (tab);
 }
 
-// do a function in env for change the type of env
-static void	exec_fork_child(t_cmd *cmd)
+static void	exec_fork_child(t_cmd *cmd, char *path)
 {
 	char	**cmd_tab;
-	char	*path;
 	char	**env;
 
-	path = find_cmd_path(cmd->arg->word);// access
-	if (!path)
-		g_error = 127;
 	cmd_tab = exec_move_list_in_char(cmd->arg);
 	env = env_to_tab();
+	if (cmd->fd[IN] != 0)
+	{
+		dup2(cmd->fd[IN], STDIN_FILENO);
+		close(cmd->fd[IN]);
+	}
 	if (cmd->fd[OUT] != 1)
 	{
 		dup2(cmd->fd[OUT], STDOUT_FILENO);
 		close(cmd->fd[OUT]);
 	}
-
-	// dup2(cmd->fd[IN], STDIN_FILENO);
-	// dup2(cmd->fd[OUT], STDOUT_FILENO);
-	printf("g_Error %d\n", g_error);
-	printf("fd[IN] = %d fd[OUT] = %d\n", cmd->fd[IN], cmd->fd[OUT]);
-	printf("path = %s\n", path);
-	printf("cmd_tab[0] = %s\ncmd_tab[1] = %s\n", cmd_tab[0], cmd_tab[1]);
 	execve(path, cmd_tab, env);
-	printf("Do a error\n");
 	exit(1);
 }
 
-void	exec_fork(t_cmd **cmd)// modif cmd->arg in char **
+void	exec_fork(t_cmd **cmd)
 {
 	pid_t	pid;
 	t_cmd	*cpy;
+	char	*path;
 
+	g_error = 0;
 	pid = fork();
-	// if (pid == -1)
-		//do error
-	if (pid == 0)
-		exec_fork_child(*cmd);
+	path = find_cmd_path((*cmd)->arg->word);
+	if (!path)
+		g_error = 127;
+	if (pid == -1)
+		printf("Error fork  on cmd = %s\n", (*cmd)->arg->word);
+	else if (pid == 0)
+		exec_fork_child(*cmd, path);
 	else
 	{
+		waitpid(pid, NULL, 0);
 		cpy = *cmd;
 		*cmd = (*cmd)->next;
 		free_list(cpy->arg);
 		free_list(cpy->red);
-		close(cpy->fd[IN]);
-		close(cpy->fd[OUT]);
+		if (cpy->fd[IN] != 0)
+			close(cpy->fd[IN]);
+		if (cpy->fd[OUT] != 1)
+			close(cpy->fd[OUT]);
 		free(cpy);
 	}
-
 }
