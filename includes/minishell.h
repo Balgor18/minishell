@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/29 01:33:06 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/29 23:15:39 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,7 @@ int		create_heredoc(int type);
 **-------------Builtins-------------
 **----------------------------------
 */
+int		check_builtins(t_cmd *cmd);
 // Builtins to do
 // echo
 // cd

@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 18:18:07 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/27 17:51:25 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/29 23:23:51 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,15 @@ void	free_cmd(t_cmd *cmd)
 	{
 		while (cmd->arg)
 		{
-			tmp = ((cmd->arg = tmp->next, cmd->arg));
+			tmp = cmd->arg;
+			cmd->arg = tmp->next;
 			free(tmp->word);
 			free(tmp);
 		}
 		while (cmd->red)
 		{
-			tmp = ((cmd->red = tmp->next, cmd->red));
+			cmd->red = tmp->next;
+			tmp = cmd->red;
 			free(tmp->word);
 			free(tmp);
 		}
@@ -35,7 +37,8 @@ void	free_cmd(t_cmd *cmd)
 			close(cmd->fd[IN]);
 		if (cmd->fd[OUT] != 1)
 			close(cmd->fd[OUT]);
-		bis = ((cmd = bis->next, cmd));
+		bis = cmd;
+		cmd = bis->next;
 		free(bis);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:41:23 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/28 23:07:58 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/29 19:15:15 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	main(int ac, char **av, char **env)
 		line = readline("Minishell rose : ");
 		if (line == NULL)
 			break ;
+		add_history(line);
 		if (line)
 			shell_split(line);
 	}

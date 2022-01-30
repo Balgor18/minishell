@@ -6,12 +6,20 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 15:48:08 by elaachac          #+#    #+#             */
-/*   Updated: 2022/01/26 19:24:51 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/30 01:16:48 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
+** ft_strcmp
+** ft_strcmp take two param in enter
+** He compar string
+** if the string s1 != s2
+** the function return FALSE
+** return TRUE if the S1 == S2
+*/
 bool	ft_strcmp(char *s1, char *s2)
 {
 	int	i;
