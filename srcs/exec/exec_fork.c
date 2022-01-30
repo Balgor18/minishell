@@ -6,44 +6,11 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 19:02:24 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/29 04:09:23 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/30 14:37:39 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*
-** ft_strjoin_add_slash
-** join S1 and S2
-** and add '/' between us
-** return NULL if error
-** else return malloc char
-*/
-static char	*ft_strjoin_add_slash(char const *s1, char const *s2)
-{
-	int		i[3];
-	char	*str;
-
-	if (!s1 || !s2)
-		return (NULL);
-	i[1] = ft_strlen((char *)s1);
-	i[2] = ft_strlen((char *)s2);
-	str = (char *)malloc(sizeof(char) * (i[1] + i[2] + 2));
-	if (str == NULL)
-		return (NULL);
-	i[0] = -1;
-	while (s1[++i[0]])
-		str[i[0]] = s1[i[0]];
-	i[0] = -1;
-	str[i[1]++] = '/';
-	while (s2[++i[0]])
-	{
-		str[i[1]] = s2[i[0]];
-		i[1]++;
-	}
-	str[i[1]] = '\0';
-	return (str);
-}
 
 /*
 ** find_cmd_path

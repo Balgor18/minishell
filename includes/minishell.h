@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/29 23:15:39 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/30 14:42:01 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,7 @@ int		exec_redir_heredoc(t_cmd *cmd);
 void	exec_fork(t_cmd **cmd);
 void	free_cmd(t_cmd *cmd);
 int		create_heredoc(int type);
+char	*ft_strjoin_add_slash(char const *s1, char const *s2);
 
 /*
 **----------------------------------
@@ -168,6 +169,7 @@ int		create_heredoc(int type);
 **----------------------------------
 */
 int		check_builtins(t_cmd *cmd);
+int		builtins_cd(t_node	*arg);
 // Builtins to do
 // echo
 // cd

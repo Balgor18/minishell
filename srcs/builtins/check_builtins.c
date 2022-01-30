@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 01:34:05 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/30 01:52:59 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/30 17:24:43 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,29 +37,6 @@ static int	builtins_echo(t_node *arg)
 	}
 	if (endl)
 		write(STDOUT_FILENO, "\n", 1);
-	return (true);
-}
-
-/*
-** builtins_cd
-** the function reproduce cd
-** Work with relative path
-** or aboslut path
-** i recode the flag -
-*/
-static int	builtins_cd(t_node	*arg)
-{
-	char	*ret;
-
-	if (ft_strcmp("-", arg->word))
-	{
-		ret = ft_env_value("OLDPWD");
-		if (!ret)
-		{
-			printf("minishell: cd: OLDPWD not set\n");
-			return (true);
-		}
-	}
 	return (true);
 }
 
@@ -116,8 +93,11 @@ static int	builtins_env(void)
 	return (true);
 }
 
-static int	builtins_exit()
+static int	builtins_exit(t_cmd *cmd)
 {
+	free_cmd(cmd);
+	delall_env();
+	exit(0);
 	return (true);
 }
 
@@ -144,6 +124,6 @@ int	check_builtins(t_cmd *cmd)
 	else if (ft_strcmp(cmd->arg->word, "env"))
 		ret = builtins_env();
 	else if (ft_strcmp(cmd->arg->word, "exit"))
-		ret = builtins_exit();
+		ret = builtins_exit(cmd);
 	return (ret);
 }
