@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 10:57:09 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/24 13:05:47 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/30 23:58:07 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,13 @@ static void	expand_modif_list(t_node **last, t_node **new,
 		(*last)->next = *new;
 	else
 		(*last)->next = tmp;
-	if (*new)
-		ft_node_last(*new)->next = tmp;
 	free((*start)->word);
 	free(*start);
-	*start = tmp;
+	if (*new)
+	{
+		*start = ft_node_last(*new);
+		ft_node_last(*new)->next = tmp;
+	}
 	if (!*last)
 	{
 		*start = *new;

@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 15:56:16 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/12 12:29:18 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/30 20:59:52 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static t_env	*ft_push_add_back(t_env **env, char *add)
 		if (!(*env))
 			return (NULL);
 		(*env)->next = NULL;
-		(*env)->env = add;
+		(*env)->env = ft_strdup(add);
 		return (*env);
 	}
 	else
@@ -43,7 +43,7 @@ static t_env	*ft_push_add_back(t_env **env, char *add)
 			return (NULL);
 	}
 	ft_env_last(*env)->next = new;
-	new->env = add;
+	new->env = ft_strdup(add);
 	new->next = NULL;
 	return (*env);
 }
@@ -63,6 +63,7 @@ static t_env	*ft_env_create(char **env)
 			{
 				tmp = list;
 				list = list->next;
+				free(tmp->env);
 				free(tmp);
 			}
 			return (NULL);

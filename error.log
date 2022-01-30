@@ -12,13 +12,6 @@ Inversez les deux check why
 Leak a  check
 
 ----
-
-In function change_pwd()
-
-
-Dont work when i send ".."
-
-----
 In builtins_cd
 when i do cd -
 
