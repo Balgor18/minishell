@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 16:51:08 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/21 15:12:20 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/31 11:42:17 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,15 @@ void	expand_space_neg(char *line)
 	}
 }
 
+/*
+** expand_remove_quote
+** Get char **line in param
+** trim the char adn remove quote
+** return the value of quote
+** 2 = "
+** 1 = '
+** 0 = no_quote
+*/
 int	expand_remove_quote(char **line)
 {
 	char	*tmp;

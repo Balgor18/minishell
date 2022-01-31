@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 15:47:24 by elaachac          #+#    #+#             */
-/*   Updated: 2022/01/19 10:20:14 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/31 16:57:18 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	ft_strncmp(char *s1, char *s2, unsigned int n)
 ** if he found the char C in S return TRUE
 ** Or return FALSE if not found
 */
-
 bool	ft_strchr(const char *s, int c)
 {
 	if ((char)c == '\0')

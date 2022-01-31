@@ -9,35 +9,3 @@ find . | grep "exec"
 
 cat | ls
 Inversez les deux check why
-Leak a  check
-
-----
-In builtins_cd
-when i do cd -
-
-need to swap the var OLDPWD
-and PWD
-----
-
-echo $PWD $OLDPWD
-
-need to dont show $OLDPWD
-
-----
-
-when i delall_env
-And a recreate
-PWD
-and
-OLDPWD
-
-create leak because i don't free PWD and OLDPWD
-----
-Error invalid read < -- here because i free the pointer who get the value of TEST
-Minishell rose : export TEST="Yolo"
-Minishell rose : echo $TEST
-What i return
-"Yolo"
-Need to return
-Yolo
-Need to remove quotes

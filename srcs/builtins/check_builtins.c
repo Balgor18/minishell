@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 01:34:05 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/30 17:24:43 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/31 14:32:46 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,6 @@ static int	builtins_pwd(void)
 	ret = ft_env_value("PWD");
 	ft_putstr_fd(STDOUT_FILENO, ret);
 	write(STDOUT_FILENO, "\n", 1);
-	return (true);
-}
-
-/*
-** builtins_export
-** add the new env
-*/
-static int	builtins_export(t_node *arg)
-{
-	add_env(arg->word);
 	return (true);
 }
 

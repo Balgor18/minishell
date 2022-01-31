@@ -35,6 +35,7 @@ SOURCES		+=                              		\
 SOURCES		+=                              		\
 		srcs/builtins/builtins_cd.c            	\
 		srcs/builtins/check_builtins.c         	\
+		srcs/builtins/builtins_export.c        	\
 
 
 ## SRCS/PARSE ##

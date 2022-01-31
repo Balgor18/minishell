@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 19:02:24 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/30 14:37:39 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/31 18:11:42 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ static char	*find_cmd_path(char *cmd)
 			close(ret);
 			break ;
 		}
+		free(path);
 		path = NULL;
 		free(*tab);
 		tab++;
@@ -127,6 +128,7 @@ void	exec_fork(t_cmd **cmd)
 	else
 	{
 		waitpid(pid, NULL, 0);
+		free(path);
 		cpy = *cmd;
 		*cmd = (*cmd)->next;
 		free_list(cpy->arg);

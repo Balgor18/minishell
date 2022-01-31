@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 15:44:00 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/29 06:37:25 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/01/31 14:31:00 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,5 @@ int	exec_redir(t_cmd *cmd)
 		error_redir(cpy->red->next->word);
 		return (false);
 	}
-	printf("redir %s\nfd[IN] = %d\nfd[OUT] = %d\n---------------\n", cmd->arg->word, cmd->fd[IN], cmd->fd[OUT]);
-	if (cmd->next->arg)
-		printf("redir %s\nfd[IN] = %d\nfd[OUT] = %d\n",  cmd->next->arg->word, cmd->next->fd[IN], cmd->next->fd[OUT]);
 	return (true);
 }
