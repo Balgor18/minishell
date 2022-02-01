@@ -3,6 +3,7 @@
 ## SRCS ##
 
 SOURCES		+=                              		\
+		srcs/init_signal.c                     	\
 		srcs/main.c                            	\
 
 
@@ -36,6 +37,7 @@ SOURCES		+=                              		\
 		srcs/builtins/builtins_cd.c            	\
 		srcs/builtins/check_builtins.c         	\
 		srcs/builtins/builtins_export.c        	\
+		srcs/builtins/builtins_echo.c          	\
 
 
 ## SRCS/PARSE ##

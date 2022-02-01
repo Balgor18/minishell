@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 18:18:07 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/30 14:37:47 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/01 12:00:40 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,25 +47,14 @@ char	*ft_strjoin_add_slash(char const *s1, char const *s2)
 
 void	free_cmd(t_cmd *cmd)
 {
-	t_node	*tmp;
 	t_cmd	*bis;
 
 	while (cmd)
 	{
-		while (cmd->arg)
-		{
-			tmp = cmd->arg;
-			cmd->arg = tmp->next;
-			free(tmp->word);
-			free(tmp);
-		}
-		while (cmd->red)
-		{
-			cmd->red = tmp->next;
-			tmp = cmd->red;
-			free(tmp->word);
-			free(tmp);
-		}
+		if (cmd->arg)
+			delall(&cmd->arg);
+		if (cmd->red)
+			delall(&cmd->red);
 		if (cmd->fd[IN] != 0)
 			close(cmd->fd[IN]);
 		if (cmd->fd[OUT] != 1)

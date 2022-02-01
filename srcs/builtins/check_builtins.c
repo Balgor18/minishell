@@ -6,39 +6,11 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 01:34:05 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/31 14:32:46 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/01 12:06:38 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*
-** builtins_echo
-** the function reproduce echo
-** But i code it
-** can work with the option -n
-*/
-static int	builtins_echo(t_node *arg)
-{
-	int	endl;
-
-	endl = true;
-	if (ft_strcmp("-n", arg->word))
-	{
-		endl = false;
-		arg = arg->next;
-	}
-	while (arg)
-	{
-		ft_putstr_fd(STDOUT_FILENO, arg->word);
-		arg = arg->next;
-		if (arg)
-				write(STDOUT_FILENO, " ", 1);
-	}
-	if (endl)
-		write(STDOUT_FILENO, "\n", 1);
-	return (true);
-}
 
 /*
 ** builtins_pwd
@@ -59,7 +31,7 @@ static int	builtins_pwd(void)
 ** builtins_export
 ** add the new env
 */
-static int	builtins_unset(t_node *arg)// cmd
+static int	builtins_unset(t_node *arg)
 {
 	delone_env(arg->word);
 	return (true);
@@ -87,6 +59,7 @@ static int	builtins_exit(t_cmd *cmd)
 {
 	free_cmd(cmd);
 	delall_env();
+	rl_clear_history();
 	exit(0);
 	return (true);
 }
@@ -98,13 +71,15 @@ static int	builtins_exit(t_cmd *cmd)
 */
 int	check_builtins(t_cmd *cmd)
 {
-	int	ret;
+	char	*only_cd;
+	int		ret;
 
+	only_cd = NULL;
 	ret = false;
 	if (ft_strcmp(cmd->arg->word, "echo"))
 		ret = builtins_echo(cmd->arg->next);
 	else if (ft_strcmp(cmd->arg->word, "cd"))
-		ret = builtins_cd(cmd->arg->next);
+		ret = builtins_cd(cmd->arg->next, only_cd);
 	else if (ft_strcmp(cmd->arg->word, "pwd"))
 		ret = builtins_pwd();
 	else if (ft_strcmp(cmd->arg->word, "export"))

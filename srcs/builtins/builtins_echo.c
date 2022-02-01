@@ -1,39 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   builtins_echo.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/06 14:41:23 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/01 11:55:09 by fcatinau         ###   ########.fr       */
+/*   Created: 2022/02/01 11:46:23 by fcatinau          #+#    #+#             */
+/*   Updated: 2022/02/01 11:46:41 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Pas encore d'arret sur la boucle || voir quoi mettre
-// rl_clear_history(); --> check le leaks
-
-int	g_error;
-
-int	main(int ac, char **av, char **env)
+/*
+** builtins_echo
+** the function reproduce echo
+** But i code it
+** can work with the option -n
+*/
+int	builtins_echo(t_node *arg)
 {
-	char	*line;
+	int	endl;
 
-	line = NULL;
-	init_env(ac, av, env);
-	// init_signal();
-	while (1)
+	endl = true;
+	if (ft_strcmp("-n", arg->word))
 	{
-		line = readline("Minishell rose : ");
-		if (line == NULL)
-			break ;
-		add_history(line);
-		if (line)
-			shell_split(line);
+		endl = false;
+		arg = arg->next;
 	}
-	delall_env();
-	rl_clear_history();
-	return (EXIT_SUCCESS);
+	while (arg)
+	{
+		ft_putstr_fd(STDOUT_FILENO, arg->word);
+		arg = arg->next;
+		if (arg)
+			write(STDOUT_FILENO, " ", 1);
+	}
+	if (endl)
+		write(STDOUT_FILENO, "\n", 1);
+	return (true);
 }

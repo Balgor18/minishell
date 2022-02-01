@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/31 13:28:24 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/01 11:46:52 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,8 +169,9 @@ char	*ft_strjoin_add_slash(char const *s1, char const *s2);
 **----------------------------------
 */
 int		check_builtins(t_cmd *cmd);
-int		builtins_cd(t_node	*arg);
+int		builtins_cd(t_node	*arg, char *ret);
 int		builtins_export(t_node *arg);
+int		builtins_echo(t_node *arg);
 // Builtins to do
 // echo
 // cd

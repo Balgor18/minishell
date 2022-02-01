@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 15:44:00 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/31 14:31:00 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/01 11:47:32 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	exec_redir_rin(t_cmd *cmd)
 {
-	int	fd;
+	int		fd;
 	char	*name;
 
 	name = cmd->red->next->word;
@@ -50,7 +50,7 @@ static int	exec_redir_rout(t_cmd *cmd)
 
 static int	exec_redir_append(t_cmd *cmd)
 {
-	int	fd;
+	int		fd;
 	char	*name;
 
 	name = cmd->red->next->word;

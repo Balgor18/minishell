@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 19:02:24 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/31 18:11:42 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/01 12:31:12 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,9 @@ static char	*find_cmd_path(char *cmd)
 			break ;
 		}
 		free(path);
-		path = NULL;
-		free(*tab);
 		tab++;
 	}
-	while (*tab)
-	{
-		free(*tab);
-		tab++;
-	}
-	free(tab2);
+	free_tab(tab2);
 	return (path);
 }
 
@@ -116,9 +109,7 @@ void	exec_fork(t_cmd **cmd)
 	t_cmd	*cpy;
 	char	*path;
 
-	g_error = 0;
-	pid = fork();
-	path = find_cmd_path((*cmd)->arg->word);
+	path = ((g_error = 0, pid = fork(), find_cmd_path((*cmd)->arg->word)));
 	if (!path)
 		g_error = 127;
 	if (pid == -1)

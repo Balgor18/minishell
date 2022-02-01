@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 14:33:41 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/31 17:23:17 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/01 11:57:11 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static size_t	get_end_of_pwd(char *test)
 	return (ft_strlen(end));
 }
 
-static void	change_pwd_double_point(t_node *arg)
+static void	change_pwd_double_point(void)
 {
 	static const char	oldpwd[9] = "OLDPWD=\0";
 	static const char	pwd[5] = "PWD=\0";
@@ -60,17 +60,17 @@ static void	change_pwd_double_point(t_node *arg)
 	char				*tmp;
 	size_t				ret;
 
-	(void)arg;
 	str = NULL;
 	delone_env("OLDPWD");
 	str = ft_strjoin(oldpwd, ft_env_value("PWD"));
 	add_env(str);
 	free(str);
 	ret = get_end_of_pwd(ft_env_value("PWD"));
-	str = ft_substr(ft_env_value("PWD"), 0, ft_strlen(ft_env_value("PWD")) - ret);
+	str = ft_substr(ft_env_value("PWD"), 0,
+			ft_strlen(ft_env_value("PWD")) - ret);
 	delone_env("PWD");
 	tmp = str;
-	str = ft_strjoin(pwd , str);
+	str = ft_strjoin(pwd, str);
 	free(tmp);
 	add_env(str);
 	free(str);
@@ -80,14 +80,14 @@ static void	swap_pwd_old_pwd(void)
 {
 	static const char	oldpwd[9] = "OLDPWD=\0";
 	static const char	pwd[5] = "PWD=\0";
-	char	*pw;
-	char	*opw;
+	char				*pw;
+	char				*opw;
 
 	pw = ft_env_value("PWD");
 	opw = ft_env_value("OLDPWD");
-	pw = ft_strjoin(oldpwd , pw);
+	pw = ft_strjoin(oldpwd, pw);
 	delone_env("PWD");
-	opw = ft_strjoin(pwd , opw);
+	opw = ft_strjoin(pwd, opw);
 	delone_env("OLDPWD");
 	add_env(pw);
 	free(pw);
@@ -102,11 +102,8 @@ static void	swap_pwd_old_pwd(void)
 ** or aboslut path
 ** i recode the flag -
 */
-int	builtins_cd(t_node	*arg)
+int	builtins_cd(t_node	*arg, char *ret)
 {
-	char	*ret;
-
-	ret = NULL;
 	if (!arg)
 		return (true);
 	if (ft_strcmp("-", arg->word))
@@ -125,7 +122,7 @@ int	builtins_cd(t_node	*arg)
 		if (chdir(arg->word) == -1)
 			perror(ret);
 		else if (ft_strcmp("..", arg->word))
-			change_pwd_double_point(arg);
+			change_pwd_double_point();
 		else
 			change_pwd(arg);
 	}
