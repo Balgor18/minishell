@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 10:47:21 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/29 03:19:43 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/02 14:13:28 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,17 @@ static int	heredoc_expand(t_node *red)
 	char	*line;
 	int		fd;
 
+	limit = NULL;
 	fd = create_heredoc(1);
 	if (fd < 0)
 		return (fd);
 	if (red->next->token == LIMITOR)
 		limit = red->next->word;
-	while (get_next_line(0, &line, 0) > 0)
+	while (1)
 	{
+		line = readline(">>");
+		if (line == NULL)
+			break ;
 		if (ft_strcmp(line, limit))
 			break ;
 		if (ft_strchr(line, '$'))
@@ -68,7 +72,6 @@ static int	heredoc_expand(t_node *red)
 		write(fd, "\n", 1);
 		free(line);
 	}
-	free(line);
 	return (fd);
 }
 
@@ -78,20 +81,23 @@ static int	heredoc_no_expand(t_node *red)
 	char	*line;
 	int		fd;
 
+	limit = NULL;
 	fd = create_heredoc(1);
 	if (fd < 0)
 		return (fd);
 	if (red->next->token == LIMITOR)
 		limit = red->next->word;
-	while (get_next_line(0, &line, 0) > 0)
+	while (1)
 	{
+		line = readline(">>");
+		if (line == NULL)
+			break ;
 		if (ft_strcmp(line, limit))
 			break ;
 		write(fd, line, ft_strlen(line));
 		write(fd, "\n", 1);
 		free(line);
 	}
-	free(line);
 	return (fd);
 }
 

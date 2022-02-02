@@ -1,41 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_signal.c                                      :+:      :+:    :+:   */
+/*   builtins_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/01 11:38:58 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/02 14:07:18 by fcatinau         ###   ########.fr       */
+/*   Created: 2022/02/02 17:35:59 by fcatinau          #+#    #+#             */
+/*   Updated: 2022/02/02 17:36:12 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	handler_sig(int sig)
+char	*check_is_not_builtins(char *path, char *cmd)
 {
-	if (sig == SIGQUIT)
-		return ;
-	if (sig == SIGINT)
+	if (ft_strcmp(cmd, "echo") || ft_strcmp(cmd, "cd") || ft_strcmp(cmd, "pwd")
+		|| ft_strcmp(cmd, "export") || ft_strcmp(cmd, "unset")
+		|| ft_strcmp(cmd, "env") || ft_strcmp(cmd, "exit"))
 	{
-		g_error = 130;
-		write(STDOUT_FILENO, "\n", 1);
-		rl_replace_line("", 1);
-		rl_on_new_line();
-		rl_redisplay();
+		if (path)
+			free(path);
+		return (ft_strdup(cmd));
 	}
-}
-
-void	init_signal(int type)
-{
-	if (!type)
-	{
-		signal(SIGINT, &handler_sig);
-		signal(SIGQUIT, SIG_IGN);
-	}
-	else if (type)
-	{
-		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
-	}
+	return (path);
 }

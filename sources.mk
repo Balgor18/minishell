@@ -34,6 +34,7 @@ SOURCES		+=                              		\
 ## SRCS/BUILTINS ##
 
 SOURCES		+=                              		\
+		srcs/builtins/builtins_utils.c         	\
 		srcs/builtins/builtins_cd.c            	\
 		srcs/builtins/check_builtins.c         	\
 		srcs/builtins/builtins_export.c        	\
@@ -52,8 +53,10 @@ SOURCES		+=                              		\
 ## SRCS/UTILS ##
 
 SOURCES		+=                              		\
+		srcs/utils/is_digit.c                  	\
 		srcs/utils/ft_split.c                  	\
 		srcs/utils/ft_itoa.c                   	\
+		srcs/utils/error2.c                    	\
 		srcs/utils/get_next_line_utils.c       	\
 		srcs/utils/get_next_line.c             	\
 		srcs/utils/utils.c                     	\

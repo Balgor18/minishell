@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 11:46:23 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/01 11:46:41 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/02 18:23:58 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,13 @@ int	builtins_echo(t_node *arg)
 	int	endl;
 
 	endl = true;
-	if (ft_strcmp("-n", arg->word))
+	if (arg)
 	{
-		endl = false;
-		arg = arg->next;
+		if (ft_strcmp("-n", arg->word))
+		{
+			endl = false;
+			arg = arg->next;
+		}
 	}
 	while (arg)
 	{
@@ -37,5 +40,5 @@ int	builtins_echo(t_node *arg)
 	}
 	if (endl)
 		write(STDOUT_FILENO, "\n", 1);
-	return (true);
+	return (g_error = 0, true);
 }

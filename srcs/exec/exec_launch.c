@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 15:10:09 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/02 12:12:09 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/02 19:03:12 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,24 @@ static void	exec_pipe(t_cmd **cmd)
 
 static void	exec_wait_free(t_cmd *cmd)
 {
+	int		wstatus;
 	t_cmd	*cpy;
 
 	while (cmd)
 	{
 		signal(SIGINT, SIG_IGN);
-		waitpid(cmd->pid, NULL, 0);
+		if (cmd->pid > 0)
+		{
+			waitpid(cmd->pid, &wstatus, 0);
+			if (WIFEXITED(wstatus))
+				g_error = WEXITSTATUS(wstatus);
+			else if (WIFSIGNALED(wstatus))
+			{
+				g_error = 128 + WTERMSIG(wstatus);
+				error_sig();
+				write(STDOUT_FILENO, "\n", 1);
+			}
+		}
 		init_signal(false);
 		cpy = cmd;
 		cmd = cmd->next;
@@ -43,17 +55,25 @@ void	exec_launch(t_cmd *cmd)
 {
 	t_cmd	*tmp;
 	t_cmd	*start;
+	int		is_next;
 
+	is_next = false;
 	start = cmd;
 	tmp = cmd;
+	if (cmd->next)
+		is_next = true;
 	while (cmd)
 	{
 		if (cmd->next)
 			exec_pipe(&cmd);
 		if (cmd->red)
-			if (!exec_redir(cmd))
-				dprintf(2, "Error in redir\n");
-		if (!check_builtins(cmd))
+			exec_redir(cmd);
+		if (!is_next)
+		{
+			if (!check_builtins(cmd->arg->word, cmd))
+				exec_fork(cmd, start);
+		}
+		else
 			exec_fork(cmd, start);
 		cmd = cmd->next;
 	}

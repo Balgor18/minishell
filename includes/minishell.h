@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/02 12:14:58 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/02 19:06:44 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,10 +177,11 @@ char	**exec_move_list_in_char(t_node *list);
 **-------------Builtins-------------
 **----------------------------------
 */
-int		check_builtins(t_cmd *cmd);
+int		check_builtins(char *path, t_cmd *cmd);
 int		builtins_cd(t_node	*arg, char *ret);
 int		builtins_export(t_node *arg);
 int		builtins_echo(t_node *arg);
+char	*check_is_not_builtins(char *path, char *cmd);
 // Builtins to do
 // echo
 // cd
@@ -198,6 +199,8 @@ int		builtins_echo(t_node *arg);
 void	ft_putstr_fd(int fd, char *s);
 int		error_msg(char *s);
 void	error_redir(char *file);
+void	error_cmd(char *cmd);
+void	error_sig(void);
 
 /*
 **----------------------------------
@@ -234,6 +237,7 @@ void	*ft_memchr(const void *s, int c, size_t n);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
 void	*ft_memmove(void *dst, const void *src, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
+int		ft_isdigit(int c);
 
 /*
 **----------------------------------

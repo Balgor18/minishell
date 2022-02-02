@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 14:33:41 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/01 11:57:11 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/02 19:09:17 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,12 +105,17 @@ static void	swap_pwd_old_pwd(void)
 int	builtins_cd(t_node	*arg, char *ret)
 {
 	if (!arg)
-		return (true);
+		return (g_error = 1, error_msg(ERROR_ARG_CD), true);
+	if (!ft_env_value("PWD"))
+		return (g_error = 1, error_msg("minishell: cd: PWD not set\n"), true);
 	if (ft_strcmp("-", arg->word))
 	{
 		ret = ft_env_value("OLDPWD");
 		if (!ret)
+		{
+			g_error = 1;
 			printf("minishell: cd: OLDPWD not set\n");
+		}
 		else
 		{
 			chdir(ret);
@@ -120,11 +125,14 @@ int	builtins_cd(t_node	*arg, char *ret)
 	else
 	{
 		if (chdir(arg->word) == -1)
+		{
+			g_error = 1;
 			perror(ret);
+		}
 		else if (ft_strcmp("..", arg->word))
 			change_pwd_double_point();
 		else
 			change_pwd(arg);
 	}
-	return (true);
+	return (g_error = 0, true);
 }

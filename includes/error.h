@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:40:13 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/02 12:20:27 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/02 14:34:00 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,4 +19,6 @@
 # define ERROR_EXP_START "export: "
 # define ERROR_EXP_END "': not a valid identifier\n"
 # define ERROR_CMD ": command not found\n"
+# define ERROR_ARG_CD "Wrong number of argument\n"
+
 #endif

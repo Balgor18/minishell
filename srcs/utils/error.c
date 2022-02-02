@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 23:13:35 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/26 19:37:35 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/02 14:19:41 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	ft_putstr_fd(int fd, char *s)
 
 int	error_msg(char *s)
 {
-	ft_putstr_fd(STDERR_FILENO, RED"Error\n"RESET);
 	ft_putstr_fd(STDERR_FILENO, s);
 	return (false);
 }
