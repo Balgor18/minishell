@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 14:33:41 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/02 21:57:45 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/02 22:00:03 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static void	pwd_old_pwd(void)
 static void	cd_less(void)
 {
 	char	*ret;
+
 	ret = ft_env_value("OLDPWD");
 	if (!ret)
 	{
