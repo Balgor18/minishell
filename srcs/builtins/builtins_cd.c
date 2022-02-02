@@ -6,93 +6,50 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 14:33:41 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/02 19:09:17 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/02 21:54:38 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-** change_pwd
-** change the env value of PWD and OLDPWD
-*/
-static void	change_pwd(t_node *arg)
-{
-	static const char	oldpwd[9] = "OLDPWD=\0";
-	static const char	pwd[5] = "PWD=\0";
-	char				*ret;
-	char				*tmp;
-
-	delone_env("OLDPWD");
-	ret = ft_strjoin(oldpwd, ft_env_value("PWD"));
-	add_env(ret);
-	free(ret);
-	if ((ft_env_value("PWD")[ft_strlen(ft_env_value("PWD"))]) == '/')
-		ret = ft_strjoin(ft_env_value("PWD"), arg->word);
-	else
-		ret = ft_strjoin_add_slash(ft_env_value("PWD"), arg->word);
-	delone_env("PWD");
-	tmp = ret;
-	ret = ft_strjoin(pwd, ret);
-	free(tmp);
-	add_env(ret);
-	free(ret);
-}
-
-static size_t	get_end_of_pwd(char *test)
-{
-	char	*end;
-
-	end = &test[ft_strlen(test)];
-	end--;
-	if (*end == '/')
-		end--;
-	while (*end != '/' && ft_is_alpha(*end + 1))
-		end--;
-	return (ft_strlen(end));
-}
-
-static void	change_pwd_double_point(void)
-{
-	static const char	oldpwd[9] = "OLDPWD=\0";
-	static const char	pwd[5] = "PWD=\0";
-	char				*str;
-	char				*tmp;
-	size_t				ret;
-
-	str = NULL;
-	delone_env("OLDPWD");
-	str = ft_strjoin(oldpwd, ft_env_value("PWD"));
-	add_env(str);
-	free(str);
-	ret = get_end_of_pwd(ft_env_value("PWD"));
-	str = ft_substr(ft_env_value("PWD"), 0,
-			ft_strlen(ft_env_value("PWD")) - ret);
-	delone_env("PWD");
-	tmp = str;
-	str = ft_strjoin(pwd, str);
-	free(tmp);
-	add_env(str);
-	free(str);
-}
-
-static void	swap_pwd_old_pwd(void)
+static void	pwd_old_pwd(void)
 {
 	static const char	oldpwd[9] = "OLDPWD=\0";
 	static const char	pwd[5] = "PWD=\0";
 	char				*pw;
 	char				*opw;
+	char				*tmp;
 
-	pw = ft_env_value("PWD");
-	opw = ft_env_value("OLDPWD");
-	pw = ft_strjoin(oldpwd, pw);
-	delone_env("PWD");
-	opw = ft_strjoin(pwd, opw);
+	opw = ft_env_value("PWD");
+	pw = getcwd(NULL, 0);
+	tmp = pw;
+	pw = ft_strjoin(pwd, pw);
+	free(tmp);
+	opw = ft_strjoin(oldpwd, opw);
 	delone_env("OLDPWD");
-	add_env(pw);
-	free(pw);
 	add_env(opw);
 	free(opw);
+	delone_env("PWD");
+	add_env(pw);
+	free(pw);
+}
+
+/*
+** Create_pwd
+** if PWD not exist a create it
+*/
+static void	create_pwd(void)
+{
+	static const char	pwd[5] = "PWD=\0";
+	char				*pw;
+	char				*tmp;
+	
+	pw = getcwd(NULL, 0);
+	tmp = pw;
+	pw = ft_strjoin(pwd, pw);
+	free(tmp);
+	add_env(pw);
+	free(pw);
 }
 
 /*
@@ -107,7 +64,7 @@ int	builtins_cd(t_node	*arg, char *ret)
 	if (!arg)
 		return (g_error = 1, error_msg(ERROR_ARG_CD), true);
 	if (!ft_env_value("PWD"))
-		return (g_error = 1, error_msg("minishell: cd: PWD not set\n"), true);
+		create_pwd();
 	if (ft_strcmp("-", arg->word))
 	{
 		ret = ft_env_value("OLDPWD");
@@ -119,7 +76,7 @@ int	builtins_cd(t_node	*arg, char *ret)
 		else
 		{
 			chdir(ret);
-			swap_pwd_old_pwd();
+			pwd_old_pwd();
 		}
 	}
 	else
@@ -129,10 +86,7 @@ int	builtins_cd(t_node	*arg, char *ret)
 			g_error = 1;
 			perror(ret);
 		}
-		else if (ft_strcmp("..", arg->word))
-			change_pwd_double_point();
-		else
-			change_pwd(arg);
+		pwd_old_pwd();
 	}
 	return (g_error = 0, true);
 }

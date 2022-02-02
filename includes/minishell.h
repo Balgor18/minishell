@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/02 19:06:44 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/02 21:30:07 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,14 +182,6 @@ int		builtins_cd(t_node	*arg, char *ret);
 int		builtins_export(t_node *arg);
 int		builtins_echo(t_node *arg);
 char	*check_is_not_builtins(char *path, char *cmd);
-// Builtins to do
-// echo
-// cd
-// pwd
-// export
-// unset
-// env
-// exit
 
 /*
 **----------------------------------
