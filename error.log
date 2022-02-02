@@ -1,16 +1,4 @@
 Error :
 
 ----
-
-find . | grep "exec"
-// do nothing
-
-----
-
-cat | ls
-Inversez les deux check why
-
-----
-
-cat | ;s
-// error leak crash
+recode the makefile

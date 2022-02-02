@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 15:10:09 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/01 18:53:56 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/02 12:12:09 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,6 @@ static void	exec_wait_free(t_cmd *cmd)
 		cmd = cmd->next;
 		free_list(cpy->arg);
 		free_list(cpy->red);
-		if (cpy->fd[IN] != 0)
-			close(cpy->fd[IN]);
-		if (cpy->fd[OUT] != 1)
-			close(cpy->fd[OUT]);
 		free(cpy);
 	}
 }
@@ -57,8 +53,7 @@ void	exec_launch(t_cmd *cmd)
 		if (cmd->red)
 			if (!exec_redir(cmd))
 				dprintf(2, "Error in redir\n");
-		if (check_builtins(cmd));
-		else
+		if (!check_builtins(cmd))
 			exec_fork(cmd, start);
 		cmd = cmd->next;
 	}

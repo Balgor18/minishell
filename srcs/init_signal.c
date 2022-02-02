@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 11:38:58 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/01 16:50:35 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/02 12:11:11 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	handler_sig(int sig)
 	}
 }
 
-void	init_signal(int	type)
+void	init_signal(int type)
 {
 	if (!type)
 	{

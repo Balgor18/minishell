@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 18:18:07 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/01 12:00:40 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/02 09:41:05 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,45 @@ int	create_heredoc(int type)
 			ret = open(".heredoc", O_RDONLY | O_CREAT, 0777);
 	}
 	return (ret);
+}
+
+/*
+** list_len
+** return the size of t_node
+*/
+static int	list_len(t_node *list)
+{
+	int	nb;
+
+	nb = 0;
+	while (list)
+	{
+		nb++;
+		list = list->next;
+	}
+	return (nb);
+}
+
+/*
+** exec_move_list_in_char
+** get list in enter and create a char **
+** with all word of list
+*/
+char	**exec_move_list_in_char(t_node *list)
+{
+	char	**ret;
+	char	**tab;
+
+	ret = malloc(sizeof(char *) * (list_len(list) + 1));
+	if (!ret)
+		return (NULL);
+	ret[list_len(list)] = NULL;
+	tab = ret;
+	while (list)
+	{
+		*ret = ft_strdup(list->word);
+		list = list->next;
+		ret++;
+	}
+	return (tab);
 }

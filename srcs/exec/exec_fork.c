@@ -6,11 +6,19 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 19:02:24 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/01 18:50:22 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/02 12:20:47 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	error_cmd(char *cmd)
+{
+	g_error = 127;
+	ft_putstr_fd(STDERR_FILENO, "Minishell :");
+	ft_putstr_fd(STDERR_FILENO, cmd);
+	ft_putstr_fd(STDERR_FILENO, ERROR_CMD);
+}
 
 /*
 ** find_cmd_path
@@ -40,46 +48,11 @@ static char	*find_cmd_path(char *cmd)
 			break ;
 		}
 		free(path);
+		path = NULL;
 		tab++;
 	}
 	free_tab(tab2);
 	return (path);
-}
-
-/*
-** list_len
-** return the size of t_node
-*/
-static int	list_len(t_node *list)
-{
-	int	nb;
-
-	nb = 0;
-	while (list)
-	{
-		nb++;
-		list = list->next;
-	}
-	return (nb);
-}
-
-char	**exec_move_list_in_char(t_node *list)
-{
-	char	**ret;
-	char	**tab;
-
-	ret = malloc(sizeof(char *) * (list_len(list) + 1));
-	if (!ret)
-		return (NULL);
-	ret[list_len(list)] = NULL;
-	tab = ret;
-	while (list)
-	{
-		*ret = ft_strdup(list->word);
-		list = list->next;
-		ret++;
-	}
-	return (tab);
 }
 
 static void	exec_fork_child(t_cmd *cmd, t_cmd *start, char *path)
@@ -92,13 +65,11 @@ static void	exec_fork_child(t_cmd *cmd, t_cmd *start, char *path)
 	if (cmd->fd[IN] != 0)
 	{
 		dup2(cmd->fd[IN], STDIN_FILENO);
-		printf("fd[IN] = %d\n", cmd->fd[IN]);
 		close(cmd->fd[IN]);
 	}
 	if (cmd->fd[OUT] != 1)
 	{
 		dup2(cmd->fd[OUT], STDOUT_FILENO);
-		printf("fd[OUT] = %d\n", cmd->fd[OUT]);
 		close(cmd->fd[OUT]);
 	}
 	init_signal(true);
@@ -112,10 +83,11 @@ void	exec_fork(t_cmd *cmd, t_cmd *start)
 	pid_t	pid;
 	char	*path;
 
-	path = ((g_error = 0, find_cmd_path(cmd->arg->word)));
+	path = find_cmd_path(cmd->arg->word);
+	g_error = 0;
 	if (!path)
 	{
-		g_error = 127;
+		error_cmd(cmd->arg->word);
 		return ;
 	}
 	pid = fork();
@@ -125,7 +97,11 @@ void	exec_fork(t_cmd *cmd, t_cmd *start)
 		exec_fork_child(cmd, start, path);
 	else
 	{
-		cmd->pid = pid;
 		free(path);
+		cmd->pid = pid;
+		if (cmd->fd[IN] != 0)
+			close(cmd->fd[IN]);
+		if (cmd->fd[OUT] != 1)
+			close(cmd->fd[OUT]);
 	}
 }

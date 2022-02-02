@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/01 18:33:10 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/02 12:14:58 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ void	tokeniser(t_node *list);
 **--------------Signal--------------
 **----------------------------------
 */
-void	init_signal(int	type);
+void	init_signal(int type);
 
 /*
 **----------------------------------
@@ -170,6 +170,7 @@ void	exec_fork(t_cmd *cmd, t_cmd *start);
 void	free_cmd(t_cmd *cmd);
 int		create_heredoc(int type);
 char	*ft_strjoin_add_slash(char const *s1, char const *s2);
+char	**exec_move_list_in_char(t_node *list);
 
 /*
 **----------------------------------
