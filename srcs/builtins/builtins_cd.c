@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 14:33:41 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/02 21:54:38 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/02 21:57:45 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,22 @@ static void	pwd_old_pwd(void)
 	free(pw);
 }
 
+static void	cd_less(void)
+{
+	char	*ret;
+	ret = ft_env_value("OLDPWD");
+	if (!ret)
+	{
+		g_error = 1;
+		printf("minishell: cd: OLDPWD not set\n");
+	}
+	else
+	{
+		chdir(ret);
+		pwd_old_pwd();
+	}
+}
+
 /*
 ** Create_pwd
 ** if PWD not exist a create it
@@ -43,7 +59,7 @@ static void	create_pwd(void)
 	static const char	pwd[5] = "PWD=\0";
 	char				*pw;
 	char				*tmp;
-	
+
 	pw = getcwd(NULL, 0);
 	tmp = pw;
 	pw = ft_strjoin(pwd, pw);
@@ -59,26 +75,17 @@ static void	create_pwd(void)
 ** or aboslut path
 ** i recode the flag -
 */
-int	builtins_cd(t_node	*arg, char *ret)
+int	builtins_cd(t_node	*arg)
 {
+	char	*ret;
+
+	ret = NULL;
 	if (!arg)
 		return (g_error = 1, error_msg(ERROR_ARG_CD), true);
 	if (!ft_env_value("PWD"))
 		create_pwd();
 	if (ft_strcmp("-", arg->word))
-	{
-		ret = ft_env_value("OLDPWD");
-		if (!ret)
-		{
-			g_error = 1;
-			printf("minishell: cd: OLDPWD not set\n");
-		}
-		else
-		{
-			chdir(ret);
-			pwd_old_pwd();
-		}
-	}
+		cd_less();
 	else
 	{
 		if (chdir(arg->word) == -1)

@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 01:34:05 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/02 19:27:03 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/02 21:57:05 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,15 +73,13 @@ static int	builtins_exit(t_cmd *cmd)
 */
 int	check_builtins(char *path, t_cmd *cmd)
 {
-	char	*only_cd;
 	int		ret;
 
-	only_cd = NULL;
 	ret = false;
 	if (ft_strcmp(path, "echo"))
 		ret = builtins_echo(cmd->arg->next);
 	else if (ft_strcmp(path, "cd"))
-		ret = builtins_cd(cmd->arg->next, only_cd);
+		ret = builtins_cd(cmd->arg->next);
 	else if (ft_strcmp(path, "pwd"))
 		ret = builtins_pwd();
 	else if (ft_strcmp(path, "export"))

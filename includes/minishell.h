@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/02 21:30:07 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/02 21:57:58 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,7 @@ char	**exec_move_list_in_char(t_node *list);
 **----------------------------------
 */
 int		check_builtins(char *path, t_cmd *cmd);
-int		builtins_cd(t_node	*arg, char *ret);
+int		builtins_cd(t_node	*arg);
 int		builtins_export(t_node *arg);
 int		builtins_echo(t_node *arg);
 char	*check_is_not_builtins(char *path, char *cmd);
