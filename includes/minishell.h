@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/01 11:46:52 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/01 18:33:10 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ struct s_cmd
 	t_node	*arg;
 	t_node	*red;
 	int		fd[FD_MAX];
+	int		pid;
 	t_cmd	*next;
 };
 
@@ -116,6 +117,13 @@ int		check_token(char *s, int last);
 **----------------------------------
 */
 void	tokeniser(t_node *list);
+
+/*
+**----------------------------------
+**--------------Signal--------------
+**----------------------------------
+*/
+void	init_signal(int	type);
 
 /*
 **----------------------------------
@@ -158,7 +166,7 @@ void	exec_malloc_cmd(t_cmd **cmd);
 void	exec_launch(t_cmd *cmd);
 int		exec_redir(t_cmd *cmd);
 int		exec_redir_heredoc(t_cmd *cmd);
-void	exec_fork(t_cmd **cmd);
+void	exec_fork(t_cmd *cmd, t_cmd *start);
 void	free_cmd(t_cmd *cmd);
 int		create_heredoc(int type);
 char	*ft_strjoin_add_slash(char const *s1, char const *s2);

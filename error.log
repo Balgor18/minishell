@@ -9,3 +9,8 @@ find . | grep "exec"
 
 cat | ls
 Inversez les deux check why
+
+----
+
+cat | ;s
+// error leak crash

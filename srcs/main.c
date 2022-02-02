@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:41:23 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/01 11:55:09 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/01 16:51:47 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main(int ac, char **av, char **env)
 
 	line = NULL;
 	init_env(ac, av, env);
-	// init_signal();
+	init_signal(false);
 	while (1)
 	{
 		line = readline("Minishell rose : ");

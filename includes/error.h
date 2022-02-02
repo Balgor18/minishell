@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:40:13 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/31 17:17:55 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/01 15:13:12 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,4 +18,5 @@
 # define ERROR_RED "No such file or directory\n"
 # define ERROR_EXP_START "export: "
 # define ERROR_EXP_END "': not a valid identifier\n"
+
 #endif

@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 19:02:24 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/01 12:31:12 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/01 18:50:22 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,14 @@ char	**exec_move_list_in_char(t_node *list)
 	tab = ret;
 	while (list)
 	{
-		*ret = list->word;
+		*ret = ft_strdup(list->word);
 		list = list->next;
 		ret++;
 	}
 	return (tab);
 }
 
-static void	exec_fork_child(t_cmd *cmd, char *path)
+static void	exec_fork_child(t_cmd *cmd, t_cmd *start, char *path)
 {
 	char	**cmd_tab;
 	char	**env;
@@ -92,42 +92,40 @@ static void	exec_fork_child(t_cmd *cmd, char *path)
 	if (cmd->fd[IN] != 0)
 	{
 		dup2(cmd->fd[IN], STDIN_FILENO);
+		printf("fd[IN] = %d\n", cmd->fd[IN]);
 		close(cmd->fd[IN]);
 	}
 	if (cmd->fd[OUT] != 1)
 	{
 		dup2(cmd->fd[OUT], STDOUT_FILENO);
+		printf("fd[OUT] = %d\n", cmd->fd[OUT]);
 		close(cmd->fd[OUT]);
 	}
+	init_signal(true);
+	free_cmd(start);
 	execve(path, cmd_tab, env);
 	exit(1);
 }
 
-void	exec_fork(t_cmd **cmd)
+void	exec_fork(t_cmd *cmd, t_cmd *start)
 {
 	pid_t	pid;
-	t_cmd	*cpy;
 	char	*path;
 
-	path = ((g_error = 0, pid = fork(), find_cmd_path((*cmd)->arg->word)));
+	path = ((g_error = 0, find_cmd_path(cmd->arg->word)));
 	if (!path)
+	{
 		g_error = 127;
+		return ;
+	}
+	pid = fork();
 	if (pid == -1)
-		printf("Error fork  on cmd = %s\n", (*cmd)->arg->word);
+		printf("Error fork on cmd = %s\n", cmd->arg->word);
 	else if (pid == 0)
-		exec_fork_child(*cmd, path);
+		exec_fork_child(cmd, start, path);
 	else
 	{
-		waitpid(pid, NULL, 0);
+		cmd->pid = pid;
 		free(path);
-		cpy = *cmd;
-		*cmd = (*cmd)->next;
-		free_list(cpy->arg);
-		free_list(cpy->red);
-		if (cpy->fd[IN] != 0)
-			close(cpy->fd[IN]);
-		if (cpy->fd[OUT] != 1)
-			close(cpy->fd[OUT]);
-		free(cpy);
 	}
 }
