@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 18:12:55 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/29 06:40:23 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/03 17:40:55 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 
 void	error_parsing(char *word)
 {
+	g_error = 2;
 	error_msg(ERROR_PARSING);
 	write(STDERR_FILENO, " '", 2);
 	ft_putstr_fd(STDERR_FILENO, word);
@@ -55,21 +56,34 @@ int	verif_token(int actual, int last)
 	return (true);
 }
 
+static int	verif_last_token(int last, int actual)
+{
+	if ((last == PIPE || last == R_IN || last == R_OUT || last == APPEND
+			|| last == HEREDOC) && actual == -1)
+		return (false);
+	return (true);
+}
+
 int	verif_parsing(t_node *list)
 {
+	t_node	*last;
 	int		last_token;
 
 	last_token = -1;
+	last = list;
 	while (list)
 	{
 		if (!verif_token(list->token, last_token))
 		{
-			g_error = 2;
 			error_parsing(list->word);
 			return (false);
 		}
 		last_token = list->token;
+		last = list;
 		list = list->next;
 	}
+	if (!list)
+		if (!verif_last_token(last_token, -1))
+			return (error_parsing(last->word), false);
 	return (true);
 }

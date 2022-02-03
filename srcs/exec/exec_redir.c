@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 15:44:00 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/01 11:47:32 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/03 17:39:16 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,9 @@ static int	exec_redir_2(t_cmd *cpy)
 int	exec_redir(t_cmd *cmd)
 {
 	t_cmd	*cpy;
+	t_node	*red;
 
-	cpy = cmd;
+	red = ((cpy = cmd, cmd->red));
 	while (cpy->red)
 	{
 		if (cpy->red->token == R_IN)
@@ -103,9 +104,7 @@ int	exec_redir(t_cmd *cmd)
 		cpy->red = cpy->red->next;
 	}
 	if (cpy->red)
-	{
-		error_redir(cpy->red->next->word);
-		return (false);
-	}
+		return (error_redir(cpy->red->next->word), false);
+	cmd->red = red;
 	return (true);
 }

@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 01:34:05 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/03 14:45:00 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/03 17:33:45 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	builtins_pwd(void)
 	char	*ret;
 
 	ret = getcwd(NULL, 0);
-		if (!ret)
+	if (!ret)
 		return (g_error = 127, error_msg("getcwd fail\n"), true);
 	ft_putstr_fd(STDOUT_FILENO, ret);
 	write(STDOUT_FILENO, "\n", 1);
@@ -59,15 +59,6 @@ static int	builtins_env(void)
 	return (g_error = 0, true);
 }
 
-static int	builtins_exit(t_cmd *cmd)
-{
-	free_cmd(cmd);
-	delall_env();
-	rl_clear_history();
-	exit(0);
-	return (g_error = 0, true);
-}
-
 /*
 ** Check builtins
 ** Return FALSE if is not a builtins
@@ -75,7 +66,7 @@ static int	builtins_exit(t_cmd *cmd)
 */
 int	check_builtins(char *path, t_cmd *cmd)
 {
-	int		ret;
+	int	ret;
 
 	ret = false;
 	if (ft_strcmp(path, "echo"))
@@ -91,6 +82,6 @@ int	check_builtins(char *path, t_cmd *cmd)
 	else if (ft_strcmp(path, "env"))
 		ret = builtins_env();
 	else if (ft_strcmp(path, "exit"))
-		ret = builtins_exit(cmd);
+		ret = builtins_exit(cmd->arg->next, cmd);
 	return (ret);
 }
