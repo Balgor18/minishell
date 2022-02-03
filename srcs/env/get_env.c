@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 19:19:53 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/30 20:58:34 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/03 20:10:24 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	init_env(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	ft_env(env, NULL, NULL);
+	modif_shlvl();
 }
 
 /*

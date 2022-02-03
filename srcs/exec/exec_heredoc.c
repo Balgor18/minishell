@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 10:47:21 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/02 14:13:28 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/03 20:32:16 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,9 @@ static int	heredoc_expand(t_node *red)
 	char	*line;
 	int		fd;
 
-	limit = NULL;
-	fd = create_heredoc(1);
+	limit = ((fd = create_heredoc(1), NULL));
 	if (fd < 0)
-		return (fd);
+		return (perror(limit), fd);
 	if (red->next->token == LIMITOR)
 		limit = red->next->word;
 	while (1)
@@ -84,7 +83,10 @@ static int	heredoc_no_expand(t_node *red)
 	limit = NULL;
 	fd = create_heredoc(1);
 	if (fd < 0)
+	{
+		perror(limit);
 		return (fd);
+	}
 	if (red->next->token == LIMITOR)
 		limit = red->next->word;
 	while (1)

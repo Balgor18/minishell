@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 19:02:24 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/02 18:09:19 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/03 20:41:58 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static char	*try_open(char *cmd)
 	if (ret > 0)
 	{
 		close (ret);
+		// return (cmd);
 		return (ft_strdup(cmd));
 	}
 	return (NULL);

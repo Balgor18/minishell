@@ -4,16 +4,13 @@ Error :
 recode the makefile
 
 ----
-
 -nnnnnnn dans echo
 :check:
 ----
-
 > file1 > file2 >> file3
 //leak
 :check:
 ----
-
 file1 > file2 >> file3
 //leak
 :check:
@@ -21,18 +18,46 @@ file1 > file2 >> file3
 //Check redirs
 :check:
 ----
-
 error get cwd
 :check:
 ----
 check exit
 :check:
 ----
-
 error syntax
 whien pipe a the end
 :check:
-
 ----
 //error ' ' at end of line fuck
 :check:
+----
+echo "0" > minishell
+touch "\?$*'KwaMe'*$?\"
+:check:
+----
+Export test
+Export when Var exist
+:check:
+----
+Exit -23
+Error dont be here
+:check:
+----
+Shlvl to increment
+:check:
+----
+<a cat -e
+Not working but need working
+:check:
+----
+Export 2 Var in 1 line
+:check:
+----
+echo dfsg > a >b >c >d
+dont output
+but create fill
+:check:
+----
+call minishell in minishell
+create a leak
+//dont understand how to resolve

@@ -27,6 +27,7 @@ SOURCES		+=                              		\
 SOURCES		+=                              		\
 		srcs/env/get_env.c                     	\
 		srcs/env/ft_env_value.c                	\
+		srcs/env/modif_shlvl.c                 	\
 		srcs/env/env_to_tab.c                  	\
 		srcs/env/ft_env.c                      	\
 
@@ -37,9 +38,9 @@ SOURCES		+=                              		\
 		srcs/builtins/builtins_utils.c         	\
 		srcs/builtins/builtins_cd.c            	\
 		srcs/builtins/check_builtins.c         	\
+		srcs/builtins/builtins_exit.c          	\
 		srcs/builtins/builtins_export.c        	\
 		srcs/builtins/builtins_echo.c          	\
-		srcs/builtins/builtins_exit.c          	\
 
 
 ## SRCS/PARSE ##
@@ -55,8 +56,8 @@ SOURCES		+=                              		\
 
 SOURCES		+=                              		\
 		srcs/utils/is_digit.c                  	\
-		srcs/utils/ft_split.c                  	\
 		srcs/utils/ft_atoi.c                   	\
+		srcs/utils/ft_split.c                  	\
 		srcs/utils/ft_itoa.c                   	\
 		srcs/utils/error2.c                    	\
 		srcs/utils/get_next_line_utils.c       	\

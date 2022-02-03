@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 15:44:00 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/03 17:39:16 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/03 18:45:04 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ static int	exec_redir_rin(t_cmd *cmd)
 	name = cmd->red->next->word;
 	fd = open(name, O_RDONLY);
 	if (fd < 0)
+	{
+		perror(name);
 		return (false);
+	}
 	if (cmd->fd[IN] != 0)
 	{
 		dup2(fd, cmd->fd[IN]);
@@ -38,7 +41,10 @@ static int	exec_redir_rout(t_cmd *cmd)
 	name = cmd->red->next->word;
 	fd = open(name, O_WRONLY | O_CREAT, 0644);
 	if (fd < 0)
+	{
+		perror(name);
 		return (false);
+	}
 	if (cmd->fd[OUT] != 1)
 	{
 		dup2(fd, cmd->fd[OUT]);
@@ -56,7 +62,10 @@ static int	exec_redir_append(t_cmd *cmd)
 	name = cmd->red->next->word;
 	fd = open(name, O_WRONLY | O_APPEND, 0644);
 	if (fd < 0)
+	{
+		perror(name);
 		return (false);
+	}
 	if (cmd->fd[OUT] != 1)
 	{
 		dup2(fd, cmd->fd[OUT]);
@@ -104,7 +113,7 @@ int	exec_redir(t_cmd *cmd)
 		cpy->red = cpy->red->next;
 	}
 	if (cpy->red)
-		return (error_redir(cpy->red->next->word), false);
+		return (false);
 	cmd->red = red;
 	return (true);
 }

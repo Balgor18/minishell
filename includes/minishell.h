@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/03 16:50:39 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/03 20:33:36 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ void	delall_env(void);
 t_env	**ft_env(char **env, char *add, char *del);
 char	*ft_env_value(char *find);
 char	**env_to_tab(void);
+void	modif_shlvl(void);
 
 /*
 **----------------------------------
@@ -194,7 +195,7 @@ int		error_msg(char *s);
 void	error_redir(char *file);
 void	error_cmd(char *cmd);
 void	error_sig(void);
-
+void	error_export(char *error);
 /*
 **----------------------------------
 **-------------Checkers-------------

@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 16:50:06 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/03 16:55:05 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/03 19:58:59 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	str_is_digit(char *s)
 {
 	while (*s)
 	{
-		if (!ft_isdigit(*s))
+		if (!ft_isdigit(*s) && *s != '-' && *s != '+')
 			return (false);
 		s++;
 	}
