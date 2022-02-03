@@ -5,4 +5,22 @@ recode the makefile
 
 ----
 
-refaire builtins_cd
+-nnnnnnn dans echo
+
+> file1 > file2 >> file3
+//leak fd
+
+----
+Check redirs
+----
+
+error get cwd
+
+
+----
+check exit
+
+----
+
+error syntax
+whien pipe a the end

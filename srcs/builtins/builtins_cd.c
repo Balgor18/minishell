@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 14:33:41 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/02 22:00:03 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/03 14:44:37 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ static void	pwd_old_pwd(void)
 
 	opw = ft_env_value("PWD");
 	pw = getcwd(NULL, 0);
+	if (!pw)
+		return (g_error = 127, (void)error_msg("getcwd fail\n"));
 	tmp = pw;
 	pw = ft_strjoin(pwd, pw);
 	free(tmp);

@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 15:10:09 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/02 19:03:12 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/03 14:31:53 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,12 @@ void	exec_launch(t_cmd *cmd)
 			exec_pipe(&cmd);
 		if (cmd->red)
 			exec_redir(cmd);
-		if (!is_next)
+		if (!is_next && cmd->arg)
 		{
 			if (!check_builtins(cmd->arg->word, cmd))
 				exec_fork(cmd, start);
 		}
-		else
+		else if (cmd->arg)
 			exec_fork(cmd, start);
 		cmd = cmd->next;
 	}
