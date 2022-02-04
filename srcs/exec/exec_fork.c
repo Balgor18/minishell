@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 19:02:24 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/04 08:52:40 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/04 09:29:52 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,8 @@ void	exec_fork(t_cmd *cmd, t_cmd *start)
 	pid_t	pid;
 	char	*path;
 
-	path = find_cmd_path(cmd->arg->word);
 	g_error = 0;
+	path = find_cmd_path(cmd->arg->word);
 	if (!path)
 		return ;
 	pid = fork();
