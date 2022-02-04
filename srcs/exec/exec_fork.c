@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 19:02:24 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/04 06:15:02 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/04 08:52:40 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 static char	*try_open(char *cmd)
 {
 	int	ret;
+
 	if (ft_strcmp(cmd, "."))
 		return (ft_putstr_fd(STDERR_FILENO, ERROR_POINT), NULL);
 	else if (ft_strcmp(cmd, ".."))
@@ -95,9 +96,7 @@ static void	exec_fork_child(t_cmd *cmd, t_cmd *start, char *path)
 	{
 		init_signal(true);
 		free_cmd(start);
-		printf("Segfault\n");
 		execve(path, cmd_tab, env);
-		printf("Jai segfault\n");
 	}
 	free(path);
 	free_all(env, cmd_tab, start);
@@ -112,10 +111,7 @@ void	exec_fork(t_cmd *cmd, t_cmd *start)
 	path = find_cmd_path(cmd->arg->word);
 	g_error = 0;
 	if (!path)
-	{
-
 		return ;
-	}
 	pid = fork();
 	if (pid == -1)
 		printf("Error fork on cmd = %s\n", cmd->arg->word);

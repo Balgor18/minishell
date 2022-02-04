@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 17:24:03 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/21 15:12:16 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/04 08:56:36 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,13 @@ static int	expand_end_word(int start, char *word)
 	while (word[++start])
 	{
 		if (word[start] == '\'')
-		{
 			if (quote == SIMPLE)
 				return (++start);
-		}
-		else if (word[start] == '"')
+		if (word[start] == '"')
 			if (quote == DOUBLE)
 				return (++start);
+		if (ft_strchr("<>|=", word[start]) && !quote)
+			return (++start);
 	}
 	return (start);
 }

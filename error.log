@@ -75,7 +75,7 @@ gestions des signaux (heredocs)
 :check:
 ----
 export lol='$lol' ; echo '$lol' (expand alors que ca devrait pas?)
-
+:check:
 ----
 < ls
 fd error
