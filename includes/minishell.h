@@ -6,14 +6,13 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/03 20:33:36 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/04 00:34:04 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "color.h"
 # include "error.h"
 # include "get_next_line.h"
 # include <stdio.h>

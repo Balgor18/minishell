@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 14:33:41 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/03 14:44:37 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/04 01:52:16 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ static void	cd_less(void)
 	else
 	{
 		chdir(ret);
+		ft_putstr_fd(STDOUT_FILENO, ret);
+		write(STDOUT_FILENO, "\n", 1);
 		pwd_old_pwd();
 	}
 }

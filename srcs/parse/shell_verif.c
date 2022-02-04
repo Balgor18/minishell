@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 18:12:55 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/03 19:34:32 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/04 01:01:56 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	verif_token(int actual, int last)
 		return (false);
 	if (last == PIPE && actual == PIPE)
 		return (false);
-	if (actual != WORD && actual != R_IN && last == -1)
+	if (actual == PIPE && last == -1)
 		return (false);
 	return (true);
 }

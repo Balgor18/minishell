@@ -6,24 +6,29 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 19:02:24 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/03 20:41:58 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/04 06:15:02 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+//reecrire les messages derreur
+// pour .
+// ./
+// ..
 static char	*try_open(char *cmd)
 {
 	int	ret;
-
+	if (ft_strcmp(cmd, "."))
+		return (ft_putstr_fd(STDERR_FILENO, ERROR_POINT), NULL);
+	else if (ft_strcmp(cmd, ".."))
+		return (ft_putstr_fd(STDERR_FILENO, ERROR_DOUBLE_POINT), NULL);
+	else if (ft_strcmp(cmd, "./"))
+		return (ft_putstr_fd(STDERR_FILENO, ERROR_POINT_SLASH), NULL);
 	ret = open(cmd, O_RDONLY);
 	if (ret > 0)
-	{
-		close (ret);
-		// return (cmd);
-		return (ft_strdup(cmd));
-	}
-	return (NULL);
+		return (close (ret), ft_strdup(cmd));
+	return (error_cmd(cmd), NULL);
 }
 
 /*
@@ -90,7 +95,9 @@ static void	exec_fork_child(t_cmd *cmd, t_cmd *start, char *path)
 	{
 		init_signal(true);
 		free_cmd(start);
+		printf("Segfault\n");
 		execve(path, cmd_tab, env);
+		printf("Jai segfault\n");
 	}
 	free(path);
 	free_all(env, cmd_tab, start);
@@ -106,7 +113,7 @@ void	exec_fork(t_cmd *cmd, t_cmd *start)
 	g_error = 0;
 	if (!path)
 	{
-		error_cmd(cmd->arg->word);
+
 		return ;
 	}
 	pid = fork();
@@ -116,8 +123,7 @@ void	exec_fork(t_cmd *cmd, t_cmd *start)
 		exec_fork_child(cmd, start, path);
 	else
 	{
-		if (*cmd->arg->word != '.' && *cmd->arg->word != '/')
-			free(path);
+		free(path);
 		cmd->pid = pid;
 		if (cmd->fd[IN] != 0)
 			close(cmd->fd[IN]);

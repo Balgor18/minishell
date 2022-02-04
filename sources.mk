@@ -60,8 +60,6 @@ SOURCES		+=                              		\
 		srcs/utils/ft_split.c                  	\
 		srcs/utils/ft_itoa.c                   	\
 		srcs/utils/error2.c                    	\
-		srcs/utils/get_next_line_utils.c       	\
-		srcs/utils/get_next_line.c             	\
 		srcs/utils/utils.c                     	\
 		srcs/utils/free.c                      	\
 		srcs/utils/error.c                     	\

@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 15:10:09 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/03 19:37:08 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/04 05:22:17 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	close_fd(t_cmd *cmd)
 {
 	if (cmd->fd[IN] != 0)
 		close(cmd->fd[IN]);
-	if (cmd->fd[OUT] != 0)
+	if (cmd->fd[OUT] != 1)
 		close(cmd->fd[OUT]);
 }
 

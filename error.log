@@ -58,6 +58,32 @@ dont output
 but create fill
 :check:
 ----
-call minishell in minishell
-create a leak
-//dont understand how to resolve
+echo -n -n -n -n -n coucou
+:check:
+----
+cd -
+afficher le new pwd
+:check:
+----
+exit 1"2"34
+:check:
+----
+echo $CDP"ATH"
+:check:
+----
+gestions des signaux (heredocs)
+:check:
+----
+export lol='$lol' ; echo '$lol' (expand alors que ca devrait pas?)
+
+----
+< ls
+fd error
+<< ls
+same error
+:check:
+----
+./
+..
+.
+:check:
