@@ -5,90 +5,64 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/22 13:08:51 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/12/23 22:36:18 by fcatinau         ###   ########.fr       */
+/*   Created: 2021/12/10 00:05:31 by fcatinau          #+#    #+#             */
+/*   Updated: 2022/02/03 16:36:48 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	is_whitespace(char c)
+int	push_tab_in_list(t_node **list, char **tab)
 {
-	if (c == ' ' || c == '	')
-		return (true);
-	return (false);
-}
-
-static int	is_specify_char(char c, char *s)
-{
-	while (*s)
+	if (!tab)
+		return (false);
+	while (*tab)
 	{
-		if (c == *s)
-			return (true);
-		s++;
-	}
-	return (false);
-}
-
-int	split_start_word(char *line)
-{
-	int	ret;
-
-	ret = 0;
-	while (is_whitespace(*line))
-	{
-		ret++;
-		line++;
-	}
-	return (ret);
-}
-
-static int	is_start_or_end_quote(char c, int *quote)
-{
-	if (c == '\'' && !*quote)
-	{
-		if (!*quote)
-			*quote = SIMPLE;
-		else
-			*quote = NO_QUOTE;
-		return (true);
-	}
-	else if (c == '"')
-	{
-		if (!*quote)
-			*quote = DOUBLE;
-		else
-			*quote = NO_QUOTE;
-		return (true);
-	}
-	return (false);
-}
-
-int	split_end_word(char *line, int start)
-{
-	static int	quote = NO_QUOTE;
-
-	if (is_specify_char(line[start], "<|>&"))
-	{
-		while (is_specify_char(line[start], "<|>&"))
-			start++;
-		return (start);
-	}
-	while (line[start])
-	{
-		if (is_start_or_end_quote(line[start], &quote))
+		if (!add_tail_list(list, *tab))
 		{
-			if (!quote)
-			{
-				start++;
-				break ;
-			}
+			delall(list);
+			return (false);
 		}
-		else if (line[start] == ' ' && !quote)
-			break ;
-		else if (is_specify_char(line[start], "<|>&") && !quote)
-			break ;
-		start++;
+		tab++;
 	}
-	return (start);
+	return (true);
+}
+
+int	shell_split_rec(char ***tab, char *line, int index)
+{
+	int	i[MAX_SPLIT];
+
+	i[START] = split_start_word(line);
+	i[END] = split_end_word(line, i[START]);
+	if (i[END] > 0)
+	{
+		if (!shell_split_rec(tab, line + i[END], index + 1))
+			return (false);
+		(*tab)[index] = ft_substr(line, i[START], i[END] - i[START]);
+		if (!(*tab)[index])
+			return (false);
+	}
+	else if (i[END] == 0)
+	{
+		(*tab) = (char **)malloc(sizeof(char *) * (index + 1));
+		if (!(*tab))
+			return (false);
+		(*tab)[index] = NULL;
+	}
+	return (true);
+}
+
+void	shell_split(char *line)
+{
+	t_node	*node;
+	char	**tab;
+
+	tab = NULL;
+	node = NULL;
+	shell_split_rec(&tab, line, 0);
+	push_tab_in_list(&node, tab);
+	free_tab(tab);
+	if (node)
+		tokeniser(node);
+	return ;
 }

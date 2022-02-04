@@ -1,26 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   color.h                                            :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/30 09:57:34 by fcatinau          #+#    #+#             */
-/*   Updated: 2021/11/19 19:09:41 by fcatinau         ###   ########.fr       */
+/*   Created: 2022/02/03 16:45:23 by fcatinau          #+#    #+#             */
+/*   Updated: 2022/02/03 17:41:02 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COLOR_H
-# define COLOR_H
+#include "minishell.h"
 
-# define BLACK "\033[0;30m"
-# define BLUE "\033[0;34m"
-# define CYAN "\033[0;36m"
-# define GREEN "\033[0;32m"
-# define PURPLE "\033[0;35m"
-# define RED "\033[0;31m"
-# define WHITE "\033[0;37m"
-# define YELLOW "\033[0;33m"
-# define RESET "\e[0m"
+int	ft_atoi(char *c)
+{
+	int	i;
+	int	sign;
+	int	total;
 
-#endif
+	total = 0;
+	i = 0;
+	sign = 1;
+	while ((c[i] >= 9 && c[i] <= 13) || c[i] == ' ')
+		i++;
+	if (c[i] == '-' || c[i] == '+')
+	{
+		if (c[i] == '-')
+			sign *= -1;
+		i++;
+	}
+	while (c[i] >= '0' && c[i] <= '9')
+	{
+		total = total * 10;
+		total = total + (c[i] - 48);
+		i++;
+	}
+	return (total * sign);
+}

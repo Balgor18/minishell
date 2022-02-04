@@ -1,24 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   file_check.c                                       :+:      :+:    :+:   */
+/*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elaachac <elaachac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/13 16:46:17 by elaachac          #+#    #+#             */
-/*   Updated: 2021/12/13 16:47:33 by elaachac         ###   ########.fr       */
+/*   Created: 2022/01/19 12:05:31 by fcatinau          #+#    #+#             */
+/*   Updated: 2022/02/01 11:48:03 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	file_check(char *path)
+t_cmd	*ft_cmd_last(t_cmd *cmd)
 {
-	if (access(path, F_OK) == -1)
+	while (cmd)
 	{
-		perror(path);
-		return (false);
+		if (!cmd->next)
+			return (cmd);
+		cmd = cmd->next;
 	}
-	else
-		return (true);
+	return (cmd);
+}
+
+void	exec(t_node *list)
+{
+	t_cmd	*cmd;
+
+	cmd = NULL;
+	exec_malloc_cmd(&cmd);
+	exec_init_cmd(&cmd, list);
+	exec_launch(cmd);
 }
