@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 15:44:00 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/05 18:12:44 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/05 23:16:57 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,7 @@ static int	exec_redir_2(t_cmd *cpy)
 			return (false);
 	}
 	else if (cpy->red->token == HEREDOC)
-	{
-		if (!exec_redir_heredoc(cpy))
-			return (false);
-	}
+		return (exec_redir_heredoc(cpy));
 	return (true);
 }
 
@@ -94,26 +91,26 @@ int	exec_redir(t_cmd *cmd)
 {
 	t_cmd	*cpy;
 	t_node	*red;
+	int		ret;
 
-	red = ((cpy = cmd, cmd->red));
+	red = ((cpy = cmd, ret = true, cmd->red));
 	while (cpy->red)
 	{
 		if (cpy->red->token == R_IN)
 		{
 			if (!exec_redir_rin(cpy))
-				break ;
+				return (false);
 		}
 		else if (cpy->red->token == R_OUT)
-		{
 			if (!exec_redir_rout(cpy))
-				break ;
-		}
-		if (!exec_redir_2(cpy))
+				return (false);
+		ret = exec_redir_2(cpy);
+		if (ret != true)
 			break ;
 		cpy->red = cpy->red->next;
 	}
 	if (cpy->red)
-		return (g_error = 1, false);
+		return (g_error = 1, ret);
 	cmd->red = red;
 	return (true);
 }

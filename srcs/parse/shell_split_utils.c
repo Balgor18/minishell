@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 13:08:51 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/03 16:30:11 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/05 23:04:54 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	is_start_or_end_quote(char c, int *quote)
 	{
 		if (!*quote)
 			*quote = SIMPLE;
-		else
+		else if (*quote == SIMPLE)
 			*quote = NO_QUOTE;
 		return (true);
 	}
@@ -46,7 +46,7 @@ static int	is_start_or_end_quote(char c, int *quote)
 	{
 		if (!*quote)
 			*quote = DOUBLE;
-		else
+		else if (*quote == DOUBLE)
 			*quote = NO_QUOTE;
 		return (true);
 	}

