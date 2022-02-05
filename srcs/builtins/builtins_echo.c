@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 11:46:23 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/05 15:18:26 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/05 15:26:56 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,8 @@
 
 int	verif_flag_n(char *word)
 {
-	int	is_less;
-	int	is_n;
-
-	is_less = false;
 	while (*word)
 	{
-		if (*word == '-')
-			is_less = true;
-		else if (*word == ' ')
-			is_less = false;
 		if (*word != '-' && *word != 'n' && *word != ' ')
 			return (false);
 		word++;
