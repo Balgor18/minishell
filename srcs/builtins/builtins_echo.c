@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 11:46:23 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/05 15:26:56 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/05 19:52:51 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	verif_flag_n(char *word)
 {
+	if (!*word)
+		return (true);
 	while (*word)
 	{
 		if (*word != '-' && *word != 'n' && *word != ' ')
@@ -29,13 +31,13 @@ int	verif_flag_n(char *word)
 ** But i code it
 ** can work with the option -n
 */
-int	builtins_echo(t_node *arg)
+int	builtins_echo(t_node *arg, int fd_out)
 {
 	int	endl;
 
 	endl = true;
 	if (!arg || !arg->word)
-		return (true);
+		return (write(fd_out, "\n", 1), true);
 	while (verif_flag_n(arg->word))
 	{
 		endl = false;
@@ -44,12 +46,12 @@ int	builtins_echo(t_node *arg)
 	while (arg)
 	{
 		expand_remove_quote(&arg->word);
-		ft_putstr_fd(STDOUT_FILENO, arg->word);
+		ft_putstr_fd(fd_out, arg->word);
 		arg = arg->next;
 		if (arg)
-			write(STDOUT_FILENO, " ", 1);
+			write(fd_out, " ", 1);
 	}
 	if (endl)
-		write(STDOUT_FILENO, "\n", 1);
+		write(fd_out, "\n", 1);
 	return (g_error = 0, true);
 }

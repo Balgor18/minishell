@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 10:47:21 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/04 10:46:16 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/05 19:33:45 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,7 @@ static int	heredoc_no_expand(t_node *red)
 	limit = NULL;
 	fd = create_heredoc(1);
 	if (fd < 0)
-	{
-		perror(limit);
-		return (fd);
-	}
+		return (perror(limit), fd);
 	if (red->next->token == LIMITOR)
 		limit = red->next->word;
 	while (1)
@@ -106,14 +103,19 @@ static int	heredoc_no_expand(t_node *red)
 int	exec_redir_heredoc(t_cmd *cmd)
 {
 	int	fd;
+	int	save;
 
-	fd = check_quote_limitor(cmd->red);
-	init_signal(true);
+	fd = ((save = dup(STDIN_FILENO), check_quote_limitor(cmd->red)));
+	signal(SIGINT, &sig_heredoc);
 	if (fd)
 		fd = heredoc_no_expand(cmd->red);
 	else
 		fd = heredoc_expand(cmd->red);
+	if (fd < 0)
+		return (false);
 	close(fd);
+	if (g_error == 128)
+		return (dup2(save, 0), close(save), write(1, "\n", 1), g_error = 130, 0);
 	init_signal(false);
 	fd = create_heredoc(0);
 	if (cmd->fd[IN] != 0)

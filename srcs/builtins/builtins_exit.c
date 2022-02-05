@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 16:50:06 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/04 02:36:13 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/05 17:57:32 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,18 +49,22 @@ static char	*remove_quote(char *s)
 
 static int	str_is_digit(char **s)
 {
+	int		good;
 	char	*tmp;
 
+	good = false;
 	tmp = *s;
 	*s = remove_quote(*s);
 	free(tmp);
 	tmp = *s;
 	while (*tmp)
 	{
-		if (!ft_isdigit(*tmp) && *tmp != '-' && *tmp != '+')
-			return (false);
+		if (ft_isdigit(*tmp))
+			good = true;
 		tmp++;
 	}
+	if (!good)
+		return (false);
 	return (true);
 }
 

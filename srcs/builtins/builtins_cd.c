@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 14:33:41 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/04 01:52:16 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/05 18:43:23 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ int	builtins_cd(t_node	*arg)
 	char	*ret;
 
 	ret = NULL;
+	g_error = 0;
 	if (!arg)
 		return (g_error = 1, error_msg(ERROR_ARG_CD), true);
 	if (!ft_env_value("PWD"))
@@ -100,5 +101,5 @@ int	builtins_cd(t_node	*arg)
 		}
 		pwd_old_pwd();
 	}
-	return (g_error = 0, true);
+	return (true);
 }

@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/04 00:34:04 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/05 19:33:58 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ void	tokeniser(t_node *list);
 **----------------------------------
 */
 void	init_signal(int type);
+void	sig_heredoc(int sig);
 
 /*
 **----------------------------------
@@ -180,7 +181,7 @@ char	**exec_move_list_in_char(t_node *list);
 int		check_builtins(char *path, t_cmd *cmd);
 int		builtins_cd(t_node	*arg);
 int		builtins_export(t_node *arg);
-int		builtins_echo(t_node *arg);
+int		builtins_echo(t_node *arg, int fd_out);
 char	*check_is_not_builtins(char *path, char *cmd);
 int		builtins_exit(t_node *list, t_cmd *cmd);
 

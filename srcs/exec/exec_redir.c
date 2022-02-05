@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 15:44:00 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/03 18:45:04 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/05 18:12:44 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ int	exec_redir(t_cmd *cmd)
 		cpy->red = cpy->red->next;
 	}
 	if (cpy->red)
-		return (false);
+		return (g_error = 1, false);
 	cmd->red = red;
 	return (true);
 }

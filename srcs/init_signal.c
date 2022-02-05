@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 11:38:58 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/02 14:07:18 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/05 19:33:48 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,12 @@ void	init_signal(int type)
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 	}
+}
+
+void	sig_heredoc(int sig)
+{
+	(void)sig;
+	close(STDIN_FILENO);
+	g_error = 128;
+	return ;
 }

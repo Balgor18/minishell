@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 19:02:24 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/04 09:29:52 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/05 19:07:24 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ static char	*try_open(char *cmd)
 		return (ft_putstr_fd(STDERR_FILENO, ERROR_DOUBLE_POINT), NULL);
 	else if (ft_strcmp(cmd, "./"))
 		return (ft_putstr_fd(STDERR_FILENO, ERROR_POINT_SLASH), NULL);
-	ret = open(cmd, O_RDONLY);
+	ret = access(cmd, X_OK);
 	if (ret > 0)
 		return (close (ret), ft_strdup(cmd));
-	return (error_cmd(cmd), NULL);
+	return (g_error = 126, perror(cmd), NULL);
 }
 
 /*
@@ -67,12 +67,11 @@ static char	*find_cmd_path(char *cmd)
 	return (check_is_not_builtins(path, cmd));
 }
 
-static void	free_all(char **env, char **cmd_tab, t_cmd *start)
+static void	free_all(char **env, char **cmd_tab)
 {
 	free_tab(env);
 	free_tab(cmd_tab);
 	delall_env();
-	free_cmd(start);
 }
 
 static void	exec_fork_child(t_cmd *cmd, t_cmd *start, char *path)
@@ -92,14 +91,11 @@ static void	exec_fork_child(t_cmd *cmd, t_cmd *start, char *path)
 		dup2(cmd->fd[OUT], STDOUT_FILENO);
 		close(cmd->fd[OUT]);
 	}
-	if (!check_builtins(path, cmd))
-	{
-		init_signal(true);
-		free_cmd(start);
-		execve(path, cmd_tab, env);
-	}
+	init_signal(true);
+	free_cmd(start);
+	execve(path, cmd_tab, env);
 	free(path);
-	free_all(env, cmd_tab, start);
+	free_all(env, cmd_tab);
 	exit(g_error);
 }
 
@@ -121,9 +117,5 @@ void	exec_fork(t_cmd *cmd, t_cmd *start)
 	{
 		free(path);
 		cmd->pid = pid;
-		if (cmd->fd[IN] != 0)
-			close(cmd->fd[IN]);
-		if (cmd->fd[OUT] != 1)
-			close(cmd->fd[OUT]);
 	}
 }
