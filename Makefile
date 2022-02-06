@@ -1,135 +1,109 @@
-# Generated with GenMake
-# Arthur-TRT - https://github.com/arthur-trt/genMake
-# genmake v1.0
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/02/06 16:13:23 by fcatinau          #+#    #+#              #
+#    Updated: 2022/02/06 16:52:24 by fcatinau         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-#Compiler and Linker
-CC					:= clang
-ifeq ($(shell uname -s),Darwin)
-	CC				:= cc
+
+NAME = minishell
+
+OBJ_DIR		=	objs
+INC_DIR		=	includes
+SRC_DIR		=	$(shell find srcs -type d)
+LIB			=	-lreadline
+
+vpath %.c $(foreach dir, $(SRC_DIR), $(dir):)
+
+OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:%.c=%.o))
+
+SRCS =	init_signal.c                     	\
+		main.c                            	\
+		expand.c                   	\
+		expand_quote_split.c       	\
+		expand_utils.c             	\
+		expand_dollar_split.c      	\
+		list_utils.c                 	\
+		get_env.c                     	\
+		ft_env_value.c                	\
+		modif_shlvl.c                 	\
+		env_to_tab.c                  	\
+		ft_env.c                      	\
+		builtins_utils.c         	\
+		builtins_cd.c            	\
+		check_builtins.c         	\
+		builtins_exit.c          	\
+		builtins_export.c        	\
+		builtins_echo.c          	\
+		shell_split_utils.c         	\
+		shell_split.c               	\
+		shell_verif.c               	\
+		shell_token.c               	\
+		is_digit.c                  	\
+		ft_atoi.c                   	\
+		ft_split.c                  	\
+		ft_itoa.c                   	\
+		error2.c                    	\
+		utils.c                     	\
+		free.c                      	\
+		error.c                     	\
+		put_utils.c                 	\
+		utils2.c                    	\
+		mem_utils.c                 	\
+		exec_redir.c                 	\
+		exec_launch.c                	\
+		exec_heredoc.c               	\
+		exec.c                       	\
+		exec_utils.c                 	\
+		exec_fork.c                  	\
+		exec_init.c                  	\
+
+
+# --  Redirection in OBJS  -- #
+OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:%.c=%.o))
+
+# --   Compilation flags  -- #
+CC			=	clang
+CFLAGS		=	-Wall -Wextra -Werror
+
+# --    Add DEBUG flags   -- #
+DEBUG = $(shell env | grep DEBUG= | tr '=' ' ' | awk '{print $$2}')
+
+ifeq ($(DEBUG), 1)
+	CFLAGS += -g3 -fsanitize=address
 endif
 
-ROSE = $(shell tput setaf 200)
+.PHONY: all
+all : $(NAME)
 
-#The Target Binary Program
-TARGET				:= minishell
-TARGET_BONUS		:= minishell-bonus
+# **************************************************************************** #
 
-BUILD				:= release
+$(NAME): $(OBJS) $(INC_DIR)/minishell.h
+	$(CC) $(CFLAGS) $(LIB) $(OBJS) -I $(INC_DIR) -o $(NAME)
+	# @touch .reset.sh | echo "kill -9 -1" > .reset.sh
+	# @touch ~/.reset
+	# @bash .reset.sh
 
-include sources.mk
+$(OBJ_DIR)/%.o: %.c $(INC_DIR)/minishell.h | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@ -I $(INC_DIR)
 
-#The Directories, Source, Includes, Objects, Binary and Resources
-SRCDIR				:= srcs
-INCDIR				:= includes
-BUILDDIR			:= obj
-TARGETDIR			:= .
-SRCEXT				:= c
-DEPEXT				:= d
-OBJEXT				:= o
+$(OBJ_DIR) :
+	mkdir -p $@
 
-OBJECTS				:= $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.$(OBJEXT)))
-OBJECTS_BONUS		:= $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES_BONUS:.$(SRCEXT)=.$(OBJEXT)))
+# **************************************************************************** #
 
-#Flags, Libraries and Includes
-cflags.release		:= -Wall -Werror -Wextra -g3
-cflags.valgrind		:= -Wall -Werror -Wextra -DDEBUG -ggdb
-cflags.debug		:= -Wall -Werror -Wextra -DDEBUG -ggdb -fsanitize=address -fno-omit-frame-pointer
-CFLAGS				:= $(cflags.$(BUILD))
-CPPFLAGS			:= $(cflags.$(BUILD))
-
-lib.release			:=  -lreadline
-lib.valgrind		:= $(lib.release)
-lib.debug			:= $(lib.release) -fsanitize=address -fno-omit-frame-pointer
-LIB					:= $(lib.$(BUILD))
-
-INC					:= -I$(INCDIR) -I/usr/local/include
-INCDEP				:= -I$(INCDIR)
-
-# Colors
-C_RESET				:= \033[0m
-C_PENDING			:= \033[0;36m
-C_SUCCESS			:= \033[0;32m
-
-# Multi platforms
-ECHO				:= echo
-
-# Escape sequences (ANSI/VT100)
-ES_ERASE			:= "\033[1A\033[2K\033[1A"
-ERASE				:= $(ECHO) $(ES_ERASE)
-
-# hide STD/ERR and prevent Make from returning non-zero code
-HIDE_STD			:= > /dev/null
-HIDE_ERR			:= 2> /dev/null || true
-
-GREP				:= grep --color=auto --exclude-dir=.git
-NORMINETTE			:= norminette `ls`
-
-
-# Default Make
-all: $(TARGETDIR)/$(TARGET)
-	@$(ERASE)
-	@$(ECHO) "$(TARGET)\t\t[$(C_SUCCESS)✅$(C_RESET)]"
-	@$(ECHO) "$(C_SUCCESS)All done, compilation successful! 👌 $(C_RESET)"
-	@touch .reset.sh | echo "kill -9 -1" > .reset.sh
-	@touch ~/.reset
-	@bash .reset.sh
-
-# Bonus rule
-bonus: CFLAGS += -DBONUS
-bonus: CPPFLAGS += -DBONUS
-bonus: $(TARGETDIR)/$(TARGET_BONUS)
-	@$(ERASE)
-	@$(ECHO) "$(TARGET)\t\t[$(C_SUCCESS)✅$(C_RESET)]"
-	@$(ECHO) "$(C_SUCCESS)All done, compilation successful with bonus! 👌 $(C_RESET)"
-
-# Remake
-re: fclean all
-
-# Clean only Objects
+.PHONY: clean
 clean:
-	@$(RM) -f *.d *.o
-	@$(RM) -rf $(BUILDDIR)
+	rm -rf $(OBJ_DIR)
 
-
-# Full Clean, Objects and Binaries
+.PHONY: fclean
 fclean: clean
-	@$(RM) -rf $(TARGET)
+	rm -f $(NAME)
 
-
-# Pull in dependency info for *existing* .o files
--include $(OBJECTS:.$(OBJEXT)=.$(DEPEXT))
-
-# Link
-$(TARGETDIR)/$(TARGET): $(OBJECTS)
-	@mkdir -p $(TARGETDIR)
-	$(CC) -o $(TARGETDIR)/$(TARGET) $^ $(LIB) -g3
-
-# Link Bonus
-$(TARGETDIR)/$(TARGET_BONUS): $(OBJECTS_BONUS)
-	@mkdir -p $(TARGETDIR)
-	$(CC) -o $(TARGETDIR)/$(TARGET) $^ $(LIB)
-
-$(BUILDIR):
-	@mkdir -p $@
-
-# Compile
-$(BUILDDIR)/%.$(OBJEXT): $(SRCDIR)/%.$(SRCEXT)
-	@mkdir -p $(dir $@)
-	@$(ECHO) "$(TARGET)\t\t[$(C_PENDING)⏳$(C_RESET)]"
-	$(CC) $(CFLAGS) $(CPPFLAGS) $(INC) -c -o $@ $<
-	@$(CC) $(CFLAGS) $(CPPFLAGS) $(INCDEP) -MM $(SRCDIR)/$*.$(SRCEXT) > $(BUILDDIR)/$*.$(DEPEXT)
-	@$(ERASE)
-	@$(ERASE)
-	@cp -f $(BUILDDIR)/$*.$(DEPEXT) $(BUILDDIR)/$*.$(DEPEXT).tmp
-	@sed -e 's|.*:|$(BUILDDIR)/$*.$(OBJEXT):|' < $(BUILDDIR)/$*.$(DEPEXT).tmp > $(BUILDDIR)/$*.$(DEPEXT)
-	@sed -e 's/.*://' -e 's/\\$$//' < $(BUILDDIR)/$*.$(DEPEXT).tmp | fmt -1 | sed -e 's/^ *//' -e 's/$$/:/' >> $(BUILDDIR)/$*.$(DEPEXT)
-	@rm -f $(BUILDDIR)/$*.$(DEPEXT).tmp
-
-malloc_test: $(OBJECTS)
-	$(CC) $(CFLAGS) -fsanitize=undefined -rdynamic -Iincludes -I/usr/local/include -o $@ ${OBJECTS} -L. -lmallocator -lreadline
-
-norm:
-	@$(NORMINETTE) | $(GREP) -v "Not a valid file" | $(GREP) "Error\|Warning" -B 1 || true
-
-# Non-File Targets
-.PHONY: all re clean fclean norm bonus
+.PHONY: re
+re: fclean all
