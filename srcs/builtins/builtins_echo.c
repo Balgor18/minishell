@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 11:46:23 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/05 19:52:51 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/06 11:27:31 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int	builtins_echo(t_node *arg, int fd_out)
 	}
 	while (arg)
 	{
-		expand_remove_quote(&arg->word);
 		ft_putstr_fd(fd_out, arg->word);
 		arg = arg->next;
 		if (arg)
