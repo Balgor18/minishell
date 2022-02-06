@@ -115,14 +115,15 @@ int	exec_redir_heredoc(t_cmd *cmd)
 		return (false);
 	close(fd);
 	if (g_error == 128)
-		return (dup2(save, 0), close(save), write(1, "\n", 1), g_error = 130, -1);
-	init_signal(false);
-	fd = create_heredoc(0);
+	{
+		dup2(save, 0);
+		return (close(save), write(1, "\n", 1), g_error = 130, -1);
+	}
+	fd = ((init_signal(false), create_heredoc(0)));
 	if (cmd->fd[IN] != 0)
 	{
 		dup2(fd, cmd->fd[IN]);
 		close(cmd->fd[IN]);
 	}
-	cmd->fd[IN] = fd;
-	return (true);
+	return (cmd->fd[IN] = fd, true);
 }
