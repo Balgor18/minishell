@@ -6,7 +6,7 @@
 #    By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/06 16:13:23 by fcatinau          #+#    #+#              #
-#    Updated: 2022/02/06 16:52:24 by fcatinau         ###   ########.fr        #
+#    Updated: 2022/02/07 17:56:14 by fcatinau         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,29 +22,31 @@ vpath %.c $(foreach dir, $(SRC_DIR), $(dir):)
 
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:%.c=%.o))
 
-SRCS =	init_signal.c                     	\
-		main.c                            	\
-		expand.c                   	\
-		expand_quote_split.c       	\
-		expand_utils.c             	\
-		expand_dollar_split.c      	\
-		list_utils.c                 	\
-		get_env.c                     	\
-		ft_env_value.c                	\
-		modif_shlvl.c                 	\
-		env_to_tab.c                  	\
-		ft_env.c                      	\
-		builtins_utils.c         	\
-		builtins_cd.c            	\
-		check_builtins.c         	\
-		builtins_exit.c          	\
-		builtins_export.c        	\
-		builtins_echo.c          	\
+SRCS =	init_signal.c               	\
+		main.c                      	\
+		expand.c                    	\
+		expand_quote_split.c        	\
+		expand_no_dollar_quote.c    	\
+		expand_utils.c              	\
+		expand_dollar_split.c       	\
+		list_utils.c                	\
+		get_env.c                   	\
+		ft_env_value.c              	\
+		modif_shlvl.c               	\
+		env_to_tab.c                	\
+		ft_env.c                    	\
+		builtins_utils.c            	\
+		builtins_cd.c               	\
+		check_builtins.c            	\
+		builtins_exit.c             	\
+		builtins_export.c           	\
+		builtins_echo.c             	\
 		shell_split_utils.c         	\
 		shell_split.c               	\
 		shell_verif.c               	\
 		shell_token.c               	\
 		is_digit.c                  	\
+		len_to_char.c               	\
 		ft_atoi.c                   	\
 		ft_split.c                  	\
 		ft_itoa.c                   	\
@@ -53,15 +55,16 @@ SRCS =	init_signal.c                     	\
 		free.c                      	\
 		error.c                     	\
 		put_utils.c                 	\
+		ternary.c                   	\
 		utils2.c                    	\
 		mem_utils.c                 	\
-		exec_redir.c                 	\
-		exec_launch.c                	\
-		exec_heredoc.c               	\
-		exec.c                       	\
-		exec_utils.c                 	\
-		exec_fork.c                  	\
-		exec_init.c                  	\
+		exec_redir.c                	\
+		exec_launch.c               	\
+		exec_heredoc.c              	\
+		exec.c                      	\
+		exec_utils.c                	\
+		exec_fork.c                 	\
+		exec_init.c                 	\
 
 
 # --  Redirection in OBJS  -- #
@@ -75,7 +78,7 @@ CFLAGS		=	-Wall -Wextra -Werror
 DEBUG = $(shell env | grep DEBUG= | tr '=' ' ' | awk '{print $$2}')
 
 ifeq ($(DEBUG), 1)
-	CFLAGS += -g3 -fsanitize=address
+	CFLAGS += -g3
 endif
 
 .PHONY: all

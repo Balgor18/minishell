@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 19:02:24 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/05 19:07:24 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/07 12:38:02 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static char	*try_open(char *cmd)
 	else if (ft_strcmp(cmd, "./"))
 		return (ft_putstr_fd(STDERR_FILENO, ERROR_POINT_SLASH), NULL);
 	ret = access(cmd, X_OK);
-	if (ret > 0)
+	if (ret >= 0)
 		return (close (ret), ft_strdup(cmd));
 	return (g_error = 126, perror(cmd), NULL);
 }
@@ -81,12 +81,12 @@ static void	exec_fork_child(t_cmd *cmd, t_cmd *start, char *path)
 
 	cmd_tab = exec_move_list_in_char(cmd->arg);
 	env = env_to_tab();
-	if (cmd->fd[IN] != 0)
+	if (cmd->fd[IN] != STDIN_FILENO)
 	{
 		dup2(cmd->fd[IN], STDIN_FILENO);
 		close(cmd->fd[IN]);
 	}
-	if (cmd->fd[OUT] != 1)
+	if (cmd->fd[OUT] != STDOUT_FILENO)
 	{
 		dup2(cmd->fd[OUT], STDOUT_FILENO);
 		close(cmd->fd[OUT]);

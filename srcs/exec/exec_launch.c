@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 15:10:09 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/05 23:34:56 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/07 16:51:28 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ static void	exec_pipe(t_cmd **cmd)
 
 static void	close_fd(t_cmd *cmd)
 {
-	if (cmd->fd[IN] != 0)
+	if (cmd->fd[IN] != STDIN_FILENO)
 		close(cmd->fd[IN]);
-	if (cmd->fd[OUT] != 1)
+	if (cmd->fd[OUT] != STDOUT_FILENO)
 		close(cmd->fd[OUT]);
 }
 

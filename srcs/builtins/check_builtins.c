@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 01:34:05 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/05 18:04:36 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/07 14:28:02 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@
 ** Get the pwd in the env
 ** and print it in STDOUT
 */
-static int	builtins_pwd(void)
+static int	builtins_pwd(int ft_out)
 {
 	char	*ret;
 
 	ret = getcwd(NULL, 0);
 	if (!ret)
 		return (g_error = 127, error_msg("getcwd fail\n"), true);
-	ft_putstr_fd(STDOUT_FILENO, ret);
-	write(STDOUT_FILENO, "\n", 1);
+	ft_putstr_fd(ft_out, ret);
+	write(ft_out, "\n", 1);
 	free(ret);
 	return (g_error = 0, true);
 }
@@ -74,7 +74,7 @@ int	check_builtins(char *path, t_cmd *cmd)
 	else if (ft_strcmp(path, "cd"))
 		ret = builtins_cd(cmd->arg->next);
 	else if (ft_strcmp(path, "pwd"))
-		ret = builtins_pwd();
+		ret = builtins_pwd(cmd->fd[OUT]);
 	else if (ft_strcmp(path, "export"))
 		ret = builtins_export(cmd->arg->next);
 	else if (ft_strcmp(path, "unset"))

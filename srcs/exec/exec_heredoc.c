@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 10:47:21 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/05 23:02:57 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/07 15:26:33 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,10 @@ static int	heredoc_no_expand(t_node *red)
 	if (fd < 0)
 		return (perror(limit), fd);
 	if (red->next->token == LIMITOR)
+	{
 		limit = red->next->word;
+		expand_remove_quote(&limit);
+	}
 	while (1)
 	{
 		line = readline(">>");
@@ -97,7 +100,7 @@ static int	heredoc_no_expand(t_node *red)
 		write(fd, "\n", 1);
 		free(line);
 	}
-	return (fd);
+	return (free(limit), fd);
 }
 
 int	exec_redir_heredoc(t_cmd *cmd)
@@ -117,10 +120,11 @@ int	exec_redir_heredoc(t_cmd *cmd)
 	if (g_error == 128)
 	{
 		dup2(save, 0);
-		return (close(save), write(1, "\n", 1), g_error = 130, -1);
+		init_signal(false);
+		return (close(save), write(STDOUT_FILENO, "\n", 1), g_error = 130, -1);
 	}
 	fd = ((init_signal(false), create_heredoc(0)));
-	if (cmd->fd[IN] != 0)
+	if (cmd->fd[IN] != STDIN_FILENO)
 	{
 		dup2(fd, cmd->fd[IN]);
 		close(cmd->fd[IN]);

@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 17:24:03 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/04 08:56:36 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/07 17:53:02 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,36 +22,34 @@ static int	expand_start_word(char *word)
 	return (start);
 }
 
-static int	expand_end_word(int start, char *word)
+static int	expand_end_word(int beg, char *word)
 {
 	int	quote;
 
 	quote = NO_QUOTE;
-	if (!word[start])
+	if (!word[beg])
 		return (0);
-	if (word[start] == '\'' || word[start] == '"')
+	if (word[beg] == '\'' || word[beg] == '"')
 	{
-		if (word[start] == '\'')
+		if (word[beg] == '\'')
 			quote = SIMPLE;
-		else if (word[start] == '"')
+		else if (word[beg] == '"')
 			quote = DOUBLE;
-		start++;
+		beg++;
 	}
-	while (word[++start])
+	while (word[++beg])
 	{
-		if (word[start] == '\'')
-			if (quote == SIMPLE)
-				return (++start);
-		if (word[start] == '"')
-			if (quote == DOUBLE)
-				return (++start);
-		if (ft_strchr("<>|=", word[start]) && !quote)
-			return (++start);
+		if (word[beg] == '\'')
+			return (ft_ternary(quote == SIMPLE, beg + 1, beg));
+		if (word[beg] == '"')
+			return (ft_ternary(quote == DOUBLE, beg + 1, beg));
+		if (ft_strchr("<>|=", word[beg]) && !quote)
+			return (++beg);
 	}
-	return (start);
+	return (beg);
 }
 
-static int	expand_quote_split_rec(char ***tab, char *word, int index)
+int	expand_quote_split_rec(char ***tab, char *word, int index)
 {
 	int	i[MAX_SPLIT];
 
@@ -96,7 +94,7 @@ int	expand_quote_split(t_node *list, t_node **new)
 
 	if (!ft_strchr(list->word, '$'))
 	{
-		expand_remove_quote(&(list)->word);
+		expand_no_dollar_quote(list);
 		return (false);
 	}
 	tab = NULL;
@@ -104,10 +102,7 @@ int	expand_quote_split(t_node *list, t_node **new)
 	tab = ft_split(rejoin, ' ');
 	free(rejoin);
 	if (!tab)
-	{
-		free_tab(tab);
-		return (false);
-	}
+		return (free_tab(tab), false);
 	if (!push_tab_in_list(new, tab))
 	{
 		free_tab(tab);

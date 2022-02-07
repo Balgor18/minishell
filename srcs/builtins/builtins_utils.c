@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 17:35:59 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/04 09:07:06 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/07 15:37:03 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,19 @@ char	*check_is_not_builtins(char *path, char *cmd)
 	if (!path)
 		return (error_cmd(cmd), path);
 	return (path);
+}
+
+int	len_cd_arg(t_node *arg)
+{
+	int	i;
+
+	i = 0;
+	if (!arg)
+		return (0);
+	while (arg)
+	{
+		i++;
+		arg = arg->next;
+	}
+	return (i);
 }

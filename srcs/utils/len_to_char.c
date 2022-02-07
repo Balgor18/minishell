@@ -1,37 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   len_to_char.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/06 14:41:23 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/07 17:09:28 by fcatinau         ###   ########.fr       */
+/*   Created: 2022/02/07 12:28:47 by fcatinau          #+#    #+#             */
+/*   Updated: 2022/02/07 12:29:31 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	g_error;
-
-int	main(int ac, char **av, char **env)
+int	len_to_char(char *s, char c)
 {
-	char	*line;
+	int	len;
 
-	line = NULL;
-	init_env(ac, av, env);
-	init_signal(false);
-	while (true)
+	len = 0;
+	while (*s != c)
 	{
-		line = readline("Minishell : ");
-		if (line == NULL)
-			break ;
-		add_history(line);
-		if (line)
-			shell_split(line);
+		s++;
+		len++;
 	}
-	delall_env();
-	rl_clear_history();
-	write(STDOUT_FILENO, "exit\n", 5);
-	return (g_error);
+	return (len);
 }

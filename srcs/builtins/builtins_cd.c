@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 14:33:41 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/07 12:11:29 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/07 17:08:58 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,19 +73,28 @@ static void	create_pwd(void)
 	free(pw);
 }
 
-static int	len_cd_arg(t_node *arg)
+static void	find_in_cdpath(char **dir)
 {
-	int	i;
+	char	*cdpath;
+	int		fd;
 
-	i = 0;
-	if (!arg)
-		return (0);
-	while (arg)
+	cdpath = ft_env_value("CDPATH");
+	if (!cdpath)
+		return (free(*dir));
+	if (cdpath[ft_strlen(cdpath)] == '/')
+		cdpath = ft_strjoin(cdpath, *dir);
+	else
+		cdpath = ft_strjoin_add_slash(cdpath, *dir);
+	free(*dir);
+	*dir = cdpath;
+	fd = open(*dir, O_DIRECTORY);
+	if (!fd)
 	{
-		i++;
-		arg = arg->next;
+		free(*dir);
+		*dir = NULL;
+		return ;
 	}
-	return (i);
+	return ((void)close(fd));
 }
 
 /*
@@ -109,6 +118,7 @@ int	builtins_cd(t_node	*arg)
 		cd_less();
 	else
 	{
+		find_in_cdpath(&arg->word);
 		if (chdir(arg->word) == -1)
 		{
 			g_error = 1;

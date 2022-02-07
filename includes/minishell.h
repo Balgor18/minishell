@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/05 23:22:08 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/07 17:55:55 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define MINISHELL_H
 
 # include "error.h"
-# include "get_next_line.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <stdbool.h>
@@ -25,6 +24,7 @@
 # include <signal.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
 
 /*
 **--------------Global--------------
@@ -99,26 +99,6 @@ struct s_env
 
 /*
 **----------------------------------
-**--------------Split---------------
-**----------------------------------
-*/
-int		split_start_word(char *line);
-int		split_end_word(char *line, int start);
-int		verif_parsing(t_node *list);
-void	shell_split(char *line);
-int		shell_split_rec(char ***tab, char *line, int index);
-int		push_tab_in_list(t_node **list, char **tab);
-int		check_token(char *s, int last);
-
-/*
-**----------------------------------
-**--------------Token---------------
-**----------------------------------
-*/
-void	tokeniser(t_node *list);
-
-/*
-**----------------------------------
 **--------------Signal--------------
 **----------------------------------
 */
@@ -142,19 +122,34 @@ void	modif_shlvl(void);
 
 /*
 **----------------------------------
+**--------------Split---------------
+**----------------------------------
+*/
+int		split_start_word(char *line);
+int		split_end_word(char *line, int start);
+int		verif_parsing(t_node *list);
+void	shell_split(char *line);
+int		shell_split_rec(char ***tab, char *line, int index);
+int		push_tab_in_list(t_node **list, char **tab);
+void	tokeniser(t_node *list);
+int		check_token(char *s, int last);
+
+/*
+**----------------------------------
 **-------------Expand---------------
 **----------------------------------
 */
 void	expand(t_node *list);
-void	expand_split_dollar(char **tab);
-char	**expand_dollar_split(char **tab_quote, char **tab);
-int		expand_remove_quote(char **line);
-int		ft_is_alpha(char c);
-void	expand_space_neg(char *line);
 int		expand_quote_split(t_node *list, t_node **new);
-void	expand_token_in_new(t_node *list, t_node **new);
+void	expand_no_dollar_quote(t_node *list);
+char	**expand_dollar_split(char **tab_quote, char **tab);
+int		expand_quote_split_rec(char ***tab, char *word, int index);
 int		expand_dollar_split_rec(char ***tab, char *line, int index);
+int		expand_remove_quote(char **line);
+void	expand_space_neg(char *line);
 void	expand_modif_dollar_line(char **tab, int nb_word);
+void	expand_token_in_new(t_node *list, t_node **new);
+int		ft_is_alpha(char c);
 
 /*
 **----------------------------------
@@ -183,6 +178,7 @@ int		builtins_cd(t_node	*arg);
 int		builtins_export(t_node *arg);
 int		builtins_echo(t_node *arg, int fd_out);
 char	*check_is_not_builtins(char *path, char *cmd);
+int		len_cd_arg(t_node *arg);
 int		builtins_exit(t_node *list, t_cmd *cmd);
 
 /*
@@ -196,6 +192,7 @@ void	error_redir(char *file);
 void	error_cmd(char *cmd);
 void	error_sig(void);
 void	error_export(char *error);
+
 /*
 **----------------------------------
 **-------------Checkers-------------
@@ -233,6 +230,8 @@ void	*ft_memmove(void *dst, const void *src, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
 int		ft_isdigit(int c);
 int		ft_atoi(char *c);
+int		len_to_char(char *s, char c);
+int		ft_ternary(int cond, int valid_1, int valid_2);
 
 /*
 **----------------------------------

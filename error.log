@@ -1,91 +1,20 @@
 Error :
 
 ----
-recode the makefile
+./a.out
+Exit my minishell
+on main
+readline ret == NULL
 
 ----
--nnnnnnn dans echo
+'e'c"ho" pouic
 :check:
 ----
-> file1 > file2 >> file3
-//leak
+Faire CDPATH
 :check:
 ----
-file1 > file2 >> file3
-//leak
+echo $CDPA"TH"
+C'est gerez
 :check:
 ----
-//Check redirs
-:check:
-----
-error get cwd
-:check:
-----
-check exit
-:check:
-----
-error syntax
-whien pipe a the end
-:check:
-----
-//error ' ' at end of line fuck
-:check:
-----
-echo "0" > minishell
-touch "\?$*'KwaMe'*$?\"
-:check:
-----
-Export test
-Export when Var exist
-:check:
-----
-Exit -23
-Error dont be here
-:check:
-----
-Shlvl to increment
-:check:
-----
-<a cat -e
-Not working but need working
-:check:
-----
-Export 2 Var in 1 line
-:check:
-----
-echo dfsg > a >b >c >d
-dont output
-but create fill
-:check:
-----
-echo -n -n -n -n -n coucou
-:check:
-----
-cd -
-afficher le new pwd
-:check:
-----
-exit 1"2"34
-:check:
-----
-echo $CDP"ATH"
-:check:
-----
-gestions des signaux (heredocs)
-:check:
-----
-export lol='$lol' ; echo '$lol' (expand alors que ca devrait pas?)
-:check:
-----
-< ls
-fd error
-<< ls
-same error
-:check:
-----
-./
-..
-.
-:check:
-----
-ehco command not found ??
+echo "$              USER"

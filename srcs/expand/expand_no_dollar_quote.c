@@ -1,37 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   expand_no_dollar_quote.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/06 14:41:23 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/07 17:09:28 by fcatinau         ###   ########.fr       */
+/*   Created: 2022/02/07 14:29:52 by fcatinau          #+#    #+#             */
+/*   Updated: 2022/02/07 16:36:46 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	g_error;
-
-int	main(int ac, char **av, char **env)
+void	expand_no_dollar_quote(t_node *list)
 {
-	char	*line;
+	char	**tab;
+	char	**tab2;
+	int		len_tab;
 
-	line = NULL;
-	init_env(ac, av, env);
-	init_signal(false);
-	while (true)
+	expand_quote_split_rec(&tab, list->word, 0);
+	len_tab = ft_strlen_tab(tab);
+	free(list->word);
+	tab2 = tab;
+	while (*tab)
 	{
-		line = readline("Minishell : ");
-		if (line == NULL)
-			break ;
-		add_history(line);
-		if (line)
-			shell_split(line);
+		expand_remove_quote(tab);
+		tab++;
 	}
-	delall_env();
-	rl_clear_history();
-	write(STDOUT_FILENO, "exit\n", 5);
-	return (g_error);
+	list->word = ft_joinstr_from_tab(tab2, len_tab);
 }
