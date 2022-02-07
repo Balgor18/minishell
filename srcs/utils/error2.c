@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 17:02:36 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/03 20:33:25 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/07 20:09:43 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ void	error_sig(void)
 	else if (g_error == 128 + SIGSEGV)
 		ft_putstr_fd(STDERR_FILENO, "Segmentation fault (core dumped)\n");
 	else if (g_error == 128 + SIGQUIT)
+	{
 		ft_putstr_fd(STDERR_FILENO, "Quit (core dumped)\n");
+		write(STDOUT_FILENO, "\n", 1);
+	}
 	else if (g_error == 128 + SIGABRT)
 		ft_putstr_fd(STDERR_FILENO, "Aborted (core dumped)\n");
 }

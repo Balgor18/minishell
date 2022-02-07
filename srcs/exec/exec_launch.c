@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 15:10:09 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/07 19:12:41 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/07 20:09:25 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ static void	exec_child_ret(int pid)
 	{
 		g_error = 128 + WTERMSIG(wstatus);
 		error_sig();
-		write(STDOUT_FILENO, "\n", 1);
 	}
 }
 

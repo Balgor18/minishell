@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 16:50:06 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/05 17:57:32 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/07 19:47:58 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ int	builtins_exit(t_node *list, t_cmd *cmd)
 {
 	int	exit_val;
 
+	if (cmd->fd[IN] != STDIN_FILENO || cmd->fd[OUT] != STDOUT_FILENO)
+		return (g_error = 0, true);
 	exit_val = EXIT_SUCCESS;
 	if (len_list(list) > 1)
 		return (g_error = 1, ft_putstr_fd(STDERR_FILENO, ERROR_TO_MANY), true);
