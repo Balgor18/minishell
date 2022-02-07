@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 15:44:00 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/05 23:16:57 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/07 12:15:10 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static int	exec_redir_append(t_cmd *cmd)
 	char	*name;
 
 	name = cmd->red->next->word;
-	fd = open(name, O_WRONLY | O_APPEND, 0644);
+	fd = open(name, O_WRONLY | O_APPEND | O_CREATE, 0644);
 	if (fd < 0)
 	{
 		perror(name);

@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 14:33:41 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/05 18:43:23 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/07 12:11:29 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,21 @@ static void	create_pwd(void)
 	free(pw);
 }
 
+static int	len_cd_arg(t_node *arg)
+{
+	int	i;
+
+	i = 0;
+	if (!arg)
+		return (0);
+	while (arg)
+	{
+		i++;
+		arg = arg->next;
+	}
+	return (i);
+}
+
 /*
 ** builtins_cd
 ** the function reproduce cd
@@ -86,7 +101,7 @@ int	builtins_cd(t_node	*arg)
 
 	ret = NULL;
 	g_error = 0;
-	if (!arg)
+	if (!arg || len_cd_arg(arg) > 1)
 		return (g_error = 1, error_msg(ERROR_ARG_CD), true);
 	if (!ft_env_value("PWD"))
 		create_pwd();

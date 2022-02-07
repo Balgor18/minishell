@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 13:08:51 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/05 23:04:54 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/07 12:14:13 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int	is_start_or_end_quote(char c, int *quote)
 
 int	split_end_word(char *line, int start)
 {
-	static int	quote = NO_QUOTE;
+	int	quote = NO_QUOTE;
 
 	if (line[start] == '\0')
 		return (0);
