@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 19:02:24 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/07 19:20:13 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/08 00:50:29 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ static void	exec_fork_child(t_cmd *cmd, t_cmd *start, char *path)
 	init_signal(true);
 	free_cmd(start);
 	execve(path, cmd_tab, env);
+	perror(path);
 	free(path);
 	free_all(env, cmd_tab);
 	exit(g_error);
@@ -105,6 +106,8 @@ void	exec_fork(t_cmd *cmd, t_cmd *start)
 	char	*path;
 
 	g_error = 0;
+	if (!cmd->arg->word)
+		return ;
 	path = find_cmd_path(cmd->arg->word);
 	if (!path)
 		return ;

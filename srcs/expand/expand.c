@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 10:57:09 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/02 14:23:05 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/08 00:06:28 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static void	absolut_char(char **word)
 	char	*tmp;
 
 	tmp = *word;
+	if (!tmp)
+		return ;
 	while (*tmp)
 	{
 		if (*tmp == -32)

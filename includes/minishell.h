@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/07 17:55:55 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/08 00:39:52 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ t_env	**ft_env(char **env, char *add, char *del);
 char	*ft_env_value(char *find);
 char	**env_to_tab(void);
 void	modif_shlvl(void);
+int		compare_before_equals(char *env, char *find);
 
 /*
 **----------------------------------

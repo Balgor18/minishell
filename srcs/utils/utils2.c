@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 15:47:24 by elaachac          #+#    #+#             */
-/*   Updated: 2022/01/31 16:57:18 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/08 00:17:50 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ char	*ft_joinstr_from_tab(char **tab, int nb_word)
 		w++;
 	}
 	if (size[0] == 0)
-		return (free(tab), NULL);
+		return (free_tab(tab), NULL);
 	ret = malloc(sizeof(char *) * (size[0] + 1));
 	if (!ret)
 		return (free(tab), NULL);

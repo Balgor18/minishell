@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 14:33:41 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/07 17:08:58 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/08 00:48:26 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static void	find_in_cdpath(char **dir)
 
 	cdpath = ft_env_value("CDPATH");
 	if (!cdpath)
-		return (free(*dir));
+		return ;
 	if (cdpath[ft_strlen(cdpath)] == '/')
 		cdpath = ft_strjoin(cdpath, *dir);
 	else

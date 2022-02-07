@@ -6,11 +6,25 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 05:58:10 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/07 15:29:20 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/08 00:43:21 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	compare_before_equals(char *env, char *find)
+{
+	if (!find)
+		return (false);
+	while (*find && *env && *env != '=' && *env == *find)
+	{
+		env++;
+		find++;
+	}
+	if (*env == '=' && !*find)
+		return (true);
+	return (false);
+}
 
 /*
 ** ft_env_value
@@ -28,7 +42,7 @@ char	*ft_env_value(char *find)
 	env = *ft_getall_env();
 	while (env)
 	{
-		if (ft_strncmp(env->env, find, len_to_char(env->env, '=')) == 0)
+		if (compare_before_equals(env->env, find))
 		{
 			tmp = env->env;
 			while (*tmp != '=')

@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 16:51:08 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/01/31 11:42:17 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/08 00:14:42 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,10 @@ int	expand_remove_quote(char **line)
 		quote = NO_QUOTE;
 		return (quote);
 	}
-	if (!tmp)
-		return (SIMPLE);
 	free(*line);
 	*line = tmp;
+	if (!*line)
+		return (SIMPLE);
 	return (quote);
 }
 

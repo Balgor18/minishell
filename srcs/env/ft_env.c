@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 15:56:16 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/07 12:39:54 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/08 00:43:27 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static t_env	*ft_env_delone(t_env *env, char *del)
 	prev = env;
 	while (env)
 	{
-		if (ft_strncmp(del, env->env, len_to_char(env->env, '=')) == 0)
+		if (compare_before_equals(env->env, del))
 		{
 			next = env->next;
 			free(env->env);
