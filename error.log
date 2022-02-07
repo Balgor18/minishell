@@ -5,6 +5,12 @@ Error :
 Exit my minishell
 on main
 readline ret == NULL
+/bin/ls
+:check:
+----
+export F='"'
+echo $F
+:check:
 
 ----
 'e'c"ho" pouic
@@ -18,3 +24,9 @@ C'est gerez
 :check:
 ----
 echo "$              USER"
+:check:
+
+----
+ls >>> 0
+<<< 0
+syntax error

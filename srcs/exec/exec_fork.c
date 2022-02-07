@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 19:02:24 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/07 12:38:02 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/07 19:20:13 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static char	*try_open(char *cmd)
 		return (ft_putstr_fd(STDERR_FILENO, ERROR_POINT_SLASH), NULL);
 	ret = access(cmd, X_OK);
 	if (ret >= 0)
-		return (close (ret), ft_strdup(cmd));
+		return (ft_strdup(cmd));
 	return (g_error = 126, perror(cmd), NULL);
 }
 

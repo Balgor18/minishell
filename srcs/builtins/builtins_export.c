@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 11:37:33 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/06 11:04:27 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/07 19:05:24 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	builtins_export(t_node *arg)
 		if (!move_after_equals(&cpy))
 			return (true);
 		cpy = ft_strdup(cpy);
-		expand_remove_quote(&cpy);
+		// expand_remove_quote(&cpy);
 		ret = trim_before_egals(arg->word);
 		free(arg->word);
 		var_exist(ret);
