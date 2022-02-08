@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:41:23 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/08 14:19:16 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/08 18:00:29 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main(int ac, char **av, char **env)
 	init_signal(false);
 	while (true)
 	{
-		line = readline("Minishell : ");
+		line = readline("Minishell :");
 		if (line == NULL)
 			break ;
 		if (*line)

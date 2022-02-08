@@ -6,7 +6,7 @@
 #    By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/06 16:13:23 by fcatinau          #+#    #+#              #
-#    Updated: 2022/02/08 15:23:39 by fcatinau         ###   ########.fr        #
+#    Updated: 2022/02/08 17:59:50 by fcatinau         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ LIB			=	-lreadline
 
 vpath %.c $(foreach dir, $(SRC_DIR), $(dir):)
 
+# --  Redirection in OBJS  -- #
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:%.c=%.o))
 
 SRCS =	init_signal.c               	\
@@ -67,9 +68,6 @@ SRCS =	init_signal.c               	\
 		exec_fork.c                 	\
 		exec_init.c                 	\
 
-
-# --  Redirection in OBJS  -- #
-OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:%.c=%.o))
 
 # --   Compilation flags  -- #
 CC			=	clang
