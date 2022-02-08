@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/08 16:02:20 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/09 00:22:26 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ int		check_token(char *s, int last);
 **----------------------------------
 */
 void	expand(t_node *list);
-int		expand_quote_split(t_node *list, t_node **new);
+int		expand_quote_split(t_node *list, t_node **new, int token);
 void	expand_no_dollar_quote(t_node *list);
 char	**expand_dollar_split(char **tab_quote, char **tab);
 int		expand_quote_split_rec(char ***tab, char *word, int index);
@@ -234,6 +234,7 @@ int		ft_atoi(char *c);
 int		len_to_char(char *s, char c);
 int		ft_ternary(int cond, int valid_1, int valid_2);
 void	remove_quote_heredoc(char **s);
+char	**only_one_line(char *line);
 
 /*
 **----------------------------------

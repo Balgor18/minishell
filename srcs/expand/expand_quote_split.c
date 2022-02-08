@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 17:24:03 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/08 16:37:41 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/09 00:23:13 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ static int	expand_end_word(int beg, char *word)
 			quote = SIMPLE;
 		else if (word[beg] == '"')
 			quote = DOUBLE;
-		beg++;
 	}
 	while (word[++beg])
 	{
@@ -89,7 +88,7 @@ static int	expand_quote_split_bis(char **rejoin, char ***tab, t_node *list)
 	return (true);
 }
 
-int	expand_quote_split(t_node *list, t_node **new)
+int	expand_quote_split(t_node *list, t_node **new, int token)
 {
 	char	**tab;
 	char	*rejoin;
@@ -101,7 +100,10 @@ int	expand_quote_split(t_node *list, t_node **new)
 	}
 	tab = NULL;
 	expand_quote_split_bis(&rejoin, &tab, list);
-	tab = ft_split(rejoin, ' ');
+	if (token == WORD)
+		tab = ft_split(rejoin, ' ');
+	else
+		tab = only_one_line(rejoin);
 	free(rejoin);
 	if (!tab)
 		return (free_tab(tab), false);

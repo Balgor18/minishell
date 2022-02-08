@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 10:57:09 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/08 00:06:28 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/09 00:22:59 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	expand(t_node *list)
 	{
 		if (start->token == WORD || start->token == FD)
 		{
-			if (expand_quote_split(start, &new))
+			if (expand_quote_split(start, &new, start->token))
 				expand_modif_list(&last, &new, &list, &start);
 			new = NULL;
 		}
