@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 14:38:19 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/07 16:45:30 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/08 14:09:11 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	itoa_negative(int *n, int *negative, int *len)
 		*n *= -1;
 		*negative = 1;
 	}
-	len += *negative;
+	*len += *negative;
 }
 
 static int	ft_len(int tmp)

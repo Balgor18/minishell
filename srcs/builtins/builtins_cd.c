@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 14:33:41 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/08 00:48:26 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/08 16:11:46 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static void	find_in_cdpath(char **dir)
 	cdpath = ft_env_value("CDPATH");
 	if (!cdpath)
 		return ;
-	if (cdpath[ft_strlen(cdpath)] == '/')
+	if (cdpath[ft_strlen(cdpath)] == '/' || *cdpath == '/')
 		cdpath = ft_strjoin(cdpath, *dir);
 	else
 		cdpath = ft_strjoin_add_slash(cdpath, *dir);
@@ -94,6 +94,8 @@ static void	find_in_cdpath(char **dir)
 		*dir = NULL;
 		return ;
 	}
+	write(STDOUT_FILENO, *dir, ft_strlen(*dir));
+	write(STDOUT_FILENO, "\n", 1);
 	return ((void)close(fd));
 }
 
@@ -104,12 +106,14 @@ static void	find_in_cdpath(char **dir)
 ** or aboslut path
 ** i recode the flag -
 */
-int	builtins_cd(t_node	*arg)
+int	builtins_cd(t_node	*arg, int in, int out)
 {
 	char	*ret;
 
 	ret = NULL;
 	g_error = 0;
+	if (in != STDIN_FILENO || out != STDOUT_FILENO)
+		return (true);
 	if (!arg || len_cd_arg(arg) > 1)
 		return (g_error = 1, error_msg(ERROR_ARG_CD), true);
 	if (!ft_env_value("PWD"))

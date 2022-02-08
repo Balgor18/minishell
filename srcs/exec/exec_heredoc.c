@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 10:47:21 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/07 15:26:33 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/08 15:19:26 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ static int	heredoc_no_expand(t_node *red)
 		return (perror(limit), fd);
 	if (red->next->token == LIMITOR)
 	{
-		limit = red->next->word;
-		expand_remove_quote(&limit);
+		limit = ft_strdup(red->next->word);
+		remove_quote_heredoc(&limit);
 	}
 	while (1)
 	{
@@ -123,7 +123,7 @@ int	exec_redir_heredoc(t_cmd *cmd)
 		init_signal(false);
 		return (close(save), write(STDOUT_FILENO, "\n", 1), g_error = 130, -1);
 	}
-	fd = ((init_signal(false), create_heredoc(0)));
+	fd = ((close(save), init_signal(false), create_heredoc(0)));
 	if (cmd->fd[IN] != STDIN_FILENO)
 	{
 		dup2(fd, cmd->fd[IN]);

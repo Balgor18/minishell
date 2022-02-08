@@ -6,7 +6,7 @@
 #    By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/06 16:13:23 by fcatinau          #+#    #+#              #
-#    Updated: 2022/02/07 18:07:35 by fcatinau         ###   ########.fr        #
+#    Updated: 2022/02/08 15:23:39 by fcatinau         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,7 @@ SRCS =	init_signal.c               	\
 		utils.c                     	\
 		free.c                      	\
 		error.c                     	\
+		remove_quote_heredoc.c      	\
 		put_utils.c                 	\
 		ternary.c                   	\
 		utils2.c                    	\

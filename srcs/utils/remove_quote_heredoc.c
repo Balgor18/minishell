@@ -1,46 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   remove_quote_heredoc.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/11 19:23:51 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/08 15:07:21 by fcatinau         ###   ########.fr       */
+/*   Created: 2022/02/08 15:18:42 by fcatinau          #+#    #+#             */
+/*   Updated: 2022/02/08 15:35:38 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_tab(char **tab)
+void	remove_quote_heredoc(char **s)
 {
-	char	**free_tab;
+	char	*test;
 
-	if (!tab)
-		return ;
-	free_tab = tab;
-	while (*tab)
-	{
-		if (*tab)
-			free(*tab);
-		tab++;
-	}
-	if (free_tab)
-		free(free_tab);
-	return ;
-}
-
-void	free_list(t_node *list)
-{
-	t_node	*tmp;
-
-	tmp = NULL;
-	while (list)
-	{
-		tmp = list->next;
-		free(list->word);
-		free(list);
-		list = tmp;
-	}
-	list = NULL;
+	test = NULL;
+	test = ft_strtrim(*s, "\"'");
+	free(*s);
+	*s = test;
 }

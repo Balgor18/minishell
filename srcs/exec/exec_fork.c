@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 19:02:24 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/08 00:50:29 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/02/08 14:47:26 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,20 +67,25 @@ static char	*find_cmd_path(char *cmd)
 	return (check_is_not_builtins(path, cmd));
 }
 
-static void	free_all(char **env, char **cmd_tab)
+static void	free_all(char **env, char **cmd_tab, char *path)
 {
+	if (path)
+	{
+		perror(path);
+		free(path);
+	}
 	free_tab(env);
 	free_tab(cmd_tab);
 	delall_env();
 }
 
-static void	exec_fork_child(t_cmd *cmd, t_cmd *start, char *path)
+static void	exec_fork_child(t_cmd *cmd, t_cmd *start)
 {
 	char	**cmd_tab;
 	char	**env;
+	char	*path;
 
-	cmd_tab = exec_move_list_in_char(cmd->arg);
-	env = env_to_tab();
+	cmd_tab = ((env = env_to_tab(), exec_move_list_in_char(cmd->arg)));
 	if (cmd->fd[IN] != STDIN_FILENO)
 	{
 		dup2(cmd->fd[IN], STDIN_FILENO);
@@ -91,34 +96,29 @@ static void	exec_fork_child(t_cmd *cmd, t_cmd *start, char *path)
 		dup2(cmd->fd[OUT], STDOUT_FILENO);
 		close(cmd->fd[OUT]);
 	}
-	init_signal(true);
+	path = find_cmd_path(cmd->arg->word);
 	free_cmd(start);
-	execve(path, cmd_tab, env);
-	perror(path);
-	free(path);
-	free_all(env, cmd_tab);
+	if (path)
+	{
+		init_signal(true);
+		execve(path, cmd_tab, env);
+	}
+	free_all(env, cmd_tab, path);
 	exit(g_error);
 }
 
 void	exec_fork(t_cmd *cmd, t_cmd *start)
 {
 	pid_t	pid;
-	char	*path;
 
 	g_error = 0;
 	if (!cmd->arg->word)
-		return ;
-	path = find_cmd_path(cmd->arg->word);
-	if (!path)
 		return ;
 	pid = fork();
 	if (pid == -1)
 		printf("Error fork on cmd = %s\n", cmd->arg->word);
 	else if (pid == 0)
-		exec_fork_child(cmd, start, path);
+		exec_fork_child(cmd, start);
 	else
-	{
-		free(path);
 		cmd->pid = pid;
-	}
 }
