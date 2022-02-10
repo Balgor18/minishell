@@ -16,8 +16,6 @@ jobs:
     - uses: actions/checkout@v2
     - name: make
       run: make
-    - name: make check
-      run: make check
     - name: norminette
       run: |
         pip3 install norminette
