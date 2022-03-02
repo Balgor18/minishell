@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/09 00:22:26 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/03/02 14:01:55 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,7 @@ int		check_builtins(char *path, t_cmd *cmd);
 int		builtins_cd(t_node	*arg, int in, int out);
 int		builtins_export(t_node *arg);
 int		builtins_echo(t_node *arg, int fd_out);
+int		builtins_unset(t_node *arg);
 char	*check_is_not_builtins(char *path, char *cmd);
 int		len_cd_arg(t_node *arg);
 int		builtins_exit(t_node *list, t_cmd *cmd);
@@ -193,6 +194,7 @@ void	error_redir(char *file);
 void	error_cmd(char *cmd);
 void	error_sig(void);
 void	error_export(char *error);
+void	error_unset(char *error);
 
 /*
 **----------------------------------

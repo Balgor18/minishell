@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 17:02:36 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/07 20:09:43 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/03/02 14:03:30 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,14 @@ void	error_export(char *error)
 	ft_putstr_fd(STDERR_FILENO, error);
 	ft_putstr_fd(STDERR_FILENO, "'");
 	ft_putstr_fd(STDERR_FILENO, ERROR_EXP_END);
+}
+
+void	error_unset(char *error)
+{
+	g_error = 1;
+	ft_putstr_fd(STDERR_FILENO, "Minishell : unset:");
+	ft_putstr_fd(STDERR_FILENO, "`");
+	ft_putstr_fd(STDERR_FILENO, error);
+	ft_putstr_fd(STDERR_FILENO, "'");
+	ft_putstr_fd(STDERR_FILENO, ": not a valid identifier\n");
 }

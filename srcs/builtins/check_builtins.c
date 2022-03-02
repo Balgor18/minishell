@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 01:34:05 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/08 16:01:24 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/03/02 13:47:20 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,6 @@ static int	builtins_pwd(int ft_out)
 	ft_putstr_fd(ft_out, ret);
 	write(ft_out, "\n", 1);
 	free(ret);
-	return (g_error = 0, true);
-}
-
-/*
-** builtins_export
-** add the new env
-*/
-static int	builtins_unset(t_node *arg)
-{
-	while (arg)
-	{
-		delone_env(arg->word);
-		arg = arg->next;
-	}
 	return (g_error = 0, true);
 }
 

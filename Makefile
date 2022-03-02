@@ -6,7 +6,7 @@
 #    By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/06 16:13:23 by fcatinau          #+#    #+#              #
-#    Updated: 2022/02/09 00:29:11 by fcatinau         ###   ########.fr        #
+#    Updated: 2022/03/02 14:01:19 by fcatinau         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ SRCS =	init_signal.c               	\
 		check_builtins.c            	\
 		builtins_exit.c             	\
 		builtins_export.c           	\
+		builtins_unset.c            	\
 		builtins_echo.c             	\
 		shell_split_utils.c         	\
 		shell_split.c               	\
