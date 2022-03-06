@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 15:44:00 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/08 23:57:31 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/03/06 01:42:01 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	exec_redir_rin(t_cmd *cmd)
 	char	*name;
 
 	if (!cmd->red->next)
-		return (false);
+		return (error_msg(ERROR_RED), false);
 	name = cmd->red->next->word;
 	fd = open(name, O_RDONLY);
 	if (fd < 0)
@@ -41,7 +41,7 @@ static int	exec_redir_rout(t_cmd *cmd)
 	char	*name;
 
 	if (!cmd->red->next)
-		return (false);
+		return (error_msg(ERROR_RED), false);
 	name = cmd->red->next->word;
 	fd = open(name, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (fd < 0)
@@ -64,7 +64,7 @@ static int	exec_redir_append(t_cmd *cmd)
 	char	*name;
 
 	if (!cmd->red->next)
-		return (false);
+		return (error_msg(ERROR_RED), false);
 	name = cmd->red->next->word;
 	fd = open(name, O_WRONLY | O_APPEND | O_CREAT, 0644);
 	if (fd < 0)
