@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 13:08:51 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/03/11 17:51:10 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/03/11 18:37:28 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,10 @@ int	split_end_word(char *line, int start)
 	quote = NO_QUOTE;
 	if (line[start] == '\0')
 		return (0);
-	if (ft_strchr("<>", line[start++]))
+	if (ft_strchr("<|>&", line[start++]))
 	{
-		if (line[start] == '>' || line[start] == '<')
+		if ((line[start - 1] != '|' && line[start - 1] != '&') 
+			&& (line[start] == '>' || line[start] == '<'))
 			start++;
 		return (start);
 	}
