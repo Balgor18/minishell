@@ -6,16 +6,19 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 16:50:06 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/08 17:19:27 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/03/11 18:12:18 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	error_exit(char *word)
+static int	error_exit(t_cmd *cmd, char *word)
 {
+	delall_env();
+	rl_clear_history();
 	ft_putstr_fd(STDERR_FILENO, "Minishell: exit: ");
 	ft_putstr_fd(STDERR_FILENO, word);
+	free_cmd(cmd);
 	ft_putstr_fd(STDERR_FILENO, " : numeric argument required\n");
 	return (2);
 }
@@ -33,6 +36,8 @@ static char	*remove_quote(char *s)
 			nb_quote++;
 		s++;
 	}
+	if (!*s)
+		return (ft_strdup(tmp));
 	s = tmp;
 	tmp = malloc(sizeof(char) * (ft_strlen(s) - nb_quote));
 	if (!tmp)
@@ -87,13 +92,13 @@ int	builtins_exit(t_node *list, t_cmd *cmd)
 
 	if (cmd->fd[IN] != STDIN_FILENO || cmd->fd[OUT] != STDOUT_FILENO)
 		return (g_error = 0, true);
-	exit_val = EXIT_SUCCESS;
+	exit_val = g_error;
 	if (list)
 	{
 		if (str_is_digit(&list->word))
 			exit_val = ft_atoi(list->word);
 		else
-			exit(error_exit(list->word));
+			exit(error_exit(cmd ,list->word));
 	}
 	if (len_list(list) > 1)
 		return (g_error = 1, ft_putstr_fd(STDERR_FILENO, ERROR_TO_MANY), true);
