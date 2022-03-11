@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 16:50:06 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/03/11 18:12:18 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/03/11 18:25:26 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	builtins_exit(t_node *list, t_cmd *cmd)
 		if (str_is_digit(&list->word))
 			exit_val = ft_atoi(list->word);
 		else
-			exit(error_exit(cmd ,list->word));
+			exit(error_exit(cmd, list->word));
 	}
 	if (len_list(list) > 1)
 		return (g_error = 1, ft_putstr_fd(STDERR_FILENO, ERROR_TO_MANY), true);
