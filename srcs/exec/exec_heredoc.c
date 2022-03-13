@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 10:47:21 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/08 15:19:26 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/03/13 22:08:17 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ static int	heredoc_no_expand(t_node *red)
 	while (1)
 	{
 		line = readline(">>");
-		if (line == NULL)
+		if (line == NULL || !limit)
 			break ;
 		if (ft_strcmp(line, limit))
 			break ;
