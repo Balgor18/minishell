@@ -6,19 +6,19 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 13:06:31 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/01 15:07:46 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/03/17 21:45:20 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	exec_malloc_cmd(t_cmd **cmd)
+int	exec_malloc_cmd(t_cmd **cmd)
 {
 	t_cmd	*tmp;
 
 	tmp = malloc(sizeof(t_cmd));
 	if (!tmp)
-		return ;
+		return (false);
 	tmp->arg = NULL;
 	tmp->red = NULL;
 	tmp->next = NULL;
@@ -29,7 +29,7 @@ void	exec_malloc_cmd(t_cmd **cmd)
 		ft_cmd_last(*cmd)->next = tmp;
 	else
 		*cmd = tmp;
-	return ;
+	return (true);
 }
 
 static t_node	*exec_add_arg(t_cmd **cmd, t_node *list)
@@ -74,7 +74,8 @@ void	exec_init_cmd(t_cmd **cmd, t_node *list)
 			tmp = list->next;
 			free(list->word);
 			free(list);
-			exec_malloc_cmd(cmd);
+			if (!exec_malloc_cmd(cmd))
+				return ;
 			(*cmd) = (*cmd)->next;
 		}
 		else

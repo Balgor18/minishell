@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 17:24:03 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/09 00:23:13 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/03/17 21:35:55 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ static int	expand_quote_split_bis(char **rejoin, char ***tab, t_node *list)
 	int	nb_word;
 
 	*rejoin = NULL;
-	expand_quote_split_rec(tab, list->word, 0);
+	if (!expand_quote_split_rec(tab, list->word, 0))
+		return (false);
 	nb_word = ft_strlen_tab(*tab);
 	(*tab) = expand_dollar_split((*tab), (*tab));
 	(*rejoin) = ft_joinstr_from_tab((*tab), nb_word);
@@ -94,12 +95,10 @@ int	expand_quote_split(t_node *list, t_node **new, int token)
 	char	*rejoin;
 
 	if (!ft_strchr(list->word, '$'))
-	{
-		expand_no_dollar_quote(list);
-		return (false);
-	}
+		return (expand_no_dollar_quote(list), false);
 	tab = NULL;
-	expand_quote_split_bis(&rejoin, &tab, list);
+	if (!expand_quote_split_bis(&rejoin, &tab, list))
+		return (false);
 	if (token == WORD)
 		tab = ft_split(rejoin, ' ');
 	else

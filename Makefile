@@ -6,7 +6,7 @@
 #    By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/06 16:13:23 by fcatinau          #+#    #+#              #
-#    Updated: 2022/03/13 22:05:04 by fcatinau         ###   ########.fr        #
+#    Updated: 2022/03/17 21:09:27 by fcatinau         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,7 +72,7 @@ SRCS =	init_signal.c               	\
 
 # --   Compilation flags  -- #
 CC			=	clang
-CFLAGS		=	-Wall -Wextra -Werror
+CFLAGS		=	-Wall -Wextra -Werror -g3
 
 # --    Add DEBUG flags   -- #
 DEBUG = $(shell env | grep DEBUG= | tr '=' ' ' | awk '{print $$2}')
@@ -104,6 +104,9 @@ clean:
 .PHONY: fclean
 fclean: clean
 	rm -f $(NAME)
+
+malloc_test: $(OBJS)
+	$(CC) $(CFLAGS) -fsanitize=undefined -rdynamic -o $@ ${OBJS} -lreadline -L. -lmallocator
 
 .PHONY: re
 re: fclean all

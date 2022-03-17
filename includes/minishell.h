@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:40:47 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/03/02 14:01:55 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/03/17 21:46:54 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ int		ft_is_alpha(char c);
 */
 void	exec(t_node *list);
 void	exec_init_cmd(t_cmd **cmd, t_node *list);
-void	exec_malloc_cmd(t_cmd **cmd);
+int		exec_malloc_cmd(t_cmd **cmd);
 void	exec_launch(t_cmd *cmd);
 int		exec_redir(t_cmd *cmd);
 int		exec_redir_heredoc(t_cmd *cmd);
@@ -243,8 +243,8 @@ char	**only_one_line(char *line);
 **---------------List---------------
 **----------------------------------
 */
-t_node	*add_tail_list(t_node **node, char *word);
-t_node	*init_node(t_node *node, char *word);
+char	*add_tail_list(t_node **node, char *word);
+char	*init_node(t_node *node, char *word);
 t_node	*delall(t_node **node);
 t_node	*delnode(t_node **node);
 t_node	*ft_node_last(t_node *lst);

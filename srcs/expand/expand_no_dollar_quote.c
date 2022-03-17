@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 14:29:52 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/09 00:26:01 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/03/17 21:29:31 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void	expand_no_dollar_quote(t_node *list)
 	char	**tab2;
 	int		len_tab;
 
-	expand_quote_split_rec(&tab, list->word, 0);
+	if (!expand_quote_split_rec(&tab, list->word, 0))
+		return ;
 	len_tab = ft_strlen_tab(tab);
 	free(list->word);
 	tab2 = tab;

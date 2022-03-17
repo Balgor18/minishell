@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 11:46:23 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/03/11 17:43:40 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/03/17 21:23:33 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ int	builtins_echo(t_node *arg, int fd_out)
 	int	endl;
 
 	endl = true;
-	if (!arg && !arg->word && !arg->next)
+	if (!arg)
+		return (write(fd_out, "\n", 1), true);
+	if (!arg->word || !arg->next)
 		return (write(fd_out, "\n", 1), true);
 	while (arg->word && verif_flag_n(arg->word))
 	{

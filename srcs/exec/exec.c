@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 12:05:31 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/08 00:13:58 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/03/17 21:34:05 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,10 @@ void	exec(t_node *list)
 
 	cmd = NULL;
 	exec_malloc_cmd(&cmd);
+	if (!cmd)
+		return ((void)delall(&list));
 	exec_init_cmd(&cmd, list);
+	if (!cmd)
+		return ;
 	exec_launch(cmd);
 }
