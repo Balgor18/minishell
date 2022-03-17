@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 11:37:33 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/08 17:04:45 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/03/17 23:55:07 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	builtins_export(t_node *arg)
 		cpy = arg->word;
 		if (!ft_strchr(arg->word, '='))
 			return (true);
-		if (ft_isdigit(*cpy))
+		if (ft_isdigit(*cpy) || arg->word[0] == '=')
 			return (g_error = 1, error_export(cpy), true);
 		if (!move_after_equals(&cpy))
 			return (true);
