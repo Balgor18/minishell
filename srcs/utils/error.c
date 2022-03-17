@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 23:13:35 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/02 14:19:41 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/03/17 22:00:59 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int	ft_strlen_tab(char **tab)
 
 void	ft_putstr_fd(int fd, char *s)
 {
+	if (!s)
+		return ;
 	write(fd, s, ft_strlen(s));
 }
 

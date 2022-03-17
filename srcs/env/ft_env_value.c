@@ -6,7 +6,7 @@
 /*   By: fcatinau <fcatinau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 05:58:10 by fcatinau          #+#    #+#             */
-/*   Updated: 2022/02/08 17:06:58 by fcatinau         ###   ########.fr       */
+/*   Updated: 2022/03/17 22:11:14 by fcatinau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	compare_before_equals(char *env, char *find)
 {
+	if (!find)
+		return (false);
 	if (!find)
 		return (false);
 	while (*find && *env && *env != '=' && *find != '=' && *env == *find)
